@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../../features/auth/authSlice";
-import { useState } from "react";
 import {
   Box,
   Flex,
@@ -33,18 +32,11 @@ const Header = () => {
           <Box>
             <Link to="/">Home</Link>
           </Box>
-          <HStack
-            as="nav"
-            spacing={4}
-            display={{ base: "none", md: "flex" }}
-          >
+          <HStack as="nav" spacing={4} display={{ base: "none", md: "flex" }}>
             {user && (
               <>
                 <Link to="/profile">{user.name}</Link>
-                <Text
-                  cursor="pointer"
-                  onClick={() => dispatch(logout())}
-                >
+                <Text cursor="pointer" onClick={() => dispatch(logout())}>
                   Logout
                 </Text>
               </>
@@ -59,17 +51,14 @@ const Header = () => {
         </HStack>
       </Flex>
 
-      {isOpen ? (
+      {isOpen && (
         <Box pb={4} display={{ md: "none" }}>
           <VStack as="nav" spacing={4}>
             <Link to="/">Home</Link>
             {user && (
               <>
                 <Link to="/profile">{user.name}</Link>
-                <Text
-                  cursor="pointer"
-                  onClick={() => dispatch(logout())}
-                >
+                <Text cursor="pointer" onClick={() => dispatch(logout())}>
                   Logout
                 </Text>
               </>
@@ -82,7 +71,7 @@ const Header = () => {
             )}
           </VStack>
         </Box>
-      ) : null}
+      )}
     </Box>
   );
 };
