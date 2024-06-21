@@ -4,6 +4,7 @@ const API_URL = "http://localhost:3002/users"
 
 
 const login = async (user)=>{
+    console.log("service", user)
   const res = await axios.post(API_URL + "/login", user)
   if (res.data) {
     console.log(res.data)

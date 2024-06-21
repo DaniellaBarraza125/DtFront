@@ -23,28 +23,30 @@ const Login = () => {
   const dispatch = useDispatch();
   const toast = useToast();
 
-  useEffect(() => {
-    if (isSuccess) {
-      toast({
-        title: 'Success',
-        description: message,
-        status: 'success',
-        duration: 5000,
-        isClosable: true,
-      });
-      navigate('/profile');
-    }
-    if (isError) {
-      toast({
-        title: 'Error',
-        description: message,
-        status: 'error',
-        duration: 5000,
-        isClosable: true,
-      });
-    }
-    dispatch(reset());
-  }, [message, isSuccess, isError, navigate, dispatch, toast]);
+
+  console.log(formData)
+  // useEffect(() => {
+  //   if (isSuccess) {
+  //     toast({
+  //       title: 'Success',
+  //       description: message,
+  //       status: 'success',
+  //       duration: 5000,
+  //       isClosable: true,
+  //     });
+  //     navigate('/profile');
+  //   }
+  //   if (isError) {
+  //     toast({
+  //       title: 'Error',
+  //       description: message,
+  //       status: 'error',
+  //       duration: 5000,
+  //       isClosable: true,
+  //     });
+  //   }
+  //   dispatch(reset());
+  // }, [message, isSuccess, isError, navigate, dispatch, toast]);
 
   const onChange = (e) => {
     setFormData({
@@ -54,8 +56,10 @@ const Login = () => {
   };
 
   const onSubmit = (e) => {
+    
     e.preventDefault();
     dispatch(login(formData));
+
   };
 
   return (
