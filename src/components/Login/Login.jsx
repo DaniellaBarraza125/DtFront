@@ -1,7 +1,6 @@
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { login, reset } from '../../features/auth/authSlice';
-import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { login } from '../../features/auth/authSlice';
 import {
   Box,
   Button,
@@ -9,7 +8,6 @@ import {
   FormLabel,
   Input,
   VStack,
-  useToast,
 } from '@chakra-ui/react';
 
 const Login = () => {
@@ -18,35 +16,11 @@ const Login = () => {
     password: ''
   });
   const { email, password } = formData;
-  const { message, isSuccess, isError } = useSelector((state) => state.auth);
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const toast = useToast();
 
 
   console.log(formData)
-  // useEffect(() => {
-  //   if (isSuccess) {
-  //     toast({
-  //       title: 'Success',
-  //       description: message,
-  //       status: 'success',
-  //       duration: 5000,
-  //       isClosable: true,
-  //     });
-  //     navigate('/profile');
-  //   }
-  //   if (isError) {
-  //     toast({
-  //       title: 'Error',
-  //       description: message,
-  //       status: 'error',
-  //       duration: 5000,
-  //       isClosable: true,
-  //     });
-  //   }
-  //   dispatch(reset());
-  // }, [message, isSuccess, isError, navigate, dispatch, toast]);
+ 
 
   const onChange = (e) => {
     setFormData({
