@@ -10,6 +10,7 @@ const initialState = {
   token: token,
   isError: false,
   isSuccess: false,
+  isLoading: true,
   msg: ""}
 
 
@@ -21,7 +22,8 @@ export const authSlice = createSlice({
     reset: (state) => {
       state.isError = false
       state.isSuccess = false
-      state.message = ""
+      state.msg = ""
+      state.isLoading = true
     }
   },
   extraReducers: (builder) => {
@@ -29,12 +31,16 @@ export const authSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         state.user = action.payload.user
         state.token = action.payload.token
-        state.message = action.payload.message 
+        state.msg = action.payload.msg 
         state.isSuccess = true
+        state.isLoading = false
       })
       .addCase(login.rejected, (state, action) => {
-        state.message = action.payload
+        state.msg = action.payload
         state.isError = true
+      })
+      .addCase(login.pending, (state,action) => {
+        state.isLoading = true
       })
       .addCase(logout.fulfilled, (state) => {
         state.user = null
@@ -43,12 +49,12 @@ export const authSlice = createSlice({
       .addCase(register.fulfilled, (state, action) => {
         console.log(action)
         state.isSuccess = true
-        state.message = action.payload.msg
+        state.msg = action.payload.msg
       })
       .addCase(register.rejected, (state, action) => {
         state.isSuccess = false
         state.isError = true
-        state.message = action.payload
+        state.msg = action.payload
       })
   }
 })
@@ -61,7 +67,7 @@ export const register = createAsyncThunk(
     return await authService.register(user)    
   } catch (error) {
     console.error(error)
-    const msgError = error.response.data.messages[0]
+    const msgError = error.response.data.msg
     return thunkAPI.rejectWithValue(msgError)
   }
 })
@@ -71,7 +77,7 @@ export const login = createAsyncThunk("auth/login", async(user, thunkAPI)=>{
       return await authService.login(user)    
     } catch (error) {
       console.error(error)
-      const msgError = error.response.data.message
+      const msgError = error.response.data.msg
       return thunkAPI.rejectWithValue(msgError)
     }
   })
