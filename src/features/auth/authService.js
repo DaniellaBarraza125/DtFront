@@ -14,6 +14,12 @@ const login = async (user)=>{
   return res.data
 }
 
+
+const register = async (userData) => {
+    const res = await axios.post(API_URL + "/", userData);
+    return res.data;
+};
+
 const logout = async () => {
   const token = localStorage.getItem("token")
   const res = await axios.delete(API_URL + "/logout", {
@@ -30,10 +36,10 @@ const logout = async () => {
 
 
 
-
 const authService = {
   login,
-  logout
+  logout,
+  register
   
 }
 
