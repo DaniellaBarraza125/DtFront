@@ -14,9 +14,11 @@ import {
     Stack,
     Select
 } from '@chakra-ui/react';
+import { useDispatch } from 'react-redux';
+import { register } from '../../features/auth/authSlice';
 
 const Register = () => {
-    const [formValues, setFormValues] = useState({
+    const initialFormValues = {
         email: '',
         name: '',
         lastName: '',
@@ -29,9 +31,14 @@ const Register = () => {
         experience: 0,
         clientType: '',
         interests: []
-    });
+    };
 
+    const [formValues, setFormValues] = useState(initialFormValues);
     const [showPassword, setShowPassword] = useState(false);
+    const [errors, setErrors] = useState({
+        objectives: false,
+        interests: false
+    });
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -57,25 +64,46 @@ const Register = () => {
     };
 
     const handlePasswordVisibility = () => setShowPassword(!showPassword);
+    const dispatch = useDispatch();
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        const objectivesError = formValues.objectives.length === 0;
+        const interestsError = formValues.interests.length === 0;
+
+        if (objectivesError || interestsError) {
+            setErrors({
+                objectives: objectivesError,
+                interests: interestsError
+            });
+            return;
+        }
+
         console.log("Data submitted:", formValues);
+        dispatch(register(formValues));
+
+        setFormValues(initialFormValues);
+        setErrors({
+            objectives: false,
+            interests: false
+        });
     };
 
     const interestsOptions = [
         { id: 1, label: 'Interés 1' },
         { id: 2, label: 'Interés 2' },
         { id: 3, label: 'Interés 3' },
-        { id:4, label: 'Interés 4' },
- 
+        { id: 4, label: 'Interés 4' },
+        { id: 5, label: 'Interés 5' },
+        { id: 6, label: 'Interés 6' },
     ];
 
     const objectiveOptions = [
         { id: "obj1", label: 'Objetivo 1' },
         { id: "obj2", label: 'Objetivo 2' },
-        { id: "obje3", label: 'Objetivo 3' },
-        { id: "obje4", label: 'Otro' }
+        { id: "obj3", label: 'Objetivo 3' },
+        { id: "obj4", label: 'Otro' }
     ];
     
     return (
@@ -170,7 +198,7 @@ const Register = () => {
                     </Select>
                 </FormControl>
 
-                <FormControl isRequired mt={4}>
+                <FormControl mt={4} isInvalid={errors.objectives}>
                     <FormLabel>Objetivos</FormLabel>
                     <CheckboxGroup colorScheme='teal'>
                         <Stack>
@@ -197,6 +225,9 @@ const Register = () => {
                             placeholder='Especifique otro objetivo'
                         />
                     )}
+                    {errors.objectives && (
+                        <FormErrorMessage>Debe seleccionar al menos un objetivo.</FormErrorMessage>
+                    )}
                 </FormControl>
 
                 <FormControl isRequired mt={4}>
@@ -220,7 +251,7 @@ const Register = () => {
                     />
                 </FormControl>
 
-                <FormControl isRequired mt={4}>
+                <FormControl mt={4} isInvalid={errors.interests}>
                     <FormLabel>Intereses</FormLabel>
                     <CheckboxGroup colorScheme='teal'>
                         <Stack>
@@ -238,6 +269,9 @@ const Register = () => {
                             ))}
                         </Stack>
                     </CheckboxGroup>
+                    {errors.interests && (
+                        <FormErrorMessage>Debe seleccionar al menos un interés.</FormErrorMessage>
+                    )}
                 </FormControl>
 
                 <Button
