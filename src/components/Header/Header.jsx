@@ -32,6 +32,9 @@ const Header = () => {
           <Box>
             <Link to="/">Home</Link>
           </Box>
+          <Box>
+            <Link to="/schedule">Schedule</Link>
+          </Box>
           <HStack as="nav" spacing={4} display={{ base: "none", md: "flex" }}>
             {user && (
               <>

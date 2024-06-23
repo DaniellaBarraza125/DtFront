@@ -12,10 +12,12 @@ import {
     Checkbox,
     CheckboxGroup,
     Stack,
-    Select
+    Select,
+    StepSeparator
 } from '@chakra-ui/react';
 import { useDispatch } from 'react-redux';
 import { register } from '../../features/auth/authSlice';
+import Stepper from '../Stepper/Stepper';
 
 const Register = () => {
     const initialFormValues = {
@@ -108,6 +110,7 @@ const Register = () => {
     
     return (
         <Container maxW="container.md" p={4}>
+            <Stepper/>
             <Box as='form' onSubmit={handleSubmit} borderWidth="1px" borderRadius="lg" p={4}>
                 <FormControl isRequired>
                     <FormLabel>Email</FormLabel>
