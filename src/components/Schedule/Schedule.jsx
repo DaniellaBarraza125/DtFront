@@ -6,6 +6,7 @@ import Event from '../Event/Event';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAll } from '../../features/events/eventSlice';
 import theme from '../../themes/chakraTheme';
+import Footer from '../Footer/Footer';
 
 const Schedule = () => {
     const { eventIsLoading, events } = useSelector((state) => state.event);
@@ -93,7 +94,9 @@ const Schedule = () => {
                 {events.map((event, i) => (
                     <Event key={i} event={event} />
                 ))}
-            </Container>
+               
+                </Container>          
+                <Footer/>
         </>
     );
 };

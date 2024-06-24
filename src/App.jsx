@@ -12,6 +12,7 @@ import Stepper from "./components/Stepper/Stepper";
 import PersonalInfo from "./components/PersonalInfo/PersonalInfo";
 import { UserCard } from "./components/UserCard/UserCard";
 import theme from "./themes/chakraTheme";
+import Footer from "./components/Footer/Footer";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
           <Route path="/stepper" element={<Stepper/>} />
           <Route path="/personalInfo" element={<PersonalInfo/>} />
           <Route path="/users" element={<UserCard/>}/>
+          <Route path="/footer" element={<Footer/>} />
         </Routes>
       </BrowserRouter>
       </ChakraProvider>

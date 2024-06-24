@@ -5,7 +5,7 @@ const theme = extendTheme({
         primary: {
             50: "black",
         },
-        secondary: "#ff6347",
+        secondary: { white: "#ffffff" },
         azulito: "#1E90B5",
     },
     fonts: {
