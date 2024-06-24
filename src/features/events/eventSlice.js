@@ -26,6 +26,18 @@ export const getById = createAsyncThunk(
         }
     },
 );
+export const getByDate = createAsyncThunk(
+    "event/getByDate",
+    async (date, { rejectWithValue }) => {
+        try {
+            const response = await eventService.getByDate(date);
+            return response;
+        } catch (error) {
+            console.error(error);
+            return rejectWithValue(error.response.data);
+        }
+    },
+);
 
 const initialState = {
     events: [],
@@ -71,6 +83,18 @@ export const eventSlice = createSlice({
             })
             .addCase(getById.rejected, (state, action) => {
                 state.eventIsLoading = false;
+                state.error = action.payload || action.error.message;
+            })
+            .addCase(getByDate.pending, (state) => {
+                state.eventsIsLoading = true;
+                state.error = null;
+            })
+            .addCase(getByDate.fulfilled, (state, action) => {
+                state.events = action.payload.events;
+                state.eventsIsLoading = false;
+            })
+            .addCase(getByDate.rejected, (state, action) => {
+                state.eventsIsLoading = false;
                 state.error = action.payload || action.error.message;
             });
     },

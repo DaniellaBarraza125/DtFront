@@ -1,61 +1,38 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, Button } from '@chakra-ui/react';
-import { useDispatch, useSelector } from 'react-redux';
 
+const Buttons = ({ options }) => {
+    const [activeButton, setActiveButton] = useState(options.length > 0 ? options[0].value : null);
 
-const Buttons = () => {
-
-    const { eventIsLoading } = useSelector((state) => state.event);
-    const dispatch = useDispatch();
-
-   
-    const [isButtonActive, setIsButtonActive] = useState(false);
-    const [selectedSala, setSelectedSala] = useState('');
-
-    const handleClick = () => {
-        console.log('Buscando evento');
-        setIsButtonActive(!isButtonActive);
+    const handleClick = (value) => {
+        setActiveButton(value === activeButton ? null : value);
     };
 
-    const handleSalaChange = (e) => {
-        const sala = e.target.value;
-        setSelectedSala(sala);
-        getBySala(sala);
-    };
+    useEffect(() => {
+        setActiveButton(options.length > 0 ? options[0].value : null);
+    }, [options]);
 
-    const getBySala = (sala) => {
-        console.log(`Sala seleccionada: ${sala}`);
-    };
+    return (
+        <Box backgroundColor='azulito' display='flex' justifyContent='space-around' padding={1} marginBottom='4' borderRadius='100'>
+            {options.map((option) => (
+                <Button
+                    key={option.value}
+                    value={option.value}
+                    width='50%'
+                    borderRadius='100'
+                    bg={activeButton === option.value ? 'white' : 'transparent'}
+                    color={activeButton === option.value ? 'primary.50' : 'white'}
+                    _active={{
+                        bg: 'white',
+                        transform: 'scale(0.98)',
+                    }}
+                    onClick={() => handleClick(option.value)}
+                >
+                    {option.label}
+                </Button>
+            ))}
+        </Box>
+    );
+};
 
-    if (eventIsLoading) {
-        return <h1>Cargando eventos...</h1>;
-    }
-  return (
-    <Box backgroundColor='azulito' display='flex' justifyContent='space-around' padding={1} marginBottom='4' borderRadius='100'>
-    <Button
-        width='50%'
-        borderRadius='100'
-        bg={isButtonActive ? 'white' : 'transparent'}
-        color={isButtonActive ? 'primary.50' : 'white'}
-        _active={{
-            bg: 'white',
-            transform: 'scale(0.98)',
-        }}
-        onClick={handleClick}
-    >
-        23 de Mayo
-    </Button>
-    <Button
-        width='50%'
-        borderRadius='100'
-        bg={isButtonActive ? 'transparent' : 'white'}
-        color={isButtonActive ? 'white' : 'black'}
-        onClick={handleClick}
-    >
-        24 de Mayo
-    </Button>
-</Box>
-  )
-}
-
-export default Buttons
+export default Buttons;

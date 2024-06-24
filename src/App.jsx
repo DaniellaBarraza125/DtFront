@@ -10,9 +10,9 @@ import Schedule from "./components/Schedule/Schedule";
 import EventDetail from "./components/EventDetail/EventDetail";
 import Stepper from "./components/Stepper/Stepper";
 import PersonalInfo from "./components/PersonalInfo/PersonalInfo";
-import { UserCard } from "./components/UserCard/UserCard";
 import theme from "./themes/chakraTheme";
 import Footer from "./components/Footer/Footer";
+import Users from "./components/Users/Users";
 
 function App() {
   return (
@@ -29,7 +29,7 @@ function App() {
           <Route path="/eventDetail/:id" element={<EventDetail/>} />
           <Route path="/stepper" element={<Stepper/>} />
           <Route path="/personalInfo" element={<PersonalInfo/>} />
-          <Route path="/users" element={<UserCard/>}/>
+          <Route path="/users" element={<Users/>}/>
           <Route path="/footer" element={<Footer/>} />
         </Routes>
       </BrowserRouter>

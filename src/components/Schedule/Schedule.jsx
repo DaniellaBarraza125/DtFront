@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getAll } from '../../features/events/eventSlice';
 import Footer from '../Footer/Footer';
 import Buttons from '../Buttons/Buttons';
+import Tags from '../Tags/Tags';
 
 const Schedule = () => {
     const { eventIsLoading, events } = useSelector((state) => state.event);
@@ -32,12 +33,21 @@ const Schedule = () => {
     if (eventIsLoading) {
         return <h1>Cargando eventos...</h1>;
     }
+    const options = [
+        { value: '2024-05-23', label: '23 de Mayo' },
+        { value: '2024-05-24', label: '24 de Mayo' }
+        ];    
+        const tags = [
+            { label: 'Todas', count: 10 },
+            { label: 'One to One', count: 1 },
+            { label: 'Matches', count: 5 }
+        ];
 
     return (
         <>
             <SearchBar />
             <Container maxW='md' paddingTop='1'>
-                <Buttons/>
+                <Buttons options={options}/>
                 <Box marginBottom={4}>
                     <FormControl isRequired mt={4}>
                         <Select
@@ -49,24 +59,11 @@ const Schedule = () => {
                         </Select>
                     </FormControl>
                 </Box>
-                <Box  marginBottom={4} display='flex' justifyContent='space-around'>
-                    <Tag fontSize='10px' padding={2} width='20%' justifyContent='space-between' bg='none' border='2px'>
-                        <Text  isTruncated maxWidth='70%'>Todas</Text>  
-                        <Text>10</Text>
-                    </Tag>
-                    <Tag fontSize='10px' padding={2} width='20%' justifyContent='space-between' bg='none' border='2px'>
-                        <Text isTruncated  maxWidth='70%'>One to One</Text>  
-                        <Text>1</Text>
-                    </Tag>
-                    <Tag fontSize='10px' padding={2} width='20%' justifyContent='space-between' bg='none' border='2px'>
-                        <Text isTruncated maxWidth='70%'>Matches</Text>  
-                        <Text>5</Text>
-                    </Tag>
-                </Box>
+                
+                <Tags tags={tags}/>
                 {events.map((event, i) => (
                     <Event key={i} event={event} />
                 ))}
-               
                 </Container>          
                 <Footer/>
         </>
