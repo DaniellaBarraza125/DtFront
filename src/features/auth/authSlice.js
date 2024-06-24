@@ -39,7 +39,7 @@ export const authSlice = createSlice({
         state.msg = action.payload
         state.isError = true
       })
-      .addCase(login.pending, (state,action) => {
+      .addCase(login.pending, (state) => {
         state.isLoading = true
       })
       .addCase(logout.fulfilled, (state) => {
@@ -56,6 +56,7 @@ export const authSlice = createSlice({
         state.isError = true
         state.msg = action.payload
       })
+     
   }
 })
 
