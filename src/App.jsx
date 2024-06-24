@@ -9,6 +9,9 @@ import { ChakraProvider } from "@chakra-ui/react";
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 import CheckoutForm from './components/CheckoutForm/CheckoutForm';
+import AddPartner from "./components/AddPartner/AddPartner";
+import AddEvent from "./components/AddEvent/AddEvent";
+
 
 // Carga tu clave pública de Stripe
 const stripePromise = loadStripe('pk_test_51PU6292MuIxm52bYvsBX37uZbLNzlaon35wbfpENgxW1ybFytd7Vdz7Pqp2bCvSfPYlcCBNZMBZxvQqtla0GLGV5006fBkWG84');
@@ -21,6 +24,8 @@ function App() {
           <Header />
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/addPartner" element={<AddPartner />} />
+            <Route path="/addEvent" element={<AddEvent />} />
             <Route path="/login" element={<Login />} />
             <Route path="/profile" element={<Profile />} />
             <Route path='/register' element={<Register />} />   

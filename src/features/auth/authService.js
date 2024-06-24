@@ -1,11 +1,11 @@
 import axios from "axios"
 
-const API_URL = "http://localhost:3000/users"
+const API_URL = "http://localhost:3000"
 
 
 const login = async (user)=>{
     console.log("service", user)
-  const res = await axios.post(API_URL + "/login", user)
+  const res = await axios.post(API_URL + "/users/login", user)
   if (res.data) {
     console.log(res.data)
     localStorage.setItem("user", JSON.stringify(res.data.user))
@@ -22,7 +22,7 @@ const register = async (userData) => {
 
 const logout = async () => {
   const token = localStorage.getItem("token")
-  const res = await axios.delete(API_URL + "/logout", {
+  const res = await axios.delete(API_URL + "/users/logout", {
     headers: {
       Authorization: token 
     }
