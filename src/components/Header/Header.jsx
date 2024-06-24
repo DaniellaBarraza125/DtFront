@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { logout } from "../../features/auth/authSlice";
-import { useState } from "react";
 import {
   Box,
   Flex,
@@ -16,7 +15,6 @@ import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 const Header = () => {
   const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { isOpen, onToggle } = useDisclosure();
 
   return (
@@ -33,18 +31,11 @@ const Header = () => {
           <Box>
             <Link to="/">Home</Link>
           </Box>
-          <HStack
-            as="nav"
-            spacing={4}
-            display={{ base: "none", md: "flex" }}
-          >
+          <HStack as="nav" spacing={4} display={{ base: "none", md: "flex" }}>
             {user && (
               <>
                 <Link to="/profile">{user.name}</Link>
-                <Text
-                  cursor="pointer"
-                  onClick={() => dispatch(logout())}
-                >
+                <Text cursor="pointer" onClick={() => dispatch(logout())}>
                   Logout
                 </Text>
               </>
@@ -55,6 +46,7 @@ const Header = () => {
                 <Link to="/register">Register</Link>
               </>
             )}
+            <Link to="/checkout">Checkout</Link> {/* Enlace añadido */}
           </HStack>
         </HStack>
       </Flex>
@@ -66,10 +58,7 @@ const Header = () => {
             {user && (
               <>
                 <Link to="/profile">{user.name}</Link>
-                <Text
-                  cursor="pointer"
-                  onClick={() => dispatch(logout())}
-                >
+                <Text cursor="pointer" onClick={() => dispatch(logout())}>
                   Logout
                 </Text>
               </>
@@ -80,6 +69,7 @@ const Header = () => {
                 <Link to="/register">Register</Link>
               </>
             )}
+            <Link to="/checkout">Checkout</Link> {/* Enlace añadido */}
           </VStack>
         </Box>
       ) : null}
