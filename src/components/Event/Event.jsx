@@ -1,10 +1,19 @@
-import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Button, Card, CardBody, CardFooter, Heading, Image, Stack, Text } from '@chakra-ui/react'
+import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Button, Card, CardBody, CardFooter, Heading, Image, Spinner, Stack, Text } from '@chakra-ui/react'
 import React from 'react'
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 const Event = ({event}) => {
-    console.log(event);
-  return (
+  const { eventIsLoading } = useSelector((state) => state.event);
+if (eventIsLoading) {
+  <h1>wait</h1>
+}
+// if(!event.User){
+//   <h1>loading...</h1>
+// }
+// const user = event.User.nombre
+// console.log(user);
+return (
     <Card
     direction={{ base: 'row', sm: 'row' }}
     overflow='hidden'
@@ -41,7 +50,7 @@ const Event = ({event}) => {
 
         <Text fontSize='sm' py='2'>{event.tema}</Text>
         <Text fontSize='sm' py='2'>{event.hora}</Text>
-        <Text py='2'>Ponente: {event.ponente}
+        <Text py='2'>Ponente: {event.User?.nombre}
         
       </Text> 
     
