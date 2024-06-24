@@ -109,7 +109,7 @@ export const authSlice = createSlice({
                 state.isLoading = true;
             })
             .addCase(getUsers.fulfilled, (state, action) => {
-                state.users = action.payload;
+                state.users = action.payload.users;
                 state.isSuccess = true;
                 state.isLoading = false;
             })

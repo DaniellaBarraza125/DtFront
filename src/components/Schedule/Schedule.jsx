@@ -14,7 +14,7 @@ const Schedule = () => {
 
     useEffect(() => {
         dispatch(getAll());
-    }, []);
+    }, [dispatch]);
 
     const [selectedSala, setSelectedSala] = useState('');
 
