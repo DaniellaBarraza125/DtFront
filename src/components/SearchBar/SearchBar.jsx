@@ -1,4 +1,4 @@
-import { Search2Icon, SearchIcon } from '@chakra-ui/icons'
+import { Search2Icon} from '@chakra-ui/icons'
 import { Button, Container, HStack, Input, InputGroup, InputRightElement, Tag } from '@chakra-ui/react'
 import React from 'react'
 
@@ -6,9 +6,12 @@ const SearchBar = () => {
     const handleClick = () => {
         console.log('Buscando evento')
     }
+    
     return (
     <Container maxW='md' padding='4'>
-        <InputGroup size='sm'>
+               
+
+        {/* <InputGroup size='sm'>
             <Input placeholder="Buscar evento" />
             <InputRightElement>
                 <Button colorScheme="blue" size="sm"  h='1.5rem'  onClick={handleClick} ><Search2Icon/></Button>
@@ -20,7 +23,7 @@ const SearchBar = () => {
                 {tag}
                 </Tag>
             ))}
-        </HStack>
+        </HStack> */}
     </Container>
     )
 }

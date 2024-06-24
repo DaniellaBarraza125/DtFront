@@ -31,11 +31,23 @@ const logout = async () => {
     }
     return res.data;
 };
+const getUsers = async () => {
+    const token = localStorage.getItem("token");
+
+    const res = await axios.get(API_URL + "/", {
+        headers: {
+            Authorization: token,
+        },
+    });
+
+    return res.data;
+};
 
 const authService = {
     login,
     logout,
     register,
+    getUsers,
 };
 
 export default authService;

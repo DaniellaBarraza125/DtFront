@@ -19,7 +19,7 @@ const Header = () => {
   const { isOpen, onToggle } = useDisclosure();
 
   return (
-    <Box bg="blue.500" px={4}>
+    <Box bg="primary.50" px={4}>
       <Flex h={16} alignItems="center" justifyContent="space-between">
         <IconButton
           size="md"
@@ -27,27 +27,28 @@ const Header = () => {
           aria-label="Toggle Navigation"
           display={{ md: "none" }}
           onClick={onToggle}
+          color="secondary"
         />
         <HStack spacing={8} alignItems="center">
           <Box>
-            <Link to="/">Home</Link>
+            <Link to="/" style={{ color: 'white' }}>Home</Link>
           </Box>
           <Box>
-            <Link to="/schedule">Schedule</Link>
+            <Link to="/schedule" style={{ color: 'white' }}>Schedule</Link>
           </Box>
           <HStack as="nav" spacing={4} display={{ base: "none", md: "flex" }}>
             {user && (
               <>
-                <Link to="/profile">{user.name}</Link>
-                <Text cursor="pointer" onClick={() => dispatch(logout())}>
+                <Link to="/profile" style={{ color: 'white' }}>{user.name}</Link>
+                <Text cursor="pointer" color="white" onClick={() => dispatch(logout())}>
                   Logout
                 </Text>
               </>
             )}
             {!user && (
               <>
-                <Link to="/login">Login</Link>
-                <Link to="/register">Register</Link>
+                <Link to="/login" style={{ color: 'white' }}>Login</Link>
+                <Link to="/register" style={{ color: 'white' }}>Register</Link>
               </>
             )}
           </HStack>
@@ -57,19 +58,19 @@ const Header = () => {
       {isOpen && (
         <Box pb={4} display={{ md: "none" }}>
           <VStack as="nav" spacing={4}>
-            <Link to="/">Home</Link>
+            <Link to="/" style={{ color: 'white' }}>Home</Link>
             {user && (
               <>
-                <Link to="/profile">{user.name}</Link>
-                <Text cursor="pointer" onClick={() => dispatch(logout())}>
+                <Link to="/profile" style={{ color: 'white' }}>{user.name}</Link>
+                <Text cursor="pointer" color="white" onClick={() => dispatch(logout())}>
                   Logout
                 </Text>
               </>
             )}
             {!user && (
               <>
-                <Link to="/login">Login</Link>
-                <Link to="/register">Register</Link>
+                <Link to="/login" style={{ color: 'white' }}>Login</Link>
+                <Link to="/register" style={{ color: 'white' }}>Register</Link>
               </>
             )}
           </VStack>

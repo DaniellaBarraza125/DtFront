@@ -1,19 +1,25 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import eventService from "./eventService";
 
-export const getAll = createAsyncThunk("event/getAll", async () => {
-    try {
-        return await eventService.getAll();
-    } catch (error) {
-        console.error(error);
-        throw error;
-    }
-});
+export const getAll = createAsyncThunk(
+    "event/getAll",
+    async (_, { rejectWithValue }) => {
+        try {
+            const response = await eventService.getAll();
+            return response;
+        } catch (error) {
+            console.error(error);
+            return rejectWithValue(error.response.data);
+        }
+    },
+);
+
 export const getById = createAsyncThunk(
     "event/getById",
     async (id, { rejectWithValue }) => {
         try {
-            return await eventService.getById(id);
+            const response = await eventService.getById(id);
+            return response;
         } catch (error) {
             console.error(error);
             return rejectWithValue(error.response.data);
@@ -34,6 +40,8 @@ export const eventSlice = createSlice({
     initialState,
     reducers: {
         reset: (state) => {
+            state.events = [];
+            state.event = null;
             state.eventsIsLoading = false;
             state.eventIsLoading = false;
             state.error = null;
@@ -51,7 +59,7 @@ export const eventSlice = createSlice({
             })
             .addCase(getAll.rejected, (state, action) => {
                 state.eventsIsLoading = false;
-                state.error = action.error.message;
+                state.error = action.payload || action.error.message;
             })
             .addCase(getById.pending, (state) => {
                 state.eventIsLoading = true;
@@ -63,7 +71,7 @@ export const eventSlice = createSlice({
             })
             .addCase(getById.rejected, (state, action) => {
                 state.eventIsLoading = false;
-                state.error = action.error.message;
+                state.error = action.payload || action.error.message;
             });
     },
 });
