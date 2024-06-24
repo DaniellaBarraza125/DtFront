@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Accordion, Box, Button, Center, Container, Flex, FormControl, Select, Tag, Text } from '@chakra-ui/react';
-import { Link } from 'react-router-dom';
+import { Box, Container, FormControl, Select, Tag, Text } from '@chakra-ui/react';
 import SearchBar from '../SearchBar/SearchBar';
 import Event from '../Event/Event';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAll } from '../../features/events/eventSlice';
-import theme from '../../themes/chakraTheme';
 import Footer from '../Footer/Footer';
+import Buttons from '../Buttons/Buttons';
 
 const Schedule = () => {
     const { eventIsLoading, events } = useSelector((state) => state.event);
@@ -16,13 +15,9 @@ const Schedule = () => {
         dispatch(getAll());
     }, []);
 
-    const [isButtonActive, setIsButtonActive] = useState(false);
     const [selectedSala, setSelectedSala] = useState('');
 
-    const handleClick = () => {
-        console.log('Buscando evento');
-        setIsButtonActive(!isButtonActive);
-    };
+
 
     const handleSalaChange = (e) => {
         const sala = e.target.value;
@@ -42,30 +37,7 @@ const Schedule = () => {
         <>
             <SearchBar />
             <Container maxW='md' paddingTop='1'>
-                <Box backgroundColor='azulito' display='flex' justifyContent='space-around' padding={1} marginBottom='4' borderRadius='100'>
-                    <Button
-                        width='50%'
-                        borderRadius='100'
-                        bg={isButtonActive ? 'white' : 'transparent'}
-                        color={isButtonActive ? 'primary.50' : 'white'}
-                        _active={{
-                            bg: 'white',
-                            transform: 'scale(0.98)',
-                        }}
-                        onClick={handleClick}
-                    >
-                        23 de Mayo
-                    </Button>
-                    <Button
-                        width='50%'
-                        borderRadius='100'
-                        bg={isButtonActive ? 'transparent' : 'white'}
-                        color={isButtonActive ? 'white' : 'black'}
-                        onClick={handleClick}
-                    >
-                        24 de Mayo
-                    </Button>
-                </Box>
+                <Buttons/>
                 <Box marginBottom={4}>
                     <FormControl isRequired mt={4}>
                         <Select
