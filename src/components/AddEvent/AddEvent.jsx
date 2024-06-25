@@ -1,4 +1,5 @@
 import { Box, Button, FormControl, FormLabel, Input, Select, VStack, HStack, Heading, Textarea } from '@chakra-ui/react';
+import { useState } from 'react';
 
 // Función para generar las opciones de tiempo en formato 12 horas
 const generateTimeOptions = () => {
@@ -13,10 +14,15 @@ const generateTimeOptions = () => {
       </option>
     );
   }
+
   return times;
 };
 
 const AddEvent = () => {
+  const handleTimeChange = (e) => {
+    console.log(`Hora seleccionada: ${e.target.value}`);
+  };
+
   return (
     <Box 
       maxW="md" 
@@ -46,20 +52,20 @@ const AddEvent = () => {
         <HStack spacing="4" width="full">
           <FormControl id="start-time">
             <FormLabel>Inicio</FormLabel>
-            <Select placeholder="Hora de inicio">
+            <Select onChange={handleTimeChange} placeholder="Hora de inicio">
               {generateTimeOptions()}
             </Select>
           </FormControl>
           <FormControl id="end-time">
             <FormLabel>Fin</FormLabel>
-            <Select placeholder="Hora de fin">
+            <Select onChange={handleTimeChange} placeholder="Hora de fin">
               {generateTimeOptions()}
             </Select>
           </FormControl>
         </HStack>
         <FormControl id="room">
           <FormLabel>Sala</FormLabel>
-          <Select placeholder="Selecciona una sala">
+          <Select onChange={(e) => console.log(`Sala seleccionada: ${e.target.value}`)} placeholder="Selecciona una sala">
             <option value="meeting-room-1">Meeting Room 1</option>
             <option value="meeting-room-2">Meeting Room 2</option>
           </Select>

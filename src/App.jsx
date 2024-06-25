@@ -14,10 +14,11 @@ import theme from "./themes/chakraTheme";
 import Footer from "./components/Footer/Footer";
 import Users from "./components/Users/Users";
 import { loadStripe } from '@stripe/stripe-js';
-import { Elements } from '@stripe/react-stripe-js';
 import CheckoutForm from './components/CheckoutForm/CheckoutForm';
 import AddPartner from "./components/AddPartner/AddPartner";
 import AddEvent from "./components/AddEvent/AddEvent";
+import { Elements } from "@stripe/react-stripe-js";
+import PanelAdmin from "./components/PanelAdmin/PanelAdmin";
 import PrivateZone from "./guards/PrivateZone";
 import AdminZone from "./guards/AdminZone";
 
@@ -45,6 +46,12 @@ function App() {
           <Route path="/addPartner" element={<PrivateZone><AddPartner /></PrivateZone>} />
           <Route path="/addEvent" element={<PrivateZone><AddEvent /></PrivateZone>} />
           <Route path="*" element={<NotFound />} />
+          <Route path="/checkoutForm" element={
+            <Elements stripe={stripePromise}>
+              <CheckoutForm />
+            </Elements>
+          } />
+          <Route path='/paneladmin' element={<PanelAdmin/>} />
           </Routes>
         </BrowserRouter>
       </ChakraProvider>

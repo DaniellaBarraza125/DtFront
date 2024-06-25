@@ -1,4 +1,4 @@
-import { color, extendTheme } from "@chakra-ui/react";
+import { extendTheme } from "@chakra-ui/react";
 
 const theme = extendTheme({
     colors: {
@@ -12,6 +12,18 @@ const theme = extendTheme({
         body: "Roboto, sans-serif",
         heading: "Montserrat, sans-serif",
     },
+    components: {
+        CardElement: {
+          baseStyle: {
+            border: "1px solid",
+            borderColor: "gray.300",
+            borderRadius: "md",
+            padding: "4",
+            boxShadow: "sm",
+          },
+        },
+      },
 });
 
 export default theme;
+

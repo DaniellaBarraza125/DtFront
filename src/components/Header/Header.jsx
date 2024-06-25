@@ -73,7 +73,7 @@ const Header = () => {
                 <Link to="/register" style={{ color: 'white' }}>Register</Link>
               </>
             )}
-            <Link to="/checkout">Checkout</Link> {/* Enlace añadido */}
+            <Link to="/checkout">Checkout</Link> 
           </VStack>
         </Box>
       )}
