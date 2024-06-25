@@ -12,7 +12,7 @@ import PersonalInfo from "./components/PersonalInfo/PersonalInfo";
 import theme from "./themes/chakraTheme";
 import Footer from "./components/Footer/Footer";
 import Users from "./components/Users/Users";
-import { loadStripe } from '@stripe/stripe-js';
+// import { loadStripe } from '@stripe/stripe-js';
 import CheckoutForm from './components/CheckoutForm/CheckoutForm';
 import AddPartner from "./components/AddPartner/AddPartner";
 import AddEvent from "./components/AddEvent/AddEvent";
@@ -21,10 +21,11 @@ import PanelAdmin from "./components/PanelAdmin/PanelAdmin";
 import PrivateZone from "./guards/PrivateZone";
 import AdminZone from "./guards/AdminZone";
 import NotFound from "./components/NotFound/NotFound";
+import AdminScheduleView from "./components/AdminScheduleView/AdminScheduleView";
 
 
 // Carga tu clave pública de Stripe
-const stripePromise = loadStripe('pk_test_51PU6292MuIxm52bYvsBX37uZbLNzlaon35wbfpENgxW1ybFytd7Vdz7Pqp2bCvSfPYlcCBNZMBZxvQqtla0GLGV5006fBkWG84');
+// const stripePromise = loadStripe('pk_test_51PU6292MuIxm52bYvsBX37uZbLNzlaon35wbfpENgxW1ybFytd7Vdz7Pqp2bCvSfPYlcCBNZMBZxvQqtla0GLGV5006fBkWG84');
 
 function App() {
   return (
@@ -40,17 +41,19 @@ function App() {
           <Route path="/schedule" element={<PrivateZone><Schedule/></PrivateZone>} />
           <Route path="/eventDetail/:id" element={<PrivateZone><EventDetail/></PrivateZone>} />
           <Route path="/personalInfo" element={<PrivateZone><PersonalInfo/></PrivateZone>} />
-          <Route path="/users" element={<PrivateZone><Users/></PrivateZone>}/>
+          <Route path="/users" element={<Users/>}/>
           <Route path="/footer" element={<Footer/>} />
           <Route path="/addPartner" element={<PrivateZone><AddPartner /></PrivateZone>} />
           <Route path="/addEvent" element={<PrivateZone><AddEvent /></PrivateZone>} />
           <Route path="*" element={<NotFound />} />
-          <Route path="/checkoutForm" element={
+          {/* <Route path="/checkoutForm" element={
             <PrivateZone><Elements stripe={stripePromise}>
               <CheckoutForm />
             </Elements></PrivateZone>
-          } />
+          } /> */}
           <Route path='/paneladmin' element={<AdminZone><PanelAdmin/></AdminZone>} />
+          <Route path='/adminscheduleview' element={<AdminZone><AdminScheduleView/></AdminZone>} />
+
           </Routes>
         </BrowserRouter>
       </ChakraProvider>

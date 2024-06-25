@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Container, FormControl, Select } from '@chakra-ui/react';
+import { Box, Container, FormControl, Select, Tag, Text } from '@chakra-ui/react';
 import SearchBar from '../SearchBar/SearchBar';
 import Event from '../Event/Event';
 import { useDispatch, useSelector } from 'react-redux';
@@ -45,28 +45,29 @@ const Schedule = () => {
 
     return (
         <>
-            <Container maxW='md'>
-                <Buttons options={options} />
-                <Box marginBottom={4}>
-                    <FormControl isRequired mt={4}>
-                        <Select
-                            name='sala'
-                            onChange={handleSalaChange}
-                        >
-                            <option value='sala1'>Sala Principal - La font blanca</option>
-                            <option value='sala2'>Sala 2</option>
-                        </Select>
-                    </FormControl>
+            <Container maxW='md' height="100vh" overflow="hidden" display="flex" flexDirection="column">
+                <Box position="sticky" top="0" zIndex="1" backgroundColor="white">
+                    <Buttons options={options}/>
+                    <Box marginBottom={4}>
+                        <FormControl isRequired mt={4}>
+                            <Select
+                                name='sala'
+                                onChange={handleSalaChange}
+                            >
+                                <option value='sala1'>Sala Principal - La font blanca</option>
+                                <option value='sala2'>Sala 2</option>
+                            </Select>
+                        </FormControl>
+                    </Box>
+                    <Tags tags={tags}/>
                 </Box>
-                
-                <Tags tags={tags} />
-                <Box maxHeight="400px" overflowY="auto">
+                <Box flex="1" overflowY="auto">
                     {events.map((event, i) => (
                         <Event key={i} event={event} />
                     ))}
                 </Box>
-            </Container>
-            <Footer />
+            </Container>          
+            <Footer/>
         </>
     );
 };
