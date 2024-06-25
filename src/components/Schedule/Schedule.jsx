@@ -45,8 +45,7 @@ const Schedule = () => {
 
     return (
         <>
-            <SearchBar />
-            <Container maxW='md' paddingTop='1'>
+            <Container maxW='md' >
                 <Buttons options={options}/>
                 <Box marginBottom={4}>
                     <FormControl isRequired mt={4}>

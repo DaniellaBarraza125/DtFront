@@ -18,6 +18,7 @@ import CheckoutForm from './components/CheckoutForm/CheckoutForm';
 import AddPartner from "./components/AddPartner/AddPartner";
 import AddEvent from "./components/AddEvent/AddEvent";
 import { Elements } from "@stripe/react-stripe-js";
+import PanelAdmin from "./components/PanelAdmin/PanelAdmin";
 
 
 // Carga tu clave pública de Stripe
@@ -47,6 +48,7 @@ function App() {
               <CheckoutForm />
             </Elements>
           } />
+          <Route path='/paneladmin' element={<PanelAdmin/>} />
           </Routes>
         </BrowserRouter>
       </ChakraProvider>

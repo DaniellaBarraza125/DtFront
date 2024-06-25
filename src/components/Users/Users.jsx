@@ -5,6 +5,7 @@ import { Container } from '@chakra-ui/react';
 import Tags from '../Tags/Tags';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUsers } from '../../features/auth/authSlice';
+import Footer from '../Footer/Footer';
 
 const Users = () => {
     const dispatch = useDispatch(); 
@@ -26,13 +27,16 @@ const Users = () => {
         if (isLoading) {<p>Loading...</p>}
 
     return (
+        <>
         <Container paddingTop='1'>
             <Buttons options={options}/>
             <Tags tags={tags}/>
             {users.map((user, i) => (
                 <UserCard key={i} user={user}/>
             ))}
+        <Footer/>
         </Container>
+        </>
     )
 }
 
