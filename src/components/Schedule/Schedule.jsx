@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Container, FormControl, Select, Tag, Text } from '@chakra-ui/react';
+import { Box, Container, FormControl, Select } from '@chakra-ui/react';
 import SearchBar from '../SearchBar/SearchBar';
 import Event from '../Event/Event';
 import { useDispatch, useSelector } from 'react-redux';
@@ -18,8 +18,6 @@ const Schedule = () => {
 
     const [selectedSala, setSelectedSala] = useState('');
 
-
-
     const handleSalaChange = (e) => {
         const sala = e.target.value;
         setSelectedSala(sala);
@@ -33,20 +31,22 @@ const Schedule = () => {
     if (eventIsLoading) {
         return <h1>Cargando eventos...</h1>;
     }
+
     const options = [
         { value: '2024-05-23', label: '23 de Mayo' },
         { value: '2024-05-24', label: '24 de Mayo' }
-        ];    
-        const tags = [
-            { label: 'Todas', count: 10 },
-            { label: 'One to One', count: 1 },
-            { label: 'Matches', count: 5 }
-        ];
+    ];
+
+    const tags = [
+        { label: 'Todas', count: 10 },
+        { label: 'One to One', count: 1 },
+        { label: 'Matches', count: 5 }
+    ];
 
     return (
         <>
-            <Container maxW='md' >
-                <Buttons options={options}/>
+            <Container maxW='md'>
+                <Buttons options={options} />
                 <Box marginBottom={4}>
                     <FormControl isRequired mt={4}>
                         <Select
@@ -59,12 +59,14 @@ const Schedule = () => {
                     </FormControl>
                 </Box>
                 
-                <Tags tags={tags}/>
-                {events.map((event, i) => (
-                    <Event key={i} event={event} />
-                ))}
-                </Container>          
-                <Footer/>
+                <Tags tags={tags} />
+                <Box maxHeight="400px" overflowY="auto">
+                    {events.map((event, i) => (
+                        <Event key={i} event={event} />
+                    ))}
+                </Box>
+            </Container>
+            <Footer />
         </>
     );
 };

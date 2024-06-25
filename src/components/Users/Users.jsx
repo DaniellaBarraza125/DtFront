@@ -27,8 +27,7 @@ const Users = () => {
         if (isLoading) {<p>Loading...</p>}
 
     return (
-        <>
-        <Container paddingTop='1'>
+        <Container paddingTop='2'>
             <Buttons options={options}/>
             <Tags tags={tags}/>
             {users.map((user, i) => (
@@ -36,7 +35,6 @@ const Users = () => {
             ))}
         <Footer/>
         </Container>
-        </>
     )
 }
 
