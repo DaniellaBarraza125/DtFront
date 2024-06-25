@@ -18,6 +18,8 @@ import { Elements } from '@stripe/react-stripe-js';
 import CheckoutForm from './components/CheckoutForm/CheckoutForm';
 import AddPartner from "./components/AddPartner/AddPartner";
 import AddEvent from "./components/AddEvent/AddEvent";
+import PrivateZone from "./guards/PrivateZone";
+import AdminZone from "./guards/AdminZone";
 
 
 // Carga tu clave pública de Stripe
@@ -32,16 +34,17 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route path="/profile" element={<PrivateZone><Profile /></PrivateZone>} />
           <Route path='/register' element={<Register />} />
-          <Route path="/schedule" element={<Schedule/>} />
-          <Route path="/eventDetail/:id" element={<EventDetail/>} />
-          <Route path="/stepper" element={<Stepper/>} />
-          <Route path="/personalInfo" element={<PersonalInfo/>} />
-          <Route path="/users" element={<Users/>}/>
+          <Route path="/schedule" element={<PrivateZone><Schedule/></PrivateZone>} />
+          <Route path="/eventDetail/:id" element={<PrivateZone><EventDetail/></PrivateZone>} />
+          <Route path="/stepper" element={<PrivateZone><Stepper/></PrivateZone>} />
+          <Route path="/personalInfo" element={<PrivateZone><PersonalInfo/></PrivateZone>} />
+          <Route path="/users" element={<PrivateZone><Users/></PrivateZone>}/>
           <Route path="/footer" element={<Footer/>} />
-          <Route path="/addPartner" element={<AddPartner />} />
-          <Route path="/addEvent" element={<AddEvent />} />
+          <Route path="/addPartner" element={<PrivateZone><AddPartner /></PrivateZone>} />
+          <Route path="/addEvent" element={<PrivateZone><AddEvent /></PrivateZone>} />
+          <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
       </ChakraProvider>
