@@ -14,10 +14,10 @@ import theme from "./themes/chakraTheme";
 import Footer from "./components/Footer/Footer";
 import Users from "./components/Users/Users";
 import { loadStripe } from '@stripe/stripe-js';
-import { Elements } from '@stripe/react-stripe-js';
 import CheckoutForm from './components/CheckoutForm/CheckoutForm';
 import AddPartner from "./components/AddPartner/AddPartner";
 import AddEvent from "./components/AddEvent/AddEvent";
+import { Elements } from "@stripe/react-stripe-js";
 
 
 // Carga tu clave pública de Stripe
@@ -42,6 +42,11 @@ function App() {
           <Route path="/footer" element={<Footer/>} />
           <Route path="/addPartner" element={<AddPartner />} />
           <Route path="/addEvent" element={<AddEvent />} />
+          <Route path="/checkoutForm" element={
+            <Elements stripe={stripePromise}>
+              <CheckoutForm />
+            </Elements>
+          } />
           </Routes>
         </BrowserRouter>
       </ChakraProvider>
