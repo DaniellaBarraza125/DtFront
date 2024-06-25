@@ -20,6 +20,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import PanelAdmin from "./components/PanelAdmin/PanelAdmin";
 import PrivateZone from "./guards/PrivateZone";
 import AdminZone from "./guards/AdminZone";
+import NotFound from "./components/NotFound/NotFound";
 
 
 // Carga tu clave pública de Stripe
@@ -35,10 +36,9 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/profile" element={<PrivateZone><Profile /></PrivateZone>} />
-          <Route path='/register' element={<Register />} />
+          <Route path='/register' element={<Stepper/>} />
           <Route path="/schedule" element={<PrivateZone><Schedule/></PrivateZone>} />
           <Route path="/eventDetail/:id" element={<PrivateZone><EventDetail/></PrivateZone>} />
-          <Route path="/stepper" element={<PrivateZone><Stepper/></PrivateZone>} />
           <Route path="/personalInfo" element={<PrivateZone><PersonalInfo/></PrivateZone>} />
           <Route path="/users" element={<PrivateZone><Users/></PrivateZone>}/>
           <Route path="/footer" element={<Footer/>} />
