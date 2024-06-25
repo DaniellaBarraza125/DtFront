@@ -11,16 +11,16 @@ const PanelAdmin = () => {
             alignContent='flex-start'>
                 <PanelInfo/>
             </Box>
-            <Box className='componentes'display='flex' flexDirection='row' justifyContent='center'
+            <Box height='100%'className='componentes'display='flex' flexDirection='row' justifyContent='center'
             alignContent='center'>   
+                <Box>         
+                    <Users/>
+                </Box>
                 <Box>         
                     <Users/>
                 </Box>
                 <Box>
                     <Schedule/>
-                </Box>
-                <Box>         
-                    <Users/>
                 </Box>
             </Box>
 
