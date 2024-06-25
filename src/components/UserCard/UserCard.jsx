@@ -9,7 +9,7 @@ export const UserCard = ({user}) => {
     <>
 
     <Stack maxW='md' > 
-        <Card borderRadius='15' margin='2' border='2px' direction={{ base: 'column', sm: 'row' }} overflow='hidden' variant='outline'>
+        <Card borderRadius='15' margin='4' border='2px' direction={{ base: 'column', sm: 'row' }} overflow='hidden' variant='outline'>
           <Stack>
             <Link to={`/eventDetail/${user.id}`}>  
               <CardBody key={user.id}>
