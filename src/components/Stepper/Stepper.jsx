@@ -11,13 +11,15 @@ const steps = [
 
 const Stepper = () => {
     const initialFormValues = {
+        
+        nombre: '',
+        apellido: '',
         email: '',
-        name: '',
-        lastName: '',
+        linkedin: '',
+        nombre_empresa: '',
+        puesto_trabajo: '',
         password: '',
-        country: '',
-        company: '',
-        sector: '',
+        pais: '',
         objectives: [],
         otherObjective: '',
         clientType: '',
@@ -111,7 +113,7 @@ const Stepper = () => {
 
         switch (activeStep) {
             case 0:
-                isValid = formValues.email !== '' && formValues.name !== '' && formValues.lastName !== '' && formValues.password !== '';
+                isValid = formValues.nombre !== '' && formValues.apellido !== '' && formValues.email !== '' && formValues.password !== '';
                 if (isValid && !validateEmail(formValues.email)) {
                     isValid = false;
                 }
@@ -192,14 +194,35 @@ const Stepper = () => {
 
             <Container maxW="container.md" p={4} display={activeStep === 0 ? 'block' : 'none'}>
                 <Box borderWidth="1px" borderRadius="lg" p={4}>
+
+                    <FormControl isRequired mt={4}>
+                        <FormLabel>Nombre</FormLabel>
+                        <Input
+                            name='nombre'
+                            value={formValues.nombre}
+                            onChange={handleChange}
+                            placeholder='Ramón'
+                        />
+                    </FormControl>
+
+                    <FormControl isRequired mt={4}>
+                        <FormLabel>Apellidos</FormLabel>
+                        <Input
+                            name='apellido'
+                            value={formValues.apellido}
+                            onChange={handleChange}
+                            placeholder='Sánchez'
+                        />
+                    </FormControl>
+
                     <FormControl isRequired>
-                        <FormLabel>Email</FormLabel>
+                        <FormLabel>Correo</FormLabel>
                         <Input
                             type='email'
                             name='email'
                             value={formValues.email}
                             onChange={handleChange}
-                            placeholder='Ingrese su correo'
+                            placeholder='ejemplo@gmail.com'
                         />
                         {!validateEmail(formValues.email) && formValues.email !== '' && (
                             <FormErrorMessage>Debe ingresar un correo electrónico válido.</FormErrorMessage>
@@ -207,22 +230,40 @@ const Stepper = () => {
                     </FormControl>
 
                     <FormControl isRequired mt={4}>
-                        <FormLabel>Nombre</FormLabel>
+                        <FormLabel>Empresa</FormLabel>
                         <Input
-                            name='name'
-                            value={formValues.name}
+                            name='nombre_empresa'
+                            value={formValues.company}
                             onChange={handleChange}
-                            placeholder='Nombre'
+                            placeholder='Tu empresa'
                         />
                     </FormControl>
 
                     <FormControl isRequired mt={4}>
-                        <FormLabel>Apellido</FormLabel>
-                        <Input
-                            name='lastName'
-                            value={formValues.lastName}
+                        <FormLabel>Tu sector</FormLabel>
+                        <Select
+                            name='sector'
+                            value={formValues.sector}
                             onChange={handleChange}
-                            placeholder='Apellido'
+                            placeholder='Seleccione su sector'
+                        >
+                            <option value='Sector 1'>Sector 1</option>
+                            <option value='Sector 2'>Sector 2</option>
+                
+                        </Select>
+                    </FormControl>
+                </Box>
+            </Container>
+
+            <Container maxW="container.md" p={4} display={activeStep === 1 ? 'block' : 'none'}>
+                <Box borderWidth="1px" borderRadius="lg" p={4}>
+                    <FormControl isRequired>
+                        <FormLabel>País/Región</FormLabel>
+                        <Input
+                            name='country'
+                            value={formValues.country}
+                            onChange={handleChange}
+                            placeholder='País/Región'
                         />
                     </FormControl>
 
@@ -243,44 +284,6 @@ const Stepper = () => {
                                 </Button>
                             </InputRightElement>
                         </InputGroup>
-                    </FormControl>
-                </Box>
-            </Container>
-
-            <Container maxW="container.md" p={4} display={activeStep === 1 ? 'block' : 'none'}>
-                <Box borderWidth="1px" borderRadius="lg" p={4}>
-                    <FormControl isRequired>
-                        <FormLabel>País/Región</FormLabel>
-                        <Input
-                            name='country'
-                            value={formValues.country}
-                            onChange={handleChange}
-                            placeholder='País/Región'
-                        />
-                    </FormControl>
-
-                    <FormControl isRequired mt={4}>
-                        <FormLabel>Tu empresa</FormLabel>
-                        <Input
-                            name='company'
-                            value={formValues.company}
-                            onChange={handleChange}
-                            placeholder='Tu empresa'
-                        />
-                    </FormControl>
-
-                    <FormControl isRequired mt={4}>
-                        <FormLabel>Tu sector</FormLabel>
-                        <Select
-                            name='sector'
-                            value={formValues.sector}
-                            onChange={handleChange}
-                            placeholder='Seleccione su sector'
-                        >
-                            <option value='Sector 1'>Sector 1</option>
-                            <option value='Sector 2'>Sector 2</option>
-                
-                        </Select>
                     </FormControl>
                 </Box>
             </Container>
