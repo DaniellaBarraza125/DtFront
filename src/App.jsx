@@ -47,11 +47,11 @@ function App() {
           <Route path="/addEvent" element={<PrivateZone><AddEvent /></PrivateZone>} />
           <Route path="*" element={<NotFound />} />
           <Route path="/checkoutForm" element={
-            <Elements stripe={stripePromise}>
+            <PrivateZone><Elements stripe={stripePromise}>
               <CheckoutForm />
-            </Elements>
+            </Elements></PrivateZone>
           } />
-          <Route path='/paneladmin' element={<PanelAdmin/>} />
+          <Route path='/paneladmin' element={<AdminZone><PanelAdmin/></AdminZone>} />
           </Routes>
         </BrowserRouter>
       </ChakraProvider>
