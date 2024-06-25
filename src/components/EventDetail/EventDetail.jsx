@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Box, Button, Card, CardBody, CardFooter, CardHeader, Flex, Heading, Text, IconButton, Container, Center } from '@chakra-ui/react';
 import { useParams } from 'react-router-dom';
-import { getById } from '../../features/events/eventSlice';
+import { getById, reset } from '../../features/events/eventSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import Footer from '../Footer/Footer';
 import { TimeIcon } from '@chakra-ui/icons';
@@ -17,7 +17,7 @@ const EventDetail = () => {
         if (id) {
             dispatch(getById(id));
             return () => {
-                dispatch(reset());
+                dispatch(reset);
             };
         }
     }, [id, dispatch]);
