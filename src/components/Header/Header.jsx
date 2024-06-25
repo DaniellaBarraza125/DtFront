@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { logout } from "../../features/auth/authSlice";
 import {
   Box,
@@ -15,7 +15,6 @@ import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 const Header = () => {
   const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { isOpen, onToggle } = useDisclosure();
 
   return (
@@ -51,6 +50,7 @@ const Header = () => {
                 <Link to="/register" style={{ color: 'white' }}>Register</Link>
               </>
             )}
+            <Link to="/checkout">Checkout</Link> {/* Enlace añadido */}
           </HStack>
         </HStack>
       </Flex>
@@ -73,6 +73,7 @@ const Header = () => {
                 <Link to="/register" style={{ color: 'white' }}>Register</Link>
               </>
             )}
+            <Link to="/checkout">Checkout</Link> 
           </VStack>
         </Box>
       )}
