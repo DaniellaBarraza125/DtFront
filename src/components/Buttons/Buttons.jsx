@@ -17,9 +17,9 @@ const Buttons = ({ options, onClick }) => {
 
     return (
         <Box backgroundColor='azulito' display='flex' justifyContent='space-around' padding={1} marginBottom='4' borderRadius='100'>
-            {options.map((option) => (
+            {options.map((option, i) => (
                 <Button
-                    key={option.value.fecha}
+                    key={i}
                     value={option.value}
                     width='50%'
                     borderRadius='100'

@@ -5,7 +5,9 @@ const theme = extendTheme({
         primary: {
             50: "black",
         },
-        secondary: { white: "#ffffff" },
+        secondary: {
+            white: "#ffffff",
+        },
         azulito: "#1E90B5",
     },
     fonts: {
@@ -14,16 +16,25 @@ const theme = extendTheme({
     },
     components: {
         CardElement: {
-          baseStyle: {
-            border: "1px solid",
-            borderColor: "gray.300",
-            borderRadius: "md",
-            padding: "4",
-            boxShadow: "sm",
-          },
+            baseStyle: {
+                border: "1px solid",
+                borderColor: "gray.300",
+                borderRadius: "md",
+                padding: "4",
+                boxShadow: "sm",
+            },
         },
-      },
+    },
+    styles: {
+        global: {
+            body: {
+                color: "black",
+            },
+            a: {
+                color: "black",
+            },
+        },
+    },
 });
 
 export default theme;
-
