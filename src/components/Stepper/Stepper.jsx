@@ -1,24 +1,29 @@
 import React, { useState } from 'react';
-import { Box, Stepper as ChakraStepper,Step,StepIndicator,StepStatus,StepIcon,StepNumber,StepTitle,StepDescription,StepSeparator,Container,Button,FormControl,FormLabel,FormErrorMessage, Input,InputGroup,InputRightElement,Checkbox,CheckboxGroup,Stack,Select,useToast} from '@chakra-ui/react';
+import { Box, Stepper as ChakraStepper,Step,StepIndicator,StepStatus,StepIcon,StepNumber,StepTitle,StepDescription,StepSeparator,Container,Button,FormControl,FormLabel,FormErrorMessage, Input,InputGroup,InputLeftElement,InputRightElement,Checkbox,CheckboxGroup,Stack,Select,useToast} from '@chakra-ui/react';
 import { useDispatch } from 'react-redux';
 import { register } from '../../features/auth/authSlice';
+import { LuImagePlus } from "react-icons/lu";
+import "./Stepper.scss";
 
 const steps = [
-    { title: 'First', description: 'Contacto' },
-    { title: 'Second', description: 'Empresa' },
-    { title: 'Third', description: 'Intereses' },
+    { title: 'Cuenta'},
+    { title: 'Datos personales'},
+    { title: 'Empresa' },
+    { title: 'Extras' },
 ];
 
 const Stepper = () => {
     const initialFormValues = {
         
+        email: '',
+        password: '',
         nombre: '',
         apellido: '',
-        email: '',
-        linkedin: '',
+        image_path:'',
         nombre_empresa: '',
         puesto_trabajo: '',
-        password: '',
+        linkedin: '',
+        
         pais: '',
         objectives: [],
         otherObjective: '',
@@ -113,15 +118,18 @@ const Stepper = () => {
 
         switch (activeStep) {
             case 0:
-                isValid = formValues.nombre !== '' && formValues.apellido !== '' && formValues.email !== '' && formValues.password !== '';
+                isValid = formValues.email !== '' && formValues.password !== '';
                 if (isValid && !validateEmail(formValues.email)) {
                     isValid = false;
                 }
                 break;
             case 1:
-                isValid = formValues.country !== '' && formValues.company !== '' && formValues.sector !== '';
+                isValid = formValues.nombre !== '' && formValues.apellido !== '' && formValues.image_path !== '';
                 break;
             case 2:
+                isValid = formValues.nombre_empresa !== '' && formValues.puesto_trabajo !== '' && formValues.linkedin !=='';
+                break;
+            case 3:
                 isValid = formValues.objectives.length > 0 && (formValues.objectives.includes('Otro') ? formValues.otherObjective !== '' : true) && formValues.experience !== '' && formValues.clientType !== '' && formValues.interests.length > 0;
                 break;
             default:
@@ -173,49 +181,12 @@ const Stepper = () => {
                     </ChakraStepper>
                 </Box>
 
-                <Box mt={4} display="flex" justifyContent="flex-end">
-                    {activeStep > 0 && (
-                        <Button mr={4} onClick={handlePrev}>
-                            Anterior
-                        </Button>
-                    )}
-                    {activeStep < steps.length - 1 && (
-                        <Button colorScheme="teal" onClick={handleNext} disabled={isSubmitting}>
-                            Siguiente
-                        </Button>
-                    )}
-                    {activeStep === steps.length - 1 && (
-                        <Button colorScheme="teal" onClick={handleSubmit} disabled={isSubmitting} isLoading={isSubmitting}>
-                            Enviar
-                        </Button>
-                    )}
-                </Box>
             </Container>
 
             <Container maxW="container.md" p={4} display={activeStep === 0 ? 'block' : 'none'}>
-                <Box borderWidth="1px" borderRadius="lg" p={4}>
-
-                    <FormControl isRequired mt={4}>
-                        <FormLabel>Nombre</FormLabel>
-                        <Input
-                            name='nombre'
-                            value={formValues.nombre}
-                            onChange={handleChange}
-                            placeholder='Ramón'
-                        />
-                    </FormControl>
-
-                    <FormControl isRequired mt={4}>
-                        <FormLabel>Apellidos</FormLabel>
-                        <Input
-                            name='apellido'
-                            value={formValues.apellido}
-                            onChange={handleChange}
-                            placeholder='Sánchez'
-                        />
-                    </FormControl>
-
-                    <FormControl isRequired>
+                <Box>
+                <h2 className='title_info'>Crea tu cuenta</h2>
+                <FormControl isRequired>
                         <FormLabel>Correo</FormLabel>
                         <Input
                             type='email'
@@ -227,44 +198,6 @@ const Stepper = () => {
                         {!validateEmail(formValues.email) && formValues.email !== '' && (
                             <FormErrorMessage>Debe ingresar un correo electrónico válido.</FormErrorMessage>
                         )}
-                    </FormControl>
-
-                    <FormControl isRequired mt={4}>
-                        <FormLabel>Empresa</FormLabel>
-                        <Input
-                            name='nombre_empresa'
-                            value={formValues.company}
-                            onChange={handleChange}
-                            placeholder='Tu empresa'
-                        />
-                    </FormControl>
-
-                    <FormControl isRequired mt={4}>
-                        <FormLabel>Tu sector</FormLabel>
-                        <Select
-                            name='sector'
-                            value={formValues.sector}
-                            onChange={handleChange}
-                            placeholder='Seleccione su sector'
-                        >
-                            <option value='Sector 1'>Sector 1</option>
-                            <option value='Sector 2'>Sector 2</option>
-                
-                        </Select>
-                    </FormControl>
-                </Box>
-            </Container>
-
-            <Container maxW="container.md" p={4} display={activeStep === 1 ? 'block' : 'none'}>
-                <Box borderWidth="1px" borderRadius="lg" p={4}>
-                    <FormControl isRequired>
-                        <FormLabel>País/Región</FormLabel>
-                        <Input
-                            name='country'
-                            value={formValues.country}
-                            onChange={handleChange}
-                            placeholder='País/Región'
-                        />
                     </FormControl>
 
                     <FormControl isRequired mt={4}>
@@ -285,6 +218,56 @@ const Stepper = () => {
                             </InputRightElement>
                         </InputGroup>
                     </FormControl>
+                    
+                </Box>
+            </Container>
+
+            <Container maxW="container.md" p={4} display={activeStep === 1 ? 'block' : 'none'}>
+                <Box borderWidth="1px" borderRadius="lg" p={4}>
+                <h2 className='title_info'>Personaliza tu cuenta</h2>
+                <p className='info'>Ayúdanos a ofrecerte una experiencia unica y a sacar el mayor partido a nuestro evento.</p>
+                <FormControl isRequired mt={4}>
+                        <FormLabel>Nombre</FormLabel>
+                        <Input
+                            name='nombre'
+                            value={formValues.nombre}
+                            onChange={handleChange}
+                            placeholder='Ramón'
+                        />
+                    </FormControl>
+
+                    <FormControl isRequired mt={4}>
+                        <FormLabel>Apellidos</FormLabel>
+                        <Input
+                            name='apellido'
+                            value={formValues.apellido}
+                            onChange={handleChange}
+                            placeholder='Sánchez'
+                        />
+                    </FormControl>
+                    
+                    <FormControl isRequired mt={4}>
+                        <FormLabel>Añadir foto</FormLabel>
+                        <InputGroup>
+                        <Input
+                            name='image_path'
+                            value={formValues.image_path}
+                            onChange={handleChange}
+                            placeholder=''
+                        />
+                        <Box
+                            position="absolute"
+                            top="50%"
+                            left="50%"
+                            transform="translate(-50%, -50%)"
+                            pointerEvents="none"
+                            color="gray.400"
+                        >
+                            <LuImagePlus />
+                        </Box>                       
+                    </InputGroup>
+                    </FormControl>
+
                 </Box>
             </Container>
 
@@ -321,6 +304,40 @@ const Stepper = () => {
                             <FormErrorMessage>Debe seleccionar al menos un objetivo.</FormErrorMessage>
                         )}
                     </FormControl>
+
+                    <FormControl isRequired mt={4}>
+                        <FormLabel>Empresa</FormLabel>
+                        <Input
+                            name='nombre_empresa'
+                            value={formValues.company}
+                            onChange={handleChange}
+                            placeholder='Tu empresa'
+                        />
+                    </FormControl>
+
+                    <FormControl isRequired mt={4}>
+                        <FormLabel>Tu sector</FormLabel>
+                        <Select
+                            name='sector'
+                            value={formValues.sector}
+                            onChange={handleChange}
+                            placeholder='Seleccione su sector'
+                        >
+                            <option value='Sector 1'>Sector 1</option>
+                            <option value='Sector 2'>Sector 2</option>
+                
+                        </Select>
+                    </FormControl>
+
+                    <FormControl isRequired>
+                        <FormLabel>País/Región</FormLabel>
+                        <Input
+                            name='country'
+                            value={formValues.country}
+                            onChange={handleChange}
+                            placeholder='País/Región'
+                        />
+                    </FormControl>
                     <FormControl isRequired mt={4}>
                         <FormLabel>Tipo de cliente</FormLabel>
                         <Input
@@ -355,6 +372,23 @@ const Stepper = () => {
                     </FormControl>
                 </Box>
             </Container>
+            <Box mt={4} display="flex" justifyContent="flex-end">
+                    {activeStep > 0 && (
+                        <Button mr={4} onClick={handlePrev}>
+                            Anterior
+                        </Button>
+                    )}
+                    {activeStep < steps.length - 1 && (
+                        <Button colorScheme="teal" onClick={handleNext} disabled={isSubmitting}>
+                            Siguiente
+                        </Button>
+                    )}
+                    {activeStep === steps.length - 1 && (
+                        <Button colorScheme="teal" onClick={handleSubmit} disabled={isSubmitting} isLoading={isSubmitting}>
+                            Enviar
+                        </Button>
+                    )}
+                </Box>
         </>
     );
 };
