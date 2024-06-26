@@ -49,18 +49,18 @@ const CheckoutForm = () => {
   };
 
   return (
-    <Box maxW="lg" mx="auto" p={6} borderWidth="1px" borderRadius="lg">
-      <Text as="h1" fontSize="xl" mb={4}>Checkout</Text>
+    <Box maxW="lg" mx="auto" p={6} borderWidth="1px" borderRadius="lg" marginTop={50}>
+      <Text as="h1" fontSize="xl" mb={4}>Verifica tu producto:</Text>
       {product && (
         <Box mb={4}>
           <Text as="h2" fontSize="lg" fontWeight="bold">{product.name}</Text>
           <Text>{product.description}</Text>
-          <Text>Price: {(product.prices[0].unit_amount / 100).toFixed(2)} {product.prices[0].currency.toUpperCase()}</Text>
+          <Text>Precio: {(product.prices[0].unit_amount / 100).toFixed(2)} {product.prices[0].currency.toUpperCase()}</Text>
         </Box>
       )}
       <form onSubmit={handleSubmit}>
         <FormControl mb={4}>
-          <FormLabel>Card details</FormLabel>
+          <FormLabel>Detalles de la tarjeta</FormLabel>
           <Box borderWidth="1px" borderRadius="lg" p={4}>
             <CardElement options={{
               style: {
@@ -79,11 +79,11 @@ const CheckoutForm = () => {
           </Box>
         </FormControl>
         <Button type="submit" colorScheme="blue" isLoading={processing} loadingText="Processing..." disabled={!stripe || processing || success}>
-          {processing ? 'Processing...' : 'Pay'}
+          {processing ? 'Processing...' : 'Pagar'}
         </Button>
       </form>
       {error && <Text color="red">{error}</Text>}
-      {success && <Text color="green">Payment Successful!</Text>}
+      {success && <Text color="green">Pago realizado con éxito</Text>}
     </Box>
   );
 };

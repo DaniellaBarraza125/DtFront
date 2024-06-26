@@ -36,7 +36,7 @@ const Products = () => {
 
   return (
     <div>
-      <h1>Products</h1>
+      <h1>Selecciona TU ENTRADA</h1>
       <ul>
         {products.map(product => (
           <li key={product.id}>
@@ -44,7 +44,7 @@ const Products = () => {
             <p>{product.description}</p>
             {product.prices.map(price => (
               <div key={price.id}>
-                <p>Price: {(price.unit_amount / 100).toFixed(2)} {price.currency.toUpperCase()}</p>
+                <p>Precio: {(price.unit_amount / 100).toFixed(2)} {price.currency.toUpperCase()}</p>
               </div>
             ))}
             <button onClick={() => handleBuyClick(product)}>Comprar</button>
