@@ -22,6 +22,7 @@ import PrivateZone from "./guards/PrivateZone";
 import AdminZone from "./guards/AdminZone";
 import NotFound from "./components/NotFound/NotFound";
 import AdminScheduleView from "./components/AdminScheduleView/AdminScheduleView";
+import Partners from "./components/Partners/Partners";
 
 
 // Carga tu clave pública de Stripe
@@ -46,6 +47,7 @@ function App() {
           <Route path="/addPartner" element={<PrivateZone><AddPartner /></PrivateZone>} />
           <Route path="/addEvent" element={<PrivateZone><AddEvent /></PrivateZone>} />
           <Route path="*" element={<NotFound />} />
+          <Route path="/partners" element={<PrivateZone><Partners/></PrivateZone>} />
           {/* <Route path="/checkoutForm" element={
             <PrivateZone><Elements stripe={stripePromise}>
               <CheckoutForm />
