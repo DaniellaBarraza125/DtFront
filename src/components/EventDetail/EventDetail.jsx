@@ -15,13 +15,14 @@ const EventDetail = () => {
 
     useEffect(() => {
         if (id) {
+            console.log('id', id);
             dispatch(getById(id));
-            return () => {
-                dispatch(reset);
-            };
         }
+        return () => {
+            dispatch(reset);
+        };
     }, [id, dispatch]);
-
+console.log('event', event);
     if (eventIsLoading) {
         return <div>cargando...</div>;
     }
@@ -36,9 +37,9 @@ const EventDetail = () => {
 
     return (
                 <>                
-                <Container width='100vw' height='80vh' paddingTop='5'>
+                <Container width='100vw' height='80vh' padding='5'>
                         <Box paddingTop='4' paddingBottom='4' textAlign='justify'>
-                            <Heading size='sm'>{event.titulo}</Heading>
+                            <Heading size='xl'>{event.titulo}</Heading>
                         </Box>
                         <Box paddingTop='1' paddingBottom='4' textAlign='justify'>
                             <Text>{event.User.nombre} {event.User.apellido}</Text>
@@ -58,13 +59,13 @@ const EventDetail = () => {
                             </Flex>
 
                         </Box>
-                        <Box paddingTop='4' paddingBottom='4'>
+                        <Box paddingTop='4' w='100%' paddingBottom='4'>
                         <Text>{event.tema}</Text>
 
                         </Box>
                         <Center>
-                        <Box paddingTop='4' paddingBottom='4'>
-                        <Button border='1px'>Me interesa</Button>
+                        <Box w='100%' justifyContent='center' display='flex' paddingTop='4' paddingBottom='4'>
+                        <Button w='90%' border='1px'>Me interesa</Button>
                         </Box>
                         </Center>
                 </Container>
