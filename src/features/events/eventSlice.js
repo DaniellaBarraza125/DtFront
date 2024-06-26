@@ -30,6 +30,7 @@ export const getByDate = createAsyncThunk(
     "event/getByDate",
     async (date, { rejectWithValue }) => {
         try {
+            console.log(date);
             const response = await eventService.getByDate(date);
             return response;
         } catch (error) {

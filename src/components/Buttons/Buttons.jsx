@@ -1,22 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Button } from '@chakra-ui/react';
 
-const Buttons = ({ options }) => {
-    const [activeButton, setActiveButton] = useState(options.length > 0 ? options[0].value : null);
+const Buttons = ({ options, onClick }) => {
+    const [activeButton, setActiveButton] = useState(options[0].value);
 
     const handleClick = (value) => {
-        setActiveButton(value === activeButton ? null : value);
+        setActiveButton(value);
+        if (onClick) {
+            onClick(value);
+        }
     };
 
     useEffect(() => {
-        setActiveButton(options.length > 0 ? options[0].value : null);
+        setActiveButton(options[0].value);
     }, [options]);
 
     return (
         <Box backgroundColor='azulito' display='flex' justifyContent='space-around' padding={1} marginBottom='4' borderRadius='100'>
             {options.map((option) => (
                 <Button
-                    key={option.value}
+                    key={option.value.fecha}
                     value={option.value}
                     width='50%'
                     borderRadius='100'

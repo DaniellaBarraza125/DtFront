@@ -10,7 +10,8 @@ const getById = async (id) => {
     return res.data;
 };
 const getByDate = async (date) => {
-    const res = await axios.get(API_URL + "/date", date);
+    console.log(date);
+    const res = await axios.post(API_URL + "/date", date);
     return res.data;
 };
 
