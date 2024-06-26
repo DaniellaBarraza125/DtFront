@@ -2,6 +2,21 @@
 
 .title_info {
     font-family:"Montserrat", sans-serif;
+    font-weight: 600;
     font-size: 16px;
 
 }
+
+.btn_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn_next {
+    margin-top: 22vh;
+    width: 343px;
+    height: 48px;
+    background-color: #0F8BA0;
+}
+

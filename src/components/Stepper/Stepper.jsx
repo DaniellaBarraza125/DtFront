@@ -172,7 +172,7 @@ const Stepper = () => {
                                     />
                                 </StepIndicator>
                                 <Box flexShrink="0" paddingLeft="4">
-                                    <StepTitle>{step.title}</StepTitle>
+                                    <StepTitle className="info-step">{step.title}</StepTitle>
                                     <StepDescription>{step.description}</StepDescription>
                                 </Box>
                                 {index < steps.length - 1 && <StepSeparator />}
@@ -372,14 +372,14 @@ const Stepper = () => {
                     </FormControl>
                 </Box>
             </Container>
-            <Box mt={4} display="flex" justifyContent="flex-end">
+            <Box className='btn_container' mt={4} display="flex" justifyContent="flex-center">
                     {activeStep > 0 && (
                         <Button mr={4} onClick={handlePrev}>
                             Anterior
                         </Button>
                     )}
                     {activeStep < steps.length - 1 && (
-                        <Button colorScheme="teal" onClick={handleNext} disabled={isSubmitting}>
+                        <Button className='btn_next' colorScheme="teal" onClick={handleNext} disabled={isSubmitting}>
                             Siguiente
                         </Button>
                     )}
