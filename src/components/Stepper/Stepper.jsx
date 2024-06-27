@@ -40,6 +40,7 @@ const Stepper = () => {
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [activeStep, setActiveStep] = useState(0);
+    const activeStepText = steps[activeStep].title;
     const toast = useToast();
     const dispatch = useDispatch();
 
@@ -161,8 +162,8 @@ const Stepper = () => {
     return (
         <>
             <Container maxW="container.sm" mt={4}>
-                <Box className='stepper'>
-                    <ChakraStepper size='sm' index={activeStep} gap='0'>
+                <Box>
+                    <ChakraStepper className='stepper' size='sm' index={activeStep} gap='0'>
                         {steps.map((step, index) => (
                             <Step key={index} gap='0'>
                                 <StepIndicator>
@@ -172,8 +173,10 @@ const Stepper = () => {
                             </Step>
                         ))}
                     </ChakraStepper>
+                    <Box>
+                        {activeStepText}
+                    </Box>
                 </Box>
-
             </Container>
 
             <Container maxW="container.md" p={4} display={activeStep === 0 ? 'block' : 'none'}>
