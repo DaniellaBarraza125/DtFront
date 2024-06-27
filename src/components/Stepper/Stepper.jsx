@@ -161,7 +161,7 @@ const Stepper = () => {
     return (
         <>
             <Container maxW="container.sm" mt={4}>
-                <Box paddingTop='4' marginTop='4'>
+                <Box className='stepper'>
                     <ChakraStepper index={activeStep} orientation="horizontal" height="100px" marginBottom="4">
                         {steps.map((step, index) => (
                             <Step key={index}>
@@ -224,7 +224,7 @@ const Stepper = () => {
             </Container>
 
             <Container maxW="container.md" p={4} display={activeStep === 1 ? 'block' : 'none'}>
-                <Box borderWidth="1px" borderRadius="lg" p={4}>
+                <Box>
                 <h2 className='title_info'>Personaliza tu cuenta</h2>
                 <p className='info'>Ayúdanos a ofrecerte una experiencia unica y a sacar el mayor partido a nuestro evento.</p>
                 <FormControl isRequired mt={4}>
@@ -273,38 +273,9 @@ const Stepper = () => {
             </Container>
 
             <Container maxW="container.md" p={4} display={activeStep === 2 ? 'block' : 'none'}>
-                <Box borderWidth="1px" borderRadius="lg" p={4}>
-                    <FormControl isRequired mt={4} isInvalid={errors.objectives}>
-                        <FormLabel>Objetivos</FormLabel>
-                        <CheckboxGroup colorScheme='teal'>
-                            <Stack>
-                                {objectiveOptions.map((objective) => (
-                                    <Checkbox
-                                        key={objective.id}
-                                        id={objective.id}
-                                        name='objectives'
-                                        value={objective.label}
-                                        isChecked={formValues.objectives.includes(objective.label)}
-                                        onChange={() => handleCheckboxChange('objectives', objective.label)}
-                                    >
-                                        {objective.label}
-                                    </Checkbox>
-                                ))}
-                            </Stack>
-                        </CheckboxGroup>
-                        {formValues.objectives.includes('Otro') && (
-                            <Input
-                                mt={2}
-                                name='otherObjective'
-                                value={formValues.otherObjective}
-                                onChange={handleChange}
-                                placeholder='Especifique otro objetivo'
-                            />
-                        )}
-                        {errors.objectives && (
-                            <FormErrorMessage>Debe seleccionar al menos un objetivo.</FormErrorMessage>
-                        )}
-                    </FormControl>
+                <Box>
+                    <h2 className='title_info'>Personaliza tu cuenta</h2>
+                    <p className='info'>Indica la empresa a la que representas y tu puesto para ayudarte a sacar el máximo partido al networking.</p>
 
                     <FormControl isRequired mt={4}>
                         <FormLabel>Empresa</FormLabel>
@@ -317,7 +288,7 @@ const Stepper = () => {
                     </FormControl>
 
                     <FormControl isRequired mt={4}>
-                        <FormLabel>Tu sector</FormLabel>
+                        <FormLabel>Puesto de trabajo</FormLabel>
                         <Select
                             name='sector'
                             value={formValues.sector}
@@ -329,6 +300,21 @@ const Stepper = () => {
                 
                         </Select>
                     </FormControl>
+
+                    <FormControl isRequired mt={4}>
+                        <FormLabel>Linkedin</FormLabel>
+                        <Input
+                            name='linkedin'
+                            value={formValues.linkedin}
+                            onChange={handleChange}
+                            placeholder='Ejemplo'
+                        />
+                    </FormControl>
+                </Box>
+            </Container>
+
+            <Container maxW="container.md" p={4} display={activeStep === 0 ? 'block' : 'none'}>
+                <Box>
 
                     <FormControl isRequired>
                         <FormLabel>País/Región</FormLabel>
@@ -369,6 +355,37 @@ const Stepper = () => {
                         </CheckboxGroup>
                         {errors.interests && (
                             <FormErrorMessage>Debe seleccionar al menos un interés.</FormErrorMessage>
+                        )}
+                    </FormControl>
+                    <FormControl isRequired mt={4} isInvalid={errors.objectives}>
+                        <FormLabel>Objetivos</FormLabel>
+                        <CheckboxGroup colorScheme='teal'>
+                            <Stack>
+                                {objectiveOptions.map((objective) => (
+                                    <Checkbox
+                                        key={objective.id}
+                                        id={objective.id}
+                                        name='objectives'
+                                        value={objective.label}
+                                        isChecked={formValues.objectives.includes(objective.label)}
+                                        onChange={() => handleCheckboxChange('objectives', objective.label)}
+                                    >
+                                        {objective.label}
+                                    </Checkbox>
+                                ))}
+                            </Stack>
+                        </CheckboxGroup>
+                        {formValues.objectives.includes('Otro') && (
+                            <Input
+                                mt={2}
+                                name='otherObjective'
+                                value={formValues.otherObjective}
+                                onChange={handleChange}
+                                placeholder='Especifique otro objetivo'
+                            />
+                        )}
+                        {errors.objectives && (
+                            <FormErrorMessage>Debe seleccionar al menos un objetivo.</FormErrorMessage>
                         )}
                     </FormControl>
                 </Box>
