@@ -18,7 +18,7 @@ const Header = () => {
   const { isOpen, onToggle } = useDisclosure();
 
   return (
-    <Box bg="primary.50" px={4}>
+    <Box bg="primary.50" px={4} width='100%' position='sticky' top='0' boxShadow="0 4px 8px rgba(0, 0, 0, 0.1)" zIndex="10">
       <Flex h={16} alignItems="center" justifyContent="space-between">
         <IconButton
           size="md"

@@ -41,7 +41,6 @@ function App() {
           <Route path="/eventDetail/:id" element={<PrivateZone><EventDetail/></PrivateZone>} />
           <Route path="/personalInfo" element={<PrivateZone><PersonalInfo/></PrivateZone>} />
           <Route path="/users" element={<PrivateZone><Users/></PrivateZone>}/>
-          <Route path="/footer" element={<Footer/>} />
           <Route path="/addPartner" element={<PrivateZone><AddPartner /></PrivateZone>} />
           <Route path="/addEvent" element={<PrivateZone><AddEvent /></PrivateZone>} />
           <Route path="*" element={<NotFound />} />
@@ -51,7 +50,9 @@ function App() {
             </Elements></PrivateZone>
           } />
           <Route path='/paneladmin' element={<AdminZone><PanelAdmin/></AdminZone>} />
+          {/* <Route path="/footer" element={<Footer/>} /> */}
           </Routes>
+          <Footer />
         </BrowserRouter>
       </ChakraProvider>
     </>
