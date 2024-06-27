@@ -8,8 +8,9 @@ import Partners from '../Partners/Partners';
 const PanelAdmin = () => {
     const { users } = useSelector((state) => state.auth);
 
-    const asistentes = users.filter(user => user.rol === 'Manager');
-    const ponentes = users.filter(user => user.rol === 'Developer');
+    console.log(users);
+    const asistentes = users.filter(user => user.rol === 'user');
+    const ponentes = users.filter(user => user.rol === 'speaker');
 
     return (
         <Box className='panelAdmin' height="90vh" display="flex" flexDirection="column" alignItems="center" padding={5}>

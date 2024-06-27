@@ -10,7 +10,6 @@ const Partners = () => {
   useEffect(() => {
     dispatch(getAllPartners());
   }, [dispatch]);
-console.log(partners);
   if (isLoading) {
     return <p>Loading...</p>;
   }
