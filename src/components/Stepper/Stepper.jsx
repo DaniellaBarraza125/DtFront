@@ -162,21 +162,13 @@ const Stepper = () => {
         <>
             <Container maxW="container.sm" mt={4}>
                 <Box className='stepper'>
-                    <ChakraStepper index={activeStep} orientation="horizontal" height="100px" marginBottom="4">
+                    <ChakraStepper size='sm' index={activeStep} gap='0'>
                         {steps.map((step, index) => (
-                            <Step key={index}>
+                            <Step key={index} gap='0'>
                                 <StepIndicator>
-                                    <StepStatus
-                                        complete={activeStep > index ? <StepIcon /> : <StepNumber />}
-                                        active={activeStep === index ? <StepNumber /> : null}
-                                        incomplete={activeStep < index ? <StepNumber /> : null}
-                                    />
+                                    <StepStatus complete={<StepIcon />} />
                                 </StepIndicator>
-                                <Box flexShrink="0" paddingLeft="4">
-                                    <StepTitle className="info-step">{step.title}</StepTitle>
-                                    <StepDescription>{step.description}</StepDescription>
-                                </Box>
-                                {index < steps.length - 1 && <StepSeparator />}
+                                <StepSeparator _horizontal={{ ml: '0' }} />
                             </Step>
                         ))}
                     </ChakraStepper>
