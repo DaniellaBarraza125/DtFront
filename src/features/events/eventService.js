@@ -20,16 +20,12 @@ const getById = async (id) => {
     return res.data;
 };
 const getByDate = async (date) => {
-<<<<<<< HEAD
     console.log(date);
-    const res = await axios.post(API_URL + "/date", date);
-=======
     const res = await axios.get(API_URL + "/date", date,{
         headers: {
             Authorization: token,
         },
     });
->>>>>>> juancarlos
     return res.data;
 };
 
