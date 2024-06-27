@@ -5,7 +5,7 @@ import PanelInfo from '../PanelInfo/PanelInfo';
 import Users from '../Users/Users';
 import Partners from '../Partners/Partners';
 
-const PanelAdmin = () => {
+const PanelAdmin = ({hideButtons}) => {
     const { users } = useSelector((state) => state.auth);
 
     console.log(users);
@@ -41,7 +41,7 @@ const PanelAdmin = () => {
                         </Box>
                         <Box >
                             {asistentes.length > 0 ? (
-                                <Users users={asistentes} />
+                                <Users hideButtons={true} users={asistentes} />
                             ) : (
                                 <Box textAlign="center" width="100%">No hay asistentes disponibles.</Box>
                             )}
@@ -58,7 +58,7 @@ const PanelAdmin = () => {
                         </Box>
                         <Box >
                             {ponentes.length > 0 ? (
-                                <Users users={ponentes} />
+                                <Users hideButtons={true}  users={ponentes} />
                             ) : (
                                 <Box textAlign="center" width="100%">No hay ponentes disponibles.</Box>
                             )}

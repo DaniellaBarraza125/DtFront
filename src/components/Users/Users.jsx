@@ -7,7 +7,7 @@ import { getUsers } from '../../features/auth/authSlice';
 import Buttons from '../Buttons/Buttons';
 import Footer from '../Footer/Footer';
 
-const Users = ({ propUsers }) => {
+const Users = ({ propUsers, hideButtons }) => {
     const dispatch = useDispatch();
     const { users: stateUsers, isLoading } = useSelector((state) => state.auth);
 
@@ -40,7 +40,7 @@ const Users = ({ propUsers }) => {
                     <Heading size='md'>PROGRAMACIÓN</Heading>
                 </Box>
                 <Box position="sticky" top="0" zIndex="1" backgroundColor="white">
-                    <Buttons options={options}/>
+                   {!hideButtons && <Buttons options={options}/>}
                 </Box>
                 <Box>
                     <Tags tags={tags} />
