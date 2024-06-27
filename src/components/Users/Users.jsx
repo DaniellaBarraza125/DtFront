@@ -1,25 +1,23 @@
-import React, { useEffect } from 'react'
-import { UserCard } from '../UserCard/UserCard'
-import Buttons from '../Buttons/Buttons'
-import { Box, Container } from '@chakra-ui/react';
+import React, { useEffect } from 'react';
+import { UserCard } from '../UserCard/UserCard';
+import { Box, Container, Heading } from '@chakra-ui/react';
 import Tags from '../Tags/Tags';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUsers } from '../../features/auth/authSlice';
+import Buttons from '../Buttons/Buttons';
 import Footer from '../Footer/Footer';
 
-const Users = () => {
-    const dispatch = useDispatch(); 
+const Users = ({ propUsers }) => {
+    const dispatch = useDispatch();
+    const { users: stateUsers, isLoading } = useSelector((state) => state.auth);
 
     useEffect(() => {
-        dispatch(getUsers());
-    }, [dispatch]);
+        if (!propUsers) {
+            dispatch(getUsers());
+        }
+    }, [dispatch, propUsers]);
 
-    const { users, isLoading } = useSelector((state) => state.auth);
-
-    const options = [
-        { value: 'asistentes', label: 'Asistentes' },
-        { value: 'partners', label: 'Partners' }
-    ]; 
+    const users = propUsers || stateUsers;
 
     const tags = [
         { label: 'Todas', count: 10 },
@@ -30,23 +28,32 @@ const Users = () => {
     if (isLoading) {
         return <p>Loading...</p>;
     }
+    const options = [
+        { value: 'Asistentes', label: 'Asistentes' },
+        { value: 'Partners', label: 'Partners' }
+    ];
 
     return (
-        <Box height="100vh" display="flex" flexDirection="column">
-            <Container maxW='md' flex="1" display="flex" flexDirection="column" overflow="hidden">
+        <Box height='65vh' display="flex" flexDirection="column" marginTop={5} width='100%'>
+            <Container flex="1" display="flex" flexDirection="column" overflow="hidden" >
+            <Box padding={3}>
+                    <Heading size='md'>PROGRAMACIÓN</Heading>
+                </Box>
                 <Box position="sticky" top="0" zIndex="1" backgroundColor="white">
-                    <Buttons options={options} />
+                    <Buttons options={options}/>
+                </Box>
+                <Box>
                     <Tags tags={tags} />
                 </Box>
-                <Box flex="1" overflowY="auto" paddingTop="2">
+                <Box width='100%' flex="1" overflowY="auto" paddingTop="2">
                     {users.map((user, i) => (
                         <UserCard key={i} user={user} />
                     ))}
                 </Box>
+                <Footer />
             </Container>
-            <Footer />
         </Box>
-    )
+    );
 }
 
 export default Users;

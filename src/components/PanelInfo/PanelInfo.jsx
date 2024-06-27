@@ -1,28 +1,72 @@
-import { Card, CardBody,Box,Text, Stack, Flex } from '@chakra-ui/react'
-import React from 'react'
+import { Card, CardBody, Box, Text, Heading, Center, Grid, GridItem } from '@chakra-ui/react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUsers } from '../../features/auth/authSlice';
 
 const PanelInfo = () => {
+  const dispatch = useDispatch();
+  const { users, isLoading, error } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    dispatch(getUsers());
+  }, [dispatch]);
+
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>Error: {error}</p>;
+  }
+
   return (
     <Box margin='10'>
-      <Flex justifyContent='space-between'> 
-      <Card width='25%'>
-        <CardBody>
-        <Text>View a summary of all your customers over the last month.</Text>
-        </CardBody>
-        </Card>
-        <Card width='25%'>
-        <CardBody>
-          <Text>View a summary of all your customers over the last month.</Text>
-        </CardBody>
-      </Card>
-      <Card width='25%'>
-        <CardBody>
-          <Text>View a summary of all your customers over the last month.</Text>
-        </CardBody>
-      </Card>
-      </Flex>
+      <Grid templateColumns="repeat(3, 1fr)" gap={6}>
+        <GridItem>
+          <Card width='20vw' maxW='350px'>
+            <CardBody>
+              <Center>
+                <Heading size='xs'>Número de asistentes</Heading>
+              </Center>
+              <Box padding={4}>
+                <Center>
+                  <Text>{users.length}</Text>
+                </Center>
+              </Box>
+            </CardBody>
+          </Card>
+        </GridItem>
+        <GridItem>
+          <Card>
+            <CardBody>
+              <Center>
+                <Heading size='xs'>Número de asistentes</Heading>
+              </Center>
+              <Box padding={4}>
+                <Center>
+                  <Text>{users.length}</Text>
+                </Center>
+              </Box>
+            </CardBody>
+          </Card>
+        </GridItem>
+        <GridItem>
+          <Card>
+            <CardBody>
+              <Center>
+                <Heading size='xs'>Número de asistentes</Heading>
+              </Center>
+              <Box padding={4}>
+                <Center>
+                  <Text>{users.length}</Text>
+                </Center>
+              </Box>
+            </CardBody>
+          </Card>
+        </GridItem>
+      </Grid>
     </Box>
-  )
+  );
 }
 
-export default PanelInfo
+export default PanelInfo;

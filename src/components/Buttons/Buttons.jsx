@@ -35,6 +35,8 @@ const Buttons = ({ options, onClick }) => {
                 </Button>
             ))}
         </Box>
+
+        
     );
 };
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Container, FormControl, Select, Tag, Text } from '@chakra-ui/react';
+import { Box, Container, FormControl, Heading, Select, Tag, Text } from '@chakra-ui/react';
 import SearchBar from '../SearchBar/SearchBar';
 import Event from '../Event/Event';
 import { useDispatch, useSelector } from 'react-redux';
@@ -46,6 +46,9 @@ const Schedule = () => {
     return (
         <>
             <Container maxW='md' height="100vh" overflow="hidden" display="flex" flexDirection="column">
+            <Box padding={3}>
+                    <Heading size='md'>PROGRAMACIÓN</Heading>
+                </Box>
                 <Box position="sticky" top="0" zIndex="1" backgroundColor="white">
                     <Buttons options={options}/>
                     <Box marginBottom={4}>
