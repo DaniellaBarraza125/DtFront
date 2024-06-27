@@ -11,7 +11,6 @@ import {
   HStack,
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
-import { FaCalendarAlt, FaUserShield } from "react-icons/fa";
 
 const Header = () => {
   const { user } = useSelector((state) => state.auth);
