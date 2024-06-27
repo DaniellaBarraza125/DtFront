@@ -10,7 +10,7 @@ const steps = [
     { title: 'Cuenta'},
     { title: 'Datos personales'},
     { title: 'Empresa' },
-    //{ title: 'Extras' },
+    { title: 'Extras' },
 ];
 
 const Stepper = () => {
@@ -24,12 +24,12 @@ const Stepper = () => {
         nombre_empresa: '',
         puesto_trabajo: '',
         linkedin: '',
+        interests: [],
         
         pais: '',
         objectives: [],
         otherObjective: '',
         clientType: '',
-        interests: []
     };
 
     const [formValues, setFormValues] = useState(initialFormValues);
@@ -130,9 +130,9 @@ const Stepper = () => {
             case 2:
                 isValid = formValues.nombre_empresa !== '' && formValues.puesto_trabajo !== '' && formValues.linkedin !=='';
                 break;
-            //case 3:
-                //isValid = formValues.objectives.length > 0 && (formValues.objectives.includes('Otro') ? formValues.otherObjective !== '' : true) && formValues.experience !== '' && formValues.clientType !== '' && formValues.interests.length > 0;
-                //break;
+            case 3:
+                isValid = formValues.objectives.length > 0 && (formValues.objectives.includes('Otro') ? formValues.otherObjective !== '' : true) && formValues.experience !== '' && formValues.clientType !== '' && formValues.interests.length > 0;
+                break;
             default:
                 break;
         }
@@ -289,16 +289,12 @@ const Stepper = () => {
 
                     <FormControl isRequired mt={4}>
                         <FormLabel>Puesto de trabajo</FormLabel>
-                        <Select
-                            name='sector'
-                            value={formValues.sector}
+                        <Input
+                            name='puesto_trabajo'
+                            value={formValues.puesto_trabajo}
                             onChange={handleChange}
-                            placeholder='Seleccione su sector'
-                        >
-                            <option value='Sector 1'>Sector 1</option>
-                            <option value='Sector 2'>Sector 2</option>
-                
-                        </Select>
+                            placeholder='ejemplo'
+                        />
                     </FormControl>
 
                     <FormControl isRequired mt={4}>
@@ -313,29 +309,10 @@ const Stepper = () => {
                 </Box>
             </Container>
 
-            <Container maxW="container.md" p={4} display={activeStep === 0 ? 'block' : 'none'}>
+            <Container maxW="container.md" p={4} display={activeStep === 3 ? 'block' : 'none'}>
                 <Box>
-
-                    <FormControl isRequired>
-                        <FormLabel>País/Región</FormLabel>
-                        <Input
-                            name='country'
-                            value={formValues.country}
-                            onChange={handleChange}
-                            placeholder='País/Región'
-                        />
-                    </FormControl>
-                    <FormControl isRequired mt={4}>
-                        <FormLabel>Tipo de cliente</FormLabel>
-                        <Input
-                            name='clientType'
-                            value={formValues.clientType}
-                            onChange={handleChange}
-                            placeholder='Tipo de cliente'
-                        />
-                    </FormControl>
-
-                    <FormControl mt={4} isInvalid={errors.interests}>
+                    
+                <FormControl mt={4} isInvalid={errors.interests}>
                         <FormLabel>Intereses</FormLabel>
                         <CheckboxGroup colorScheme='teal'>
                             <Stack>
@@ -357,56 +334,19 @@ const Stepper = () => {
                             <FormErrorMessage>Debe seleccionar al menos un interés.</FormErrorMessage>
                         )}
                     </FormControl>
-                    <FormControl isRequired mt={4} isInvalid={errors.objectives}>
-                        <FormLabel>Objetivos</FormLabel>
-                        <CheckboxGroup colorScheme='teal'>
-                            <Stack>
-                                {objectiveOptions.map((objective) => (
-                                    <Checkbox
-                                        key={objective.id}
-                                        id={objective.id}
-                                        name='objectives'
-                                        value={objective.label}
-                                        isChecked={formValues.objectives.includes(objective.label)}
-                                        onChange={() => handleCheckboxChange('objectives', objective.label)}
-                                    >
-                                        {objective.label}
-                                    </Checkbox>
-                                ))}
-                            </Stack>
-                        </CheckboxGroup>
-                        {formValues.objectives.includes('Otro') && (
-                            <Input
-                                mt={2}
-                                name='otherObjective'
-                                value={formValues.otherObjective}
-                                onChange={handleChange}
-                                placeholder='Especifique otro objetivo'
-                            />
-                        )}
-                        {errors.objectives && (
-                            <FormErrorMessage>Debe seleccionar al menos un objetivo.</FormErrorMessage>
-                        )}
-                    </FormControl>
+                    
                 </Box>
             </Container>
             <Box className='btn_container' mt={4} display="flex" justifyContent="flex-center">
-                    {activeStep < steps.length - 1 && (
-                        <Button className='btn_next' colorScheme="teal" onClick={handleNext} disabled={isSubmitting}>
-                            Siguiente
-                        </Button>
-                    )}
-                    {activeStep > 0 && (
-                        <Button className='btn_back' mr={4} onClick={handlePrev}>
-                            Anterior
-                        </Button>
-                    )}
-                    {activeStep === steps.length - 1 && (
-                        <Button colorScheme="teal" onClick={handleSubmit} disabled={isSubmitting} isLoading={isSubmitting}>
-                            Enviar
-                        </Button>
-                    )}
-                </Box>
+                <Button className='btn_next' colorScheme="teal" onClick={activeStep === steps.length - 1 ? handleSubmit : handleNext} disabled={isSubmitting} isLoading={activeStep === steps.length - 1 && isSubmitting}>
+                    {activeStep === steps.length - 1 ? 'Enviar' : 'Siguiente'}
+                </Button>                
+                {activeStep > 0 && (
+                    <Button className='btn_back' mr={4} onClick={handlePrev}>
+                        Anterior
+                    </Button>
+                )}
+            </Box>
         </>
     );
 };
