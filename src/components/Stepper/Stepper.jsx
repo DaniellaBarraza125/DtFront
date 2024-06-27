@@ -214,7 +214,7 @@ const Stepper = () => {
                             />
                             <InputRightElement width='4.5rem'>
                                 <Button h='1.75rem' size='sm' onClick={handlePasswordVisibility}>
-                                    {showPassword ? 'Ocultar' : 'Mostrar'}
+                                    {showPassword ? <FiEyeOff /> : <FiEye />}
                                 </Button>
                             </InputRightElement>
                         </InputGroup>
