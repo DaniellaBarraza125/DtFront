@@ -1,11 +1,10 @@
 import { Box, Button, FormControl, FormLabel, Input, Select, VStack, HStack, Heading, Textarea } from '@chakra-ui/react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const generateTimeOptions = (events, room) => {
   const times = [];
   const reservedTimes = [];
 
-  // Convert a time string (e.g., "09:00am") to minutes since midnight
   const timeToMinutes = (time) => {
     const [hourMinute, suffix] = time.split(/(am|pm)/);
     let [hours, minutes] = hourMinute.split(':').map(Number);
@@ -14,18 +13,17 @@ const generateTimeOptions = (events, room) => {
     return hours * 60 + minutes;
   };
 
-  // Add reserved times for the specified room
   events.forEach(event => {
     if (event.room === room) {
       const start = timeToMinutes(event.startTime);
       const end = timeToMinutes(event.endTime);
-      for (let t = start; t < end; t += 5) { // Cambiado a 5 minutos
+      for (let t = start; t < end; t += 5) { 
         reservedTimes.push(t);
       }
     }
   });
 
-  for (let i = 9 * 12; i <= 24 * 12; i++) { // Cambiado a intervalos de 5 minutos
+  for (let i = 9 * 12; i <= 24 * 12; i++) { 
     const hour = Math.floor(i / 12);
     const minute = (i % 12) * 5;
     const hourFormatted = hour % 12 === 0 ? 12 : hour % 12;
@@ -57,13 +55,20 @@ const AddEvent = () => {
 
   const [events, setEvents] = useState([]);
 
+  useEffect(() => {
+    const storedEvents = JSON.parse(localStorage.getItem('events')) || [];
+    setEvents(storedEvents);
+  }, []);
+
   const handleChange = (e) => {
     const { id, value } = e.target;
     setFormData({ ...formData, [id]: value });
   };
 
   const handleAddEvent = () => {
-    setEvents([...events, formData]);
+    const updatedEvents = [...events, formData];
+    setEvents(updatedEvents);
+    localStorage.setItem('events', JSON.stringify(updatedEvents));
     setFormData({
       title: '',
       description: '',

@@ -1,6 +1,19 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import eventService from "./eventService";
 
+export const createEvent = createAsyncThunk(
+    "event/create",
+    async (_, { rejectWithValue }) => {
+        try {
+            const response = await eventService.createEvent();
+            return response;
+        } catch (error) {
+            console.error(error);
+            return rejectWithValue(error.response.data);
+        }
+    },
+);
+
 export const getAll = createAsyncThunk(
     "event/getAll",
     async (_, { rejectWithValue }) => {
@@ -96,7 +109,10 @@ export const eventSlice = createSlice({
             .addCase(getByDate.rejected, (state, action) => {
                 state.eventsIsLoading = false;
                 state.error = action.payload || action.error.message;
-            });
+            })
+            .addCase(createEvent.fulfilled, (state, action) => {
+                state.events = action.payload.events;
+            })
     },
 });
 
