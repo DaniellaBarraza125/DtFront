@@ -3,9 +3,9 @@ import eventService from "./eventService";
 
 export const createEvent = createAsyncThunk(
     "event/create",
-    async (_, { rejectWithValue }) => {
+    async (event, { rejectWithValue }) => {
         try {
-            const response = await eventService.createEvent();
+            const response = await eventService.createEvent(event);
             return response;
         } catch (error) {
             console.error(error);
@@ -68,8 +68,8 @@ export const eventSlice = createSlice({
         reset: (state) => {
             state.events = [];
             state.event = null;
-            state.eventsIsLoading = false;//-----------
-            state.eventIsLoading = false;//------------
+            state.eventsIsLoading = true;//-----------
+            state.eventIsLoading = true;//------------
             state.error = null;
         },
     },
@@ -112,7 +112,8 @@ export const eventSlice = createSlice({
                 state.error = action.payload || action.error.message;
             })
             .addCase(createEvent.fulfilled, (state, action) => {
-                state.events = action.payload.events;
+                state.eventIsLoading = false
+                state.event = action.payload.event;
             })
     },
 });

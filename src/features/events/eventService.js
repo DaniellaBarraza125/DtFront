@@ -1,8 +1,13 @@
 import axios from "axios";
 const API_URL = "http://localhost:3000/events";
 
-const createEvent = async () => {
-    const res = await axios.post(API_URL + "/");
+const createEvent = async (event) => {
+    const token = localStorage.getItem("token");
+    const res = await axios.post(API_URL + "/",event,{
+        headers: {
+            Authorization: token,
+        },});
+    
     return res.data;
 }
 

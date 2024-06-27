@@ -1,139 +1,3 @@
-// import {
-//   Box,
-//   Button,
-//   FormControl,
-//   FormLabel,
-//   Input,
-//   Select,
-//   VStack,
-//   HStack,
-//   Heading,
-//   Textarea,
-//   RadioGroup,
-//   Radio,
-//   Checkbox,
-//   Wrap,
-//   WrapItem,
-// } from "@chakra-ui/react";
-// import { useState, useEffect } from "react";
-// import axios from "axios";
-// import { useDispatch } from "react-redux";
-// import { createEvent } from "../../features/events/eventSlice";
-
-// const AddEvent = () => {
-
-//   const dispatch = useDispatch()
-
-//   const [formData, setFormData] = useState()
-
-//   const handleChange = (e) => {
-//     const { id, value } = e.target;
-//     setFormData({ ...formData, [id]: value });
-//   };
-
-//   const handleEventTypeChange = (value) => {
-//     setFormData({ ...formData, eventType: value });
-//   };
-
-//   const handleInterestChange = (e) => {
-//     const { value, checked } = e.target;
-//     if (checked) {
-//       setFormData({ ...formData, interes: [...formData.interes, value] });
-//     } else {
-//       setFormData({
-//         ...formData,
-//         interes: formData.interes.filter((interest) => interest !== value),
-//       });
-//     }
-//   };
-
-//   const handleAddEvent = async () => {
-    
-//       // const token = localStorage.getItem("token")
-//       dispatch(createEvent(formData))
-//       console.log(formData)
-
-//       setFormData({
-//       tipo_evento: "Ponencia",
-//       userId: "",
-//       titulo: "",
-//       descripcion: "",
-//       interes: "Accesibilidad",
-//       sala: "",
-//       hora_inicio: "",
-//       hora_fin: "",
-//       tematica: "",
-//       duracion_minutos: 0,
-//       fecha: "",
-//       numero_asistentes: 0
-//       });
-
-     
-//   };
-
-//   return (
-//     <Box
-//       maxW="md"
-//       mx="auto"
-//       mt="10"
-//       p="6"
-//       borderWidth="1px"
-//       borderRadius="lg"
-//       boxShadow="lg"
-//     >
-//       <Heading as="h2" size="md" mb="6" textAlign="center">
-//         Añade un evento
-//       </Heading>
-//       <VStack spacing="4">
-//         <FormControl id="eventType">
-//           <FormLabel>Tipo de evento</FormLabel>
-//           <RadioGroup
-//             onChange={handleEventTypeChange}
-//             value={formData.eventType}
-//           >
-//             <HStack spacing="4">
-//               <Radio value="Ponencia">Ponencia</Radio>
-//               <Radio value="Workshop">Workshop</Radio>
-//               <Radio value="Comida">Comida</Radio>
-//             </HStack>
-//           </RadioGroup>
-//         </FormControl>
-
-//         {formData.eventType === "Comida" ? (
-//           <ComidaForm
-//             formData={formData}
-//             handleChange={handleChange}
-//             generateTimeOptions={generateTimeOptions}
-//             events={events}
-//           />
-//         ) : (
-//           <PonenciaWorkshopForm
-//             formData={formData}
-//             handleChange={handleChange}
-//             generateTimeOptions={generateTimeOptions}
-//             events={events}
-//             handleInterestChange={handleInterestChange}
-//           />
-//         )}
-
-//         <Button
-//           colorScheme="teal"
-//           size="md"
-//           width="auto"
-//           alignSelf="center"
-//           onClick={handleAddEvent}
-//         >
-//           Añadir
-//         </Button>
-//       </VStack>
-//     </Box>
-//   );
-// };
-
-
-// export default AddEvent
-
-
 import { Box, Button, FormControl, FormLabel, Input, Select, VStack, HStack, Heading, Textarea, RadioGroup, Radio, Tag, TagLabel, Wrap, WrapItem } from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
 
@@ -187,7 +51,7 @@ const interesOptions = [
   'Videoconferencia'
 ];
 
-const AddEvent = () => {
+const AddWorkshop = () => {
   const [formData, setFormData] = useState({
     tipo_evento: "Ponencia",
     userId: "",
@@ -212,7 +76,9 @@ const AddEvent = () => {
 
   const handleChange = (e) => {
     const { id, value } = e.target;
+    console.log(id)
     setFormData({ ...formData, [id]: value });
+    
   };
 
   const handleInterestChange = (value) => {
@@ -228,20 +94,19 @@ const AddEvent = () => {
     const updatedEvents = [...events, formData];
     setEvents(updatedEvents);
     localStorage.setItem('events', JSON.stringify(updatedEvents));
-
     setFormData({
-      tipo_evento: "Ponencia",
-      userId: "",
-      titulo: "",
-      descripcion: "",
-      interes: "Accesibilidad",
-      sala: "",
-      hora_inicio: "",
-      hora_fin: "",
-      tematica: "",
-      duracion_minutos: 0,
-      fecha: "",
-      numero_asistentes: 0
+       tipo_evento: "Ponencia",
+    userId: "",
+    titulo: "",
+    descripcion: "",
+    interes: "Accesibilidad",
+    sala: "",
+    hora_inicio: "",
+    hora_fin: "",
+    tematica: "",
+    duracion_minutos: 0,
+    fecha: "",
+    numero_asistentes: 0
     });
   };
 
@@ -271,15 +136,15 @@ const AddEvent = () => {
         </FormControl>
         <FormControl>
           <FormLabel>Ponente</FormLabel>
-          <Input type="text"  id="userId" placeholder="Juan García" value={formData.speaker} onChange={handleChange} />
+          <Input type="text"  id="userId" placeholder="Ejemplo" value={formData.speaker} onChange={handleChange} />
         </FormControl>
-        <FormControl>
+        <FormControl >
           <FormLabel>Título</FormLabel>
-          <Input type="text" id='titulo' placeholder="Tu título" value={formData.titulo} onChange={handleChange} />
+          <Input type="text" id="titulo" placeholder="Ejemplo" value={formData.title} onChange={handleChange} />
         </FormControl>
-        <FormControl>
+        <FormControl >
           <FormLabel>Descripción</FormLabel>
-          <Textarea  id="descripcion" placeholder="Descripción" value={formData.description} onChange={handleChange} />
+          <Textarea id="descripcion" placeholder="Descripción" value={formData.description} onChange={handleChange} />
         </FormControl>
         <FormControl>
           <FormLabel>Intereses</FormLabel>
@@ -328,4 +193,4 @@ const AddEvent = () => {
   );
 };
 
-export default AddEvent;
+export default AddWorkshop;
