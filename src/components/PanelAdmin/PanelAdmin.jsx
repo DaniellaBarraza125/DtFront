@@ -8,7 +8,7 @@ import Partners from '../Partners/Partners';
 const PanelAdmin = ({hideButtons}) => {
     const { users } = useSelector((state) => state.auth);
 
-    console.log(users);
+    // console.log(users);
     const asistentes = users.filter(user => user.rol === 'user');
     const ponentes = users.filter(user => user.rol === 'speaker');
 

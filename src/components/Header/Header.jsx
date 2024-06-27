@@ -184,8 +184,8 @@ const Header = () => {
       </Box>
 
       {isOpen && (
-        <Box className="menulist" pb={4} display={{ md: "block" }}>
-          <VStack as="nav" spacing={4}>
+        <Box className="menulist" pb={4} >
+          <VStack as="nav" bg='black'spacing={4}>
             <Link to="/schedule" style={{ color: 'white' }}>Schedule</Link>
             {user && (
               <>
