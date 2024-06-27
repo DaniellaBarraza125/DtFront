@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import "./App.css";
 import Login from "./components/Login/Login";
 import Header from "./components/Header/Header";
@@ -26,12 +26,22 @@ import NotFound from "./components/NotFound/NotFound";
 // Carga tu clave pública de Stripe
 const stripePromise = loadStripe('pk_test_51PU6292MuIxm52bYvsBX37uZbLNzlaon35wbfpENgxW1ybFytd7Vdz7Pqp2bCvSfPYlcCBNZMBZxvQqtla0GLGV5006fBkWG84');
 
+function Layout({ children }) {
+  const location = useLocation();
+  return (
+    <>
+      {location.pathname !== '/register' && <Header />}
+      {children}
+    </>
+  );
+}
+
 function App() {
   return (
     <>
     <ChakraProvider theme={theme}>
       <BrowserRouter>
-        <Header />
+      <Layout>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
@@ -52,6 +62,7 @@ function App() {
           } />
           <Route path='/paneladmin' element={<AdminZone><PanelAdmin/></AdminZone>} />
           </Routes>
+          </Layout>
         </BrowserRouter>
       </ChakraProvider>
     </>

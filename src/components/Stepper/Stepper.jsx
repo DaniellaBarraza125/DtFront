@@ -3,13 +3,14 @@ import { Box, Stepper as ChakraStepper,Step,StepIndicator,StepStatus,StepIcon,St
 import { useDispatch } from 'react-redux';
 import { register } from '../../features/auth/authSlice';
 import { LuImagePlus } from "react-icons/lu";
+import { FiEye, FiEyeOff } from 'react-icons/fi';
 import "./Stepper.scss";
 
 const steps = [
     { title: 'Cuenta'},
     { title: 'Datos personales'},
     { title: 'Empresa' },
-    { title: 'Extras' },
+    //{ title: 'Extras' },
 ];
 
 const Stepper = () => {
@@ -129,9 +130,9 @@ const Stepper = () => {
             case 2:
                 isValid = formValues.nombre_empresa !== '' && formValues.puesto_trabajo !== '' && formValues.linkedin !=='';
                 break;
-            case 3:
-                isValid = formValues.objectives.length > 0 && (formValues.objectives.includes('Otro') ? formValues.otherObjective !== '' : true) && formValues.experience !== '' && formValues.clientType !== '' && formValues.interests.length > 0;
-                break;
+            //case 3:
+                //isValid = formValues.objectives.length > 0 && (formValues.objectives.includes('Otro') ? formValues.otherObjective !== '' : true) && formValues.experience !== '' && formValues.clientType !== '' && formValues.interests.length > 0;
+                //break;
             default:
                 break;
         }
@@ -187,7 +188,7 @@ const Stepper = () => {
                 <Box>
                 <h2 className='title_info'>Crea tu cuenta</h2>
                 <FormControl isRequired>
-                        <FormLabel>Correo</FormLabel>
+                        <FormLabel className='label '>Correo</FormLabel>
                         <Input
                             type='email'
                             name='email'
@@ -373,14 +374,14 @@ const Stepper = () => {
                 </Box>
             </Container>
             <Box className='btn_container' mt={4} display="flex" justifyContent="flex-center">
-                    {activeStep > 0 && (
-                        <Button mr={4} onClick={handlePrev}>
-                            Anterior
-                        </Button>
-                    )}
                     {activeStep < steps.length - 1 && (
                         <Button className='btn_next' colorScheme="teal" onClick={handleNext} disabled={isSubmitting}>
                             Siguiente
+                        </Button>
+                    )}
+                    {activeStep > 0 && (
+                        <Button className='btn_back' mr={4} onClick={handlePrev}>
+                            Anterior
                         </Button>
                     )}
                     {activeStep === steps.length - 1 && (

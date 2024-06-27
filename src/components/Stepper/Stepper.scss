@@ -1,22 +1,43 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
 .title_info {
+    color: #000;
     font-family:"Montserrat", sans-serif;
+    font-size: 20px;
+    font-style: normal;
     font-weight: 600;
-    font-size: 16px;
+    margin-bottom: 16px;
+}
 
+.label {
+    color: #000;
+    font-family: "Montserrat", sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
 }
 
 .btn_container {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: end;
     align-items: center;
+    position: fixed;
+    bottom: 80px;
+    width: 100%; 
 }
 
 .btn_next {
-    margin-top: 22vh;
     width: 343px;
     height: 48px;
     background-color: #0F8BA0;
+}
+
+.btn_back {
+    width: 343px;
+    height: 48px;
+    margin-left: 15px;
+    margin-top: 20px;
 }
 
