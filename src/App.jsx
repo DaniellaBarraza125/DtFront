@@ -12,7 +12,7 @@ import PersonalInfo from "./components/PersonalInfo/PersonalInfo";
 import theme from "./themes/chakraTheme";
 import Footer from "./components/Footer/Footer";
 import Users from "./components/Users/Users";
-// import { loadStripe } from '@stripe/stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
 import CheckoutForm from './components/CheckoutForm/CheckoutForm';
 import AddPartner from "./components/AddPartner/AddPartner";
 import AddEvent from "./components/AddEvent/AddEvent";
@@ -24,10 +24,13 @@ import NotFound from "./components/NotFound/NotFound";
 import AdminScheduleView from "./components/AdminScheduleView/AdminScheduleView";
 import Partners from "./components/Partners/Partners";
 import PanelInfo from "./components/PanelInfo/PanelInfo";
+import Event from "./components/Event/Event";
+import Products from "./components/Products/Products";
+
 
 
 // Carga tu clave pública de Stripe
-// const stripePromise = loadStripe('pk_test_51PU6292MuIxm52bYvsBX37uZbLNzlaon35wbfpENgxW1ybFytd7Vdz7Pqp2bCvSfPYlcCBNZMBZxvQqtla0GLGV5006fBkWG84');
+const stripePromise = loadStripe('pk_test_51PU6292MuIxm52bYvsBX37uZbLNzlaon35wbfpENgxW1ybFytd7Vdz7Pqp2bCvSfPYlcCBNZMBZxvQqtla0GLGV5006fBkWG84');
 
 function App() {
   return (
@@ -50,11 +53,13 @@ function App() {
           <Route path="*" element={<NotFound />} />
           <Route path="/panelInfo" element={<PanelInfo/>} />
           <Route path="/partners" element={<PrivateZone><Partners/></PrivateZone>} />
-          {/* <Route path="/checkoutForm" element={
-            <PrivateZone><Elements stripe={stripePromise}>
+         
+          <Route path="/products" element={<Products />} />
+          <Route path="/checkoutForm" element={
+            <Elements stripe={stripePromise}>
               <CheckoutForm />
-            </Elements></PrivateZone>
-          } /> */}
+            </Elements>
+          } />
           <Route path='/paneladmin' element={<AdminZone><PanelAdmin/></AdminZone>} />
           <Route path='/adminscheduleview' element={<AdminZone><AdminScheduleView/></AdminZone>} />
 
