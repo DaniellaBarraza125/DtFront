@@ -5,11 +5,12 @@ import PanelInfo from '../PanelInfo/PanelInfo';
 import Users from '../Users/Users';
 import Partners from '../Partners/Partners';
 
-const PanelAdmin = () => {
+const PanelAdmin = ({hideButtons}) => {
     const { users } = useSelector((state) => state.auth);
 
-    const asistentes = users.filter(user => user.rol === 'Manager');
-    const ponentes = users.filter(user => user.rol === 'Developer');
+    console.log(users);
+    const asistentes = users.filter(user => user.rol === 'user');
+    const ponentes = users.filter(user => user.rol === 'speaker');
 
     return (
         <Box className='panelAdmin' height="90vh" display="flex" flexDirection="column" alignItems="center" padding={5}>
@@ -40,7 +41,7 @@ const PanelAdmin = () => {
                         </Box>
                         <Box >
                             {asistentes.length > 0 ? (
-                                <Users users={asistentes} />
+                                <Users hideButtons={true} users={asistentes} />
                             ) : (
                                 <Box textAlign="center" width="100%">No hay asistentes disponibles.</Box>
                             )}
@@ -57,7 +58,7 @@ const PanelAdmin = () => {
                         </Box>
                         <Box >
                             {ponentes.length > 0 ? (
-                                <Users users={ponentes} />
+                                <Users hideButtons={true}  users={ponentes} />
                             ) : (
                                 <Box textAlign="center" width="100%">No hay ponentes disponibles.</Box>
                             )}

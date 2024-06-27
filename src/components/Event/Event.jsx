@@ -10,38 +10,44 @@ const Event = ({ event }) => {
     return <h1>wait</h1>;
   }
 
-  const bdhour = event.hora_inicio;
+  if (!event) {
+    return null; 
+  }
+
+  const bdhour = event?.hora_inicio || '';
   const [hour, minute] = bdhour.split(':');
   const formattedHour = `${hour}:${minute}`;
-console.log(event);
+
   return (
     <>
-      <Box position='relative'>
+      <Box position='relative'width='80vw' paddingTop='10px'marginBottom='10px' >
         <Flex alignItems='center' maxW='md'>
           <Text flexShrink={0} px='4'>
             {formattedHour}
           </Text>
           <Box flex='1'>
-            <Box h='1px' bg='primary.50' mt='-1px' />
+            <Box h='1px' bg='primary.50' mt='-1px' mb='1px'/>
           </Box>
         </Flex>
       </Box>
-      <Stack maxW='md'>
-        <Card borderRadius='15' margin='2' border='2px' direction={{ base: 'row', sm: 'row' }} overflow='hidden' variant='outline'>
+      <Stack width='81vw'>
+        <Card borderRadius='15'  border='1px solid #E2E8F0' direction={{ base: 'row', sm: 'row' }} overflow='hidden' variant='outline' padding='5px' >
           <Stack>
             <Link to={`/eventDetail/${event.id}`}>
               <CardBody key={event.id}>
-                <Heading fontSize='large'>{event.titulo}</Heading>
-                <Text fontSize='sm' py='2'>{event.descripcion}</Text>
-                <Text fontSize='sm' py='2'>{event.hora}</Text>
-                <Text py='2'>Ponente: {event.User?.nombre}</Text>
+                <Heading fontSize='14px'>{event.titulo || 'Sin título'}</Heading>
+                <Text fontSize='12px' py='2'>{event.User?.nombre} {event.User?.apellido } 
+                  <br></br>{event.descripcion || 'Sin descripción'}</Text>  
               </CardBody>
             </Link>
           </Stack>
         </Card>
+        <Box>
+
+        </Box>
       </Stack>
     </>
   );
-}
+};
 
 export default Event;
