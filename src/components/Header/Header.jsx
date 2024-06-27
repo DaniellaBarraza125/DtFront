@@ -141,7 +141,7 @@ const Header = () => {
   const { isOpen, onToggle } = useDisclosure();
 
   return (
-    <Box bg="primary.50" px={4}>
+    <Box bg="primary.50" px={4}height='72px'>
       <Box display="grid" gridTemplateColumns="1fr 1fr 1fr" alignItems="center" h={16}>
         <Box className="logoGrande" display={{ base: "none", md: "block" }} gridColumn="1">
           <Link to="/">{logoGrande}</Link>

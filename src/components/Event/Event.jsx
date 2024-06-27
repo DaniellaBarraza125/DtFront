@@ -13,7 +13,6 @@ const Event = ({ event }) => {
   const bdhour = event.hora_inicio;
   const [hour, minute] = bdhour.split(':');
   const formattedHour = `${hour}:${minute}`;
-console.log(event);
   return (
     <>
       <Box position='relative'>
