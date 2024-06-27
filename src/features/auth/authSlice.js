@@ -68,7 +68,7 @@ export const authSlice = createSlice({
             state.isError = false;
             state.isSuccess = false;
             state.msg = "";
-            state.isLoading = false;
+            state.isLoading = false;//-----------------
         },
     },
     extraReducers: (builder) => {
@@ -80,7 +80,7 @@ export const authSlice = createSlice({
                 state.isSuccess = true;
                 state.isLoading = false;
             })
-            .addCase(login.rejected, (state, action) => {
+            .addCase(login.rejected, (state, action) => {//---------------orden
                 state.msg = action.payload;
                 state.isError = true;
                 state.isLoading = false;
@@ -91,7 +91,7 @@ export const authSlice = createSlice({
             .addCase(logout.fulfilled, (state) => {
                 state.user = null;
                 state.token = "";
-                state.isSuccess = false;
+                state.isSuccess = false; //------------------
                 state.isLoading = false;
             })
             .addCase(register.fulfilled, (state, action) => {
@@ -115,7 +115,7 @@ export const authSlice = createSlice({
             })
             .addCase(getUsers.rejected, (state) => {
                 state.isError = true;
-                state.isLoading = false;
+                state.isLoading = false;//------------falta mensaje
             })
             .addCase(getUsers.pending, (state) => {
                 state.isLoading = true;

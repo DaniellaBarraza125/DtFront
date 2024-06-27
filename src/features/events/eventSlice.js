@@ -42,9 +42,9 @@ export const getByDate = createAsyncThunk(
 
 const initialState = {
     events: [],
-    eventsIsLoading: false,
+    eventsIsLoading: false, //---------------
     event: null,
-    eventIsLoading: false,
+    eventIsLoading: false, //---------------
     error: null,
 };
 
@@ -55,14 +55,14 @@ export const eventSlice = createSlice({
         reset: (state) => {
             state.events = [];
             state.event = null;
-            state.eventsIsLoading = false;
-            state.eventIsLoading = false;
+            state.eventsIsLoading = false;//-----------
+            state.eventIsLoading = false;//------------
             state.error = null;
         },
     },
     extraReducers: (builder) => {
         builder
-            .addCase(getAll.pending, (state) => {
+            .addCase(getAll.pending, (state) => {//-------------------orden
                 state.eventsIsLoading = true;
                 state.error = null;
             })
@@ -84,7 +84,7 @@ export const eventSlice = createSlice({
             })
             .addCase(getById.rejected, (state, action) => {
                 state.eventIsLoading = false;
-                state.error = action.payload || action.error.message;
+                state.error = action.payload || action.error.message;//----------------
             })
             .addCase(getByDate.pending, (state) => {
                 state.eventsIsLoading = true;
