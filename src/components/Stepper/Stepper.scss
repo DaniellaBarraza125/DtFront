@@ -4,6 +4,48 @@
     color:#0F8BA0;
 }
 
+.container_login {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+}
+
+.info_login {
+    font-family: "Montserrat", sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+}
+
+.btn_login {
+    margin-left: 10px;
+    padding: 0 8px;;
+    border-radius: 80px;
+    border: 1px solid #666;
+}
+
+.spam {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.spam-image {
+    margin-top: 65px;
+    margin-bottom: 30px;
+}
+
+.spam_info {
+    font-family: "Montserrat", sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    width: 245px;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
 .title_info {
     color: #000;
     font-family:"Montserrat", sans-serif;
@@ -14,7 +56,7 @@
 }
 
 .info {
-    font-family: Montserrat;
+    font-family: "Montserrat", sans-serif;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;

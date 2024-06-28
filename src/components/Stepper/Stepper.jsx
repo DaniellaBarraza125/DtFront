@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { register } from '../../features/auth/authSlice';
 import { LuImagePlus } from "react-icons/lu";
 import { FiEye, FiEyeOff } from 'react-icons/fi';
+import Logotipo from "../../assets/Images/Logotipo.png"
 import "./Stepper.scss";
 
 const steps = [
@@ -181,8 +182,16 @@ const Stepper = () => {
 
             <Container maxW="container.md" p={4} display={activeStep === 0 ? 'block' : 'none'}>
                 <Box>
-                <h2 className='title_info'>Crea tu cuenta</h2>
-                <FormControl isRequired>
+                    <div className='container_login'>
+                        <p className='info_login'>¿Ya tienes una cuenta?</p>
+                        <button className='btn_login'>Iniciar Sesión</button>
+                    </div>
+                    <div className='spam'>
+                        <img className="spam-image" src={ Logotipo }/>
+                        <p className='spam_info'>Descubre las últimas innovaciones en tecnología educativa.</p>
+                    </div>
+                    <h2 className='title_info'>Crea tu cuenta</h2>
+                    <FormControl isRequired>
                         <FormLabel className='label '>Correo</FormLabel>
                         <Input
                             type='email'
@@ -250,6 +259,7 @@ const Stepper = () => {
                             value={formValues.image_path}
                             onChange={handleChange}
                             placeholder=''
+                            height="80px"
                         />
                         <Box
                             position="absolute"
