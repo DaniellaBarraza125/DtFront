@@ -22,11 +22,7 @@ const Users = ({ propUsers, hideButtons }) => {
     const tags = [
         { label: 'Todas', count: 10 },
         { label: 'platinum', count: 1 },
-        { label: 'Gold', count: 5 },
-        { label: 'Silver', count: 5 },
-
-
-    
+        { label: 'Gold', count: 5 }
     ];
 
     if (isLoading) {
