@@ -64,7 +64,7 @@ const Schedule = () => {
                     </Box>
                     <Tags tags={tags}/>
                 </Box>
-                <Box flex="1" overflowY="auto"width='343px'>
+                <Box flex="1" overflowY="auto"width='100%'>
                     {events.map((event, i) => (
                         <Event key={i} event={event} />
                     ))}
