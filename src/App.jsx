@@ -26,8 +26,6 @@ import Partners from "./components/Partners/Partners";
 import PanelInfo from "./components/PanelInfo/PanelInfo";
 import Event from "./components/Event/Event";
 import Products from "./components/Products/Products";
-import AddMeal from "./components/AddMeal/AddMeal";
-import AddWorkshop from "./components/AddWorkshop/AddWorkshop";
 
 
 
@@ -49,8 +47,6 @@ function App() {
           <Route path="/eventDetail/:id" element={<PrivateZone><EventDetail/></PrivateZone>} />
           <Route path="/personalInfo" element={<PrivateZone><PersonalInfo/></PrivateZone>} />
           <Route path="/users" element={<Users/>}/>
-          <Route path="/addWorkshop" element={<AddWorkshop/>}/>
-          <Route path="/addMeal" element={<AddMeal/>}/>
           <Route path="/footer" element={<Footer/>} />
           <Route path="/addPartner" element={<PrivateZone><AddPartner /></PrivateZone>} />
           <Route path="/addEvent" element={<PrivateZone><AddEvent /></PrivateZone>} />

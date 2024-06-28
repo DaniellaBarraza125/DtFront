@@ -6,7 +6,7 @@ const createEvent = async (event) => {
     const res = await axios.post(API_URL + "/",event,{
         headers: {
             Authorization: token,
-        },});
+        }});
     
     return res.data;
 }

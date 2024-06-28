@@ -53,59 +53,59 @@ export const getByDate = createAsyncThunk(
     },
 );
 
-const initialState = {
-    events: [],
-    eventsIsLoading: false, //---------------
-    event: null,
-    eventIsLoading: false, //---------------
-    error: null,
-};
 
 export const eventSlice = createSlice({
     name: "event",
-    initialState,
+    initialState: { 
+        events: [],
+        status: null,
+        error: null,
+        eventsIsLoading: false, //---------------
+        event: null,
+        eventIsLoading: false, //---------------
+    },
     reducers: {
         reset: (state) => {
             state.events = [];
-            state.event = null;
-            state.eventsIsLoading = true;//-----------
-            state.eventIsLoading = true;//------------
+            // state.event = null;
+            state.eventsIsLoading = true;
+            state.eventIsLoading = true;
             state.error = null;
         },
     },
     extraReducers: (builder) => {
         builder
-            .addCase(getAll.pending, (state) => {//-------------------orden
-                state.eventsIsLoading = true;
-                state.error = null;
-            })
             .addCase(getAll.fulfilled, (state, action) => {
                 state.events = action.payload.events;
                 state.eventsIsLoading = false;
+            })
+            .addCase(getAll.pending, (state) => {
+                state.eventsIsLoading = true;
+                state.error = null;
             })
             .addCase(getAll.rejected, (state, action) => {
                 state.eventsIsLoading = false;
                 state.error = action.payload || action.error.message;
             })
-            .addCase(getById.pending, (state) => {
-                state.eventIsLoading = true;
-                state.error = null;
-            })
             .addCase(getById.fulfilled, (state, action) => {
                 state.event = action.payload.event;
                 state.eventIsLoading = false;
+            })
+            .addCase(getById.pending, (state) => {
+                state.eventIsLoading = true;
+                state.error = null;
             })
             .addCase(getById.rejected, (state, action) => {
                 state.eventIsLoading = false;
                 state.error = action.payload || action.error.message;//----------------
             })
-            .addCase(getByDate.pending, (state) => {
-                state.eventsIsLoading = true;
-                state.error = null;
-            })
             .addCase(getByDate.fulfilled, (state, action) => {
                 state.events = action.payload.events;
                 state.eventsIsLoading = false;
+            })
+            .addCase(getByDate.pending, (state) => {
+                state.eventsIsLoading = true;
+                state.error = null;
             })
             .addCase(getByDate.rejected, (state, action) => {
                 state.eventsIsLoading = false;
@@ -113,8 +113,15 @@ export const eventSlice = createSlice({
             })
             .addCase(createEvent.fulfilled, (state, action) => {
                 state.eventIsLoading = false
-                state.event = action.payload.event;
+                state.events = action.payload.event;
             })
+            .addCase(createEvent.pending, (state) => {
+                state.status = "loading";
+            })
+            .addCase(createEvent.rejected, (state, action) => {
+            state.status = "failed";
+            state.error = action.payload;
+            });
     },
 });
 
