@@ -164,19 +164,23 @@ const Stepper = () => {
         <>
             <Container maxW="container.sm" mt={4}>
                 <Box>
-                    <ChakraStepper className='stepper' size='sm' index={activeStep} gap='0'>
-                        {steps.map((step, index) => (
-                            <Step key={index} gap='0'>
-                                <StepIndicator>
-                                    <StepStatus complete={<StepIcon />} />
-                                </StepIndicator>
-                                <StepSeparator _horizontal={{ ml: '0' }} />
-                            </Step>
-                        ))}
-                    </ChakraStepper>
-                    <Box>
-                        {activeStepText}
-                    </Box>
+                    {activeStep > 0 && (
+                        <>
+                            <ChakraStepper className='stepper' size='sm' index={activeStep} gap='0'>
+                                {steps.map((step, index) => (
+                                    <Step key={index} gap='0'>
+                                        <StepIndicator>
+                                            <StepStatus complete={<StepIcon />} />
+                                        </StepIndicator>
+                                        <StepSeparator _horizontal={{ ml: '0' }} />
+                                    </Step>
+                                ))}
+                            </ChakraStepper>
+                            <Box>
+                                {activeStepText}
+                            </Box>
+                        </>
+                    )}
                 </Box>
             </Container>
 
