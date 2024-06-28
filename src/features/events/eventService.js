@@ -8,7 +8,6 @@ const createEvent = async () => {
 
 const getAll = async () => {
     const token = localStorage.getItem("token");
-
     const res = await axios.get(API_URL + "/", {
         headers: {
             Authorization: token,
@@ -28,8 +27,7 @@ const getById = async (id) => {
 };
 const getByDate = async (date) => {
     const token = localStorage.getItem("token");
-
-    const res = await axios.get(API_URL + "/date", date, {
+    const res = await axios.get(API_URL + "/fecha/"+ date,{
         headers: {
             Authorization: token,
         },

@@ -42,12 +42,25 @@ const getUsers = async () => {
 
     return res.data;
 };
+const getUsersByRole = async (role) => {
+    const token = localStorage.getItem("token");
+
+    const res = await axios.get(API_URL + "/role/" + role, {
+        headers: {
+            Authorization: token,
+        },
+    });
+
+    return res.data;
+
+}
 
 const authService = {
     login,
     logout,
     register,
     getUsers,
+    getUsersByRole,
 };
 
 export default authService;
