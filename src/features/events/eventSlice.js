@@ -53,6 +53,30 @@ export const getByDate = createAsyncThunk(
         }
     },
 );
+ export const subscribeEvent = createAsyncThunk(
+    "event/subscribe",
+    async (eventId, { rejectWithValue }) => {
+        try {
+            const response = await eventService.subscribeEvent(eventId);
+            return response;
+        } catch (error) {
+            console.error(error);
+            return rejectWithValue(error.response.data);
+        }
+    },
+);
+export const unsubscribeEvent = createAsyncThunk(
+    "event/unsubscribe",
+    async (eventId, { rejectWithValue }) => {
+        try {
+            const response = await eventService.unsubscribeEvent(eventId);
+            return response;
+        } catch (error) {
+            console.error(error);
+            return rejectWithValue(error.response.data);
+        }
+    },
+);
 
 const initialState = {
     events: [],
@@ -74,7 +98,7 @@ export const eventSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            .addCase(getAll.pending, (state) => {//-------------------orden
+            .addCase(getAll.pending, (state) => {
                 state.isLoading = true;
                 state.error = null;
             })
@@ -112,6 +136,28 @@ export const eventSlice = createSlice({
             })
             .addCase(createEvent.fulfilled, (state, action) => {
                 state.events = action.payload.events;
+            })
+            .addCase(subscribeEvent.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.event = action.payload.event;
+            })
+            .addCase(subscribeEvent.pending, (state) => {
+                state.isLoading = true;
+                state.error = null;
+            })
+            .addCase(subscribeEvent.rejected, (state, action) => {
+                state.error = action.payload || action.error.message;
+            })
+            .addCase(unsubscribeEvent.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.event = action.payload.event;
+            })
+            .addCase(unsubscribeEvent.pending, (state) => {
+                state.isLoading = true;
+                state.error = null;
+            })
+            .addCase(unsubscribeEvent.rejected, (state, action) => {
+                state.error = action.payload || action.error.message;
             })
     },
 });
