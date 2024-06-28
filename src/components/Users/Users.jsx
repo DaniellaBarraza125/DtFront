@@ -7,7 +7,7 @@ import { getUsers } from '../../features/auth/authSlice';
 import Buttons from '../Buttons/Buttons';
 import Footer from '../Footer/Footer';
 
-const Users = ({ propUsers, hideButtons }) => {
+const Users = ({ propUsers, hideButtons, hideFooter }) => {
 	const dispatch = useDispatch();
 	const { users: stateUsers, isLoading } = useSelector((state) => state.auth);
 
@@ -38,7 +38,8 @@ const Users = ({ propUsers, hideButtons }) => {
 				<Box position='sticky' top='0' zIndex='1' backgroundColor='white'>
 					{!hideButtons && <Buttons options={options} />}
 				</Box>
-				<Box>
+				<Box  margin='10px' width='305px' height='27px'alignContent='center'
+				>
 					<Tags tags={tags} />
 				</Box>
 				<Box width='100%' flex='1' overflowY='auto' paddingTop='2'>
@@ -52,7 +53,8 @@ const Users = ({ propUsers, hideButtons }) => {
 						</>
 					)}
 				</Box>
-				<Footer />
+				<Footer hideFooter={hideFooter}/>
+		
 			</Container>
 		</Box>
 	);

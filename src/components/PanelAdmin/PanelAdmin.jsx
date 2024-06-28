@@ -5,7 +5,7 @@ import PanelInfo from '../PanelInfo/PanelInfo';
 import Users from '../Users/Users';
 import Partners from '../Partners/Partners';
 
-const PanelAdmin = ({hideButtons}) => {
+const PanelAdmin = ({hideFooter}) => {
     const { users } = useSelector((state) => state.auth);
 
     // console.log(users);

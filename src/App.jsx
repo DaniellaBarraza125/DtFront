@@ -32,7 +32,10 @@ import Products from "./components/Products/Products";
 // Carga tu clave pública de Stripe
 const stripePromise = loadStripe('pk_test_51PU6292MuIxm52bYvsBX37uZbLNzlaon35wbfpENgxW1ybFytd7Vdz7Pqp2bCvSfPYlcCBNZMBZxvQqtla0GLGV5006fBkWG84');
 
+
 function App() {
+
+  const hideFooter = false;
   return (
     <>
     <ChakraProvider theme={theme}>
@@ -63,7 +66,6 @@ function App() {
           <Route path='/adminscheduleview' element={<AdminZone><AdminScheduleView/></AdminZone>} />
           {/* <Route path="/footer" element={<Footer/>} /> */}
           </Routes>
-          <Footer />
         </BrowserRouter>
       </ChakraProvider>
     </>
