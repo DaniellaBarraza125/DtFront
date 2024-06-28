@@ -45,7 +45,7 @@ const Schedule = () => {
 
     return (
         <>
-            <Container maxW='md' height="100vh" overflow="hidden" display="flex" flexDirection="column" width='375px' >
+            <Container maxW='md'  height="100vh" overflow="hidden" display="flex" flexDirection="column" width='375px' >
             <Box padding={3}>
                     <Heading size='md'>PROGRAMACIÓN</Heading>
                 </Box>
