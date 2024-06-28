@@ -36,9 +36,7 @@ const Users = ({ propUsers, hideButtons }) => {
     return (
         <Box height='65vh' display="flex" flexDirection="column" marginTop={5} width='100%'>
             <Container flex="1" display="flex" flexDirection="column" overflow="hidden" >
-            <Box padding={3}>
-                    <Heading size='md'>PROGRAMACIÓN</Heading>
-                </Box>
+       
                 <Box position="sticky" top="0" zIndex="1" backgroundColor="white">
                    {!hideButtons && <Buttons options={options}/>}
                 </Box>
