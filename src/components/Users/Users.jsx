@@ -27,7 +27,7 @@ const Users = () => {
 
 	return (
         <>
-		<Container top='0' w='100%' m='0' padding='0' marginTop='6'>
+		<Container top='0'  height="100vh" w='100%' m='0' padding='0' marginTop='6'>
 			<Buttons options={options} />
             <Tags tags={tags} />
             {isLoading ? <p>Loading...</p> : (

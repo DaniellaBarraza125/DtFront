@@ -2,17 +2,36 @@ import React, { useState, useEffect } from 'react';
 import { Box, Button } from '@chakra-ui/react';
 import { useDispatch } from 'react-redux';
 import { getUsersByRole } from '../../features/auth/authSlice';
+import { getByDate } from '../../features/events/eventSlice';
 
 const Buttons = ({ options }) => {
-    const [activeButton, setActiveButton] = useState('user');
-    const [selectedOption, setSelectedOption] = useState('user');
+    const [activeButton, setActiveButton] = useState(options[0].value);
+    const [selectedOption, setSelectedOption] = useState('');
     const dispatch = useDispatch();
 
     const handleClick = (value) => {
         console.log('value', value);
         setSelectedOption(value);
-        dispatch(getUsersByRole(value));
         setActiveButton(value)
+        switch (true) {
+            case value == 'user':
+                dispatch(getUsersByRole('user'));
+                break;
+            case value == 'speaker':
+                dispatch(getUsersByRole('speaker'));
+                break;
+            case value == '2024-04-20':
+                console.log('2024-04-20 switch');
+                dispatch(getByDate('2024-04-20'));
+                break;
+            case value == '2024-05-15':
+                console.log('2024-05-15 switch');
+                dispatch(getByDate('2024-05-15'));
+                break;
+        
+            default:
+                break;
+        }
     };
 
     return (
@@ -23,12 +42,9 @@ const Buttons = ({ options }) => {
                 value={option.value}
                 width='50%'
                 borderRadius='100'
-                bg={activeButton === option.value ? '#0F8BA0' : 'transparent'}
+                backgroundColor={activeButton === option.value ? '#0F8BA0' : 'transparent'}
                 color={activeButton === option.value ? 'white' : '#191919'}
-                _active={{
-                    bg: activeButton.button === option.value ? '#0F8BA0' : 'transparent',
-                    color: activeButton === option.value ? 'white' : '#191919',
-                }}
+                // variant={activeButton === option.value ? 'solid' : 'outline'}
                 onClick={() => handleClick(option.value)}
             >
                 {option.label}

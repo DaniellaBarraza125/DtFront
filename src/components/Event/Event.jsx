@@ -4,13 +4,12 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 const Event = ({ event }) => {
-  const { eventIsLoading } = useSelector((state) => state.event);
 
-  if (eventIsLoading) {
-    return <h1>wait</h1>;
-  }
   const bdhour = event.hora_inicio;
+  console.log('bdhour', bdhour);
   const [hour, minute] = bdhour.split(':');
+  console.log('hour', hour);
+  console.log('minute', minute);
   const formattedHour = `${hour}:${minute}`;
 
   return (

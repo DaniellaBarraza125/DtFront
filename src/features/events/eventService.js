@@ -2,6 +2,7 @@ import axios from "axios";
 const API_URL = "http://localhost:3000/events";
 
 const getAll = async () => {
+    const token = localStorage.getItem("token");
     const res = await axios.get(API_URL + "/", {
         headers: {
             Authorization: token,
@@ -20,7 +21,8 @@ const getById = async (id) => {
     return res.data;
 };
 const getByDate = async (date) => {
-    const res = await axios.get(API_URL + "/date", date,{
+    const token = localStorage.getItem("token");
+    const res = await axios.get(API_URL + "/fecha/"+ date,{
         headers: {
             Authorization: token,
         },
