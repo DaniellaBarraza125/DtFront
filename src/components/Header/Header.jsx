@@ -141,18 +141,18 @@ const Header = () => {
   const { isOpen, onToggle } = useDisclosure();
 
   return (
-    <Box bg="primary.50" px={4}height='72px'>
-      <Box display="grid" gridTemplateColumns="1fr 1fr 1fr" alignItems="center" h={16}>
-        <Box className="logoGrande" display={{ base: "none", md: "block" }} gridColumn="1">
-          <Link to="/">{logoGrande}</Link>
-        </Box>
+    <Box bg="primary.50" px={4} height="72px">
+    <Box display="grid" gridTemplateColumns="1fr 1fr 1fr" alignItems="center" h={16}>
+      <Box className="logoGrande" display={{ base: "none", md: "block" }} gridColumn="1">
+        <Link to="/">{logoGrande}</Link>
+      </Box>
 
-        <Center>
+      <Center>
         {user?.role === "admin" && (
-          <Box className="iconsAdmin" gridColumn="2" justifyContent='center'>
+          <Box className="iconsAdmin" gridColumn="2" justifyContent="center">
             <HStack display={{ base: "none", md: "flex" }} spacing={8}>
               <Link to="/adminscheduleview">
-                <Box display="flex" flexDirection="column" alignItems="center" justifyContent='center'>
+                <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center">
                   {agenda}
                 </Box>
               </Link>
@@ -164,49 +164,50 @@ const Header = () => {
             </HStack>
           </Box>
         )}
-        </Center>
+      </Center>
 
-        <Box className="burgerIcon" display="flex" alignItems="center" justifyContent="flex-end" gridColumn="3">
-          <Flex flex="1" justifyContent="center" display={{ base: "flex", md: "none" }}>
-            <Link to="/">{logo}</Link>
-          </Flex>
-          <IconButton
-            size="md"
-            icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
-            aria-label="Toggle Navigation"
-            onClick={onToggle}
-            color="secondary.white"
-            background="none"
-            _hover={{ background: 'none' }}
-            _active={{ background: 'none' }}
-          />
-        </Box>
+      <Box className="logo" display={{ base: "flex", md: "none" }} gridColumn="2" justifyContent="center">
+        <Link to="/">{logo}</Link>
       </Box>
 
-      {isOpen && (
-        <Box className="menulist" pb={4} >
-          <VStack as="nav" bg='black'spacing={4}>
-            <Link to="/schedule" style={{ color: 'white' }}>Schedule</Link>
-            {user && (
-              <>
-                <Link to="/profile" style={{ color: 'white' }}>{user.name}</Link>
-                <Text cursor="pointer" onClick={() => dispatch(logout())} style={{ color: 'white' }}>
-                  Logout
-                </Text>
-              </>
-            )}
-            {!user && (
-              <>
-                <Link to="/login" style={{ color: 'white' }}>Login</Link>
-                <Link to="/register" style={{ color: 'white' }}>Register</Link>
-              </>
-            )}
-            <Link to="/checkout" style={{ color: 'white' }}>Checkout</Link>
-          </VStack>
-        </Box>
-      )}
+      <Box className="burgerIcon" display="flex" alignItems="center" justifyContent={{ base: "flex-end", md: "flex-end" }} gridColumn={{ base: "3", md: "3" }} alignSelf="center">
+        <IconButton
+          size="md"
+          icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
+          aria-label="Toggle Navigation"
+          onClick={onToggle}
+          color="secondary.white"
+          background="none"
+          _hover={{ background: 'none' }}
+          _active={{ background: 'none' }}
+        />
+      </Box>
     </Box>
-  );
+
+    {isOpen && (
+      <Box className="menulist" position="absolute" top="72px" left="0" width="100%" bg="black" zIndex="overlay" pb={4}>
+        <VStack as="nav" spacing={'4'} mt={'4'}>
+          <Link to="/schedule" style={{ color: 'white' }}>Schedule</Link>
+          {user && (
+            <>
+              <Link to="/profile" style={{ color: 'white' }}>{user.name}</Link>
+              <Text cursor="pointer" onClick={() => dispatch(logout())} style={{ color: 'white' }}>
+                Logout
+              </Text>
+            </>
+          )}
+          {!user && (
+            <>
+              <Link to="/login" style={{ color: 'white' }}>Login</Link>
+              <Link to="/register" style={{ color: 'white' }}>Register</Link>
+            </>
+          )}
+          <Link to="/checkout" style={{ color: 'white' }}>Checkout</Link>
+        </VStack>
+      </Box>
+    )}
+  </Box>
+);
 };
 
 export default Header;

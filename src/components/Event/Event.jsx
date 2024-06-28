@@ -20,7 +20,7 @@ const Event = ({ event }) => {
 
   return (
     <>
-      <Box position='relative'width='80vw' paddingTop='10px'marginBottom='10px' >
+      <Box position='relative'width='80vw'  maxW='95%'paddingTop='10px'marginBottom='10px' >
         <Flex alignItems='center' maxW='md'>
           <Text flexShrink={0} px='4'>
             {formattedHour}
@@ -30,8 +30,8 @@ const Event = ({ event }) => {
           </Box>
         </Flex>
       </Box>
-      <Stack width='81vw'>
-        <Card borderRadius='15'  border='1px solid #E2E8F0' direction={{ base: 'row', sm: 'row' }} overflow='hidden' variant='outline' padding='5px' >
+      <Stack width='22vw' minW='311px'>
+        <Card borderRadius='15'   border='1px solid #E2E8F0' direction={{ base: 'row', sm: 'row' }} overflow='hidden' variant='outline' padding='5px' >
           <Stack>
             <Link to={`/eventDetail/${event.id}`}>
               <CardBody key={event.id}>

@@ -21,8 +21,8 @@ const Users = ({ propUsers, hideButtons }) => {
 
     const tags = [
         { label: 'Todas', count: 10 },
-        { label: 'One to One', count: 1 },
-        { label: 'Matches', count: 5 }
+        { label: 'platinum', count: 1 },
+        { label: 'Gold', count: 5 }
     ];
 
     if (isLoading) {
@@ -36,8 +36,9 @@ const Users = ({ propUsers, hideButtons }) => {
     return (
         <Box height='65vh' display="flex" flexDirection="column" marginTop={5} width='100%'>
             <Container flex="1" display="flex" flexDirection="column" overflow="hidden" >
-            <Box padding={3}>
+            <Box >
                 </Box>
+       
                 <Box position="sticky" top="0" zIndex="1" backgroundColor="white">
                    {!hideButtons && <Buttons options={options}/>}
                 </Box>

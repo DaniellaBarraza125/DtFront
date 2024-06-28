@@ -45,7 +45,7 @@ const Schedule = () => {
 
     return (
         <>
-            <Container maxW='md' height="100vh" overflow="hidden" display="flex" flexDirection="column" width='375px' >
+            <Container maxW='md'  height="100vh" overflow="hidden" display="flex" flexDirection="column" width='375px' >
             <Box padding={3}>
                     <Heading size='md'>PROGRAMACIÓN</Heading>
                 </Box>
@@ -64,7 +64,7 @@ const Schedule = () => {
                     </Box>
                     <Tags tags={tags}/>
                 </Box>
-                <Box flex="1" overflowY="auto"width='343px'>
+                <Box flex="1" overflowY="auto"width='100%'>
                     {events.map((event, i) => (
                         <Event key={i} event={event} />
                     ))}

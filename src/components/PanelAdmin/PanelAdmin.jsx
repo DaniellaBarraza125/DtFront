@@ -20,9 +20,9 @@ const PanelAdmin = ({hideButtons}) => {
             <Box flex="1" display='flex' justifyContent='center' overflow="hidden" width='100%'>
             <Box className='componentes' bg='#f8f8f8' borderRadius='20px' p={4} m={2} width='70%'>
                     <Flex direction="column">
-                        <Box display="flex" flexDirection="column" alignItems="center" mb={4}>
-                            <Heading as="h2" size="md" textAlign="center" color="primary.50" mb={2}>Partners</Heading>
-                            <Box width="80%">
+                        <Box padding='16px'  display="flex" flexDirection="column" alignItems="left" mb={1}>
+                            <Heading as="h2" size="md" textAlign='left' color="primary.50" mb={2}>Partners</Heading>
+                            <Box width="100%">
                                 <Divider borderColor="black" />
                             </Box>
                         </Box>
@@ -31,11 +31,11 @@ const PanelAdmin = ({hideButtons}) => {
                         </Box>
                     </Flex>
                 </Box>
-                <Box className='componentes' bg='#f8f8f8' borderRadius='20px' p={4} m={2} width='70%'>
+                <Box className='componentes' bg='#f8f8f8' borderRadius='20px' p={4} m={2} width='70%' >
                     <Flex direction="column">
-                        <Box display="flex" flexDirection="column" alignItems="center" mb={4}>
-                            <Heading as="h2" size="md" textAlign="center" color="primary.50" mb={2}>Asistentes</Heading>
-                            <Box width="80%">
+                        <Box  padding='16px'  display="flex" flexDirection="column" alignItems="left" mb={1}>
+                            <Heading as="h2" size="md" textAlign="left" color="primary.50" mb={2}>Asistentes</Heading>
+                            <Box width="100%">
                                 <Divider borderColor="black" />
                             </Box>
                         </Box>
@@ -50,9 +50,9 @@ const PanelAdmin = ({hideButtons}) => {
                 </Box>
                 <Box className='componentes' bg='#f8f8f8' borderRadius='20px' p={4} m={2} width='70%'>
                     <Flex direction="column">
-                        <Box display="flex" flexDirection="column" alignItems="center" mb={4}>
-                            <Heading as="h2" size="md" textAlign="center" color="primary.50" mb={2}>Ponentes</Heading>
-                            <Box width="80%">
+                        <Box padding='16px'  display="flex" flexDirection="column" alignItems="left" mb={1}>
+                            <Heading as="h2" size="md" textAlign="left" color="primary.50" mb={2}>Ponentes</Heading>
+                            <Box width="100%">
                                 <Divider borderColor="black" />
                             </Box>
                         </Box>
