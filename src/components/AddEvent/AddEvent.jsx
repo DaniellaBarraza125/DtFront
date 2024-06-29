@@ -1,4 +1,3 @@
-
 import {
   Box,
   Button,
@@ -18,7 +17,6 @@ import {
   TagLabel,
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
-import axios from "axios";
 import { useDispatch } from "react-redux";
 import { createEvent } from "../../features/events/eventSlice";
 
@@ -73,7 +71,6 @@ const interesOptions = [
 ];
 
 const AddEvent = () => {
-
   const dispatch = useDispatch(); 
 
   const { id } = JSON.parse(localStorage.getItem("user"))
@@ -105,7 +102,7 @@ const AddEvent = () => {
     setFormData({ ...formData, [id]: value });
   };
 
-  const handleInterestChange = (value) => {
+  const handleInteresChange = (value) => {
     setFormData((prevState) => ({
       ...prevState,
       interes: prevState.interes.includes(value) 
@@ -137,25 +134,28 @@ const AddEvent = () => {
     }
   }, [formData.hora_inicio, formData.hora_fin]);
 
-  const handleAddEvent = () => {
-    const token = localStorage.getItem("token");
-    const dispatch = useDispatch();
-    dispatch(createEvent(token, formData));
-
-    setFormData({
-      tipo_evento: "Ponencia",
-      userId: "",
-      titulo: "",
-      descripcion: "",
-      interes: "Accesibilidad",
-      sala: "",
-      hora_inicio: "",
-      hora_fin: "",
-      tematica: "",
-      duracion_minutos: 0,
-      fecha: "",
-      numero_asistentes: 0
-    });
+  const handleAddEvent = async () => {
+    try {
+      // const token = localStorage.getItem("token");
+      await dispatch(createEvent(formData))
+  
+      setFormData({
+        tipo_evento: "Ponencia",
+        userId: id,
+        titulo: "",
+        descripcion: "",
+        interes: "Accesibilidad",
+        sala: "",
+        hora_inicio: "",
+        hora_fin: "",
+        tematica: "",
+        duracion_minutos: 0,
+        fecha: "",
+        numero_asistentes: 0
+      });
+    } catch (error) {
+      console.error("Error al añadir evento", error)
+    }
   };
 
   return (
@@ -182,40 +182,47 @@ const AddEvent = () => {
             </HStack>
           </RadioGroup>
         </FormControl>
-        <FormControl>
-          <FormLabel>Ponente</FormLabel>
-          <Input type="text"  id="userId" placeholder="Juan García" value={formData.userId} onChange={handleChange} />
-        </FormControl>
-        <FormControl>
-          <FormLabel>Título</FormLabel>
-          <Input type="text" id='titulo' placeholder="Tu título" value={formData.titulo} onChange={handleChange} />
-        </FormControl>
+
+        
+        
+        {formData.tipo_evento !== "Comida" && (
+          <>
+            <FormControl>
+              <FormLabel>Título</FormLabel>
+              <Input type="text" id='titulo' placeholder="Tu título" value={formData.titulo} onChange={handleChange} />
+            </FormControl>
+          
+            <FormControl>
+              <FormLabel>Temática</FormLabel>
+              <Input type="text" id='tematica' placeholder="Tu temática" value={formData.tematica} onChange={handleChange} />
+            </FormControl>
+
+            <FormControl>
+              <FormLabel>Intereses</FormLabel>
+              <Wrap>
+                {interesOptions.map((interes) => (
+                  <WrapItem key={interes}>
+                    <Tag
+                      size="lg"
+                      borderRadius="full"
+                      variant={formData.interes.includes(interes) ? "solid" : "outline"}
+                      colorScheme={formData.interes.includes(interes) ? "teal" : "gray"}
+                      onClick={() => handleInteresChange(interes)}
+                      cursor="pointer"
+                    >
+                      <TagLabel>{interes}</TagLabel>
+                    </Tag>
+                  </WrapItem>
+                ))}
+              </Wrap>
+            </FormControl>
+          </>
+        )}
+        
         <FormControl>
           <FormLabel>Descripción</FormLabel>
-          <Textarea  id="descripcion" placeholder="Descripción" value={formData.descripcion} onChange={handleChange} />
+          <Textarea id="descripcion" placeholder="Descripción" value={formData.descripcion} onChange={handleChange} />
         </FormControl>
-
-        {formData.tipo_evento !== "Comida" && (
-          <FormControl>
-            <FormLabel>Intereses</FormLabel>
-            <Wrap>
-              {interesOptions.map((interest) => (
-                <WrapItem key={interest}>
-                  <Tag
-                    size="lg"
-                    borderRadius="full"
-                    variant={formData.interes.includes(interest) ? "solid" : "outline"}
-                    colorScheme={formData.interes.includes(interest) ? "teal" : "gray"}
-                    onClick={() => handleInterestChange(interest)}
-                    cursor="pointer"
-                  >
-                    <TagLabel>{interest}</TagLabel>
-                  </Tag>
-                </WrapItem>
-              ))}
-            </Wrap>
-          </FormControl>
-        )}
 
         <FormControl id="sala">
           <FormLabel>Sala</FormLabel>
@@ -238,10 +245,7 @@ const AddEvent = () => {
             </Select>
           </FormControl>
         </HStack>
-        <FormControl>
-          <FormLabel>Temática</FormLabel>
-          <Input type="text" id='tematica' placeholder="Tu temática" value={formData.tematica} onChange={handleChange} />
-        </FormControl>
+       
         <FormControl>
           <FormLabel>Fecha</FormLabel>
           <Input type="date" id="fecha" placeholder="Fecha" value={formData.fecha} onChange={handleChange} />
