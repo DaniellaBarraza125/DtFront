@@ -298,12 +298,22 @@ const Stepper = () => {
 
                     <FormControl isRequired mt={4}>
                         <FormLabel>Puesto de trabajo</FormLabel>
-                        <Input
-                            name='puesto_trabajo'
+                        <div className='container_work'>
+                        <select className='select_work' name='puesto_trabajo'
                             value={formValues.puesto_trabajo}
-                            onChange={handleChange}
-                            placeholder='ejemplo'
-                        />
+                            onChange={handleChange}>
+                            <option value="Productor de Multimedia Educativa">Productor de Multimedia Educativa</option>
+                            <option value="Desarrollador de Contenidos de e-Learning">Desarrollador de Contenidos de e-Learning</option>
+                            <option value="Coordinador de Programas de e-Learning">Coordinador de Programas de e-Learning</option>
+                            <option value="Analista de Datos Educativos">Analista de Datos Educativos</option>
+                            <option value="Tutor o Facilitador de e-Learning">Tutor o Facilitador de e-Learning</option>
+                            <option value="Consultor de e-Learning">Consultor de e-Learning</option>
+                            <option value="Especialista en LMS">Especialista en LMS</option>
+                            <option value="Diseñador Gráfico para e-Learning">Diseñador Gráfico para e-Learning</option>
+                            <option value="Especialista en Evaluación y Certificación en Línea">Especialista en Evaluación y Certificación en Línea</option>
+                            <option value="Diseñador Instruccional">Diseñador Instruccional</option>
+                        </select>
+                        </div>
                     </FormControl>
 
                     <FormControl isRequired mt={4}>
