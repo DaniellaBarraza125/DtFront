@@ -172,7 +172,7 @@ const Stepper = () => {
                                         <StepIndicator>
                                             <StepStatus complete={<StepIcon />} />
                                         </StepIndicator>
-                                        <StepSeparator _horizontal={{ ml: '0', borderColor: '#0F8BA0' }}  />
+                                        <StepSeparator _horizontal={{ ml: '0' }} />
                                     </Step>
                                 ))}
                             </ChakraStepper>

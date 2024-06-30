@@ -21,6 +21,12 @@ import PanelAdmin from "./components/PanelAdmin/PanelAdmin";
 import PrivateZone from "./guards/PrivateZone";
 import AdminZone from "./guards/AdminZone";
 import NotFound from "./components/NotFound/NotFound";
+import AdminScheduleView from "./components/AdminScheduleView/AdminScheduleView";
+import Partners from "./components/Partners/Partners";
+import PanelInfo from "./components/PanelInfo/PanelInfo";
+import Event from "./components/Event/Event";
+import Products from "./components/Products/Products";
+
 
 
 // Carga tu clave pública de Stripe
@@ -51,16 +57,21 @@ function App() {
           <Route path="/eventDetail/:id" element={<PrivateZone><EventDetail/></PrivateZone>} />
           <Route path="/personalInfo" element={<PrivateZone><PersonalInfo/></PrivateZone>} />
           <Route path="/users" element={<PrivateZone><Users/></PrivateZone>}/>
-          <Route path="/footer" element={<Footer/>} />
           <Route path="/addPartner" element={<PrivateZone><AddPartner /></PrivateZone>} />
           <Route path="/addEvent" element={<PrivateZone><AddEvent /></PrivateZone>} />
           <Route path="*" element={<NotFound />} />
+          <Route path="/panelInfo" element={<PanelInfo/>} />
+          <Route path="/partners" element={<PrivateZone><Partners/></PrivateZone>} />
+         
+          <Route path="/products" element={<Products />} />
           <Route path="/checkoutForm" element={
-            <PrivateZone><Elements stripe={stripePromise}>
+            <Elements stripe={stripePromise}>
               <CheckoutForm />
-            </Elements></PrivateZone>
+            </Elements>
           } />
           <Route path='/paneladmin' element={<AdminZone><PanelAdmin/></AdminZone>} />
+          <Route path='/adminscheduleview' element={<AdminZone><AdminScheduleView/></AdminZone>} />
+          {/* <Route path="/footer" element={<Footer/>} /> */}
           </Routes>
           </Layout>
         </BrowserRouter>
