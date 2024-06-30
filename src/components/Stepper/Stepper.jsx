@@ -172,7 +172,7 @@ const Stepper = () => {
                                         <StepIndicator>
                                             <StepStatus complete={<StepIcon />} />
                                         </StepIndicator>
-                                        <StepSeparator _horizontal={{ ml: '0' }} />
+                                        <StepSeparator _horizontal={{ ml: '0', borderColor: '#0F8BA0' }}  />
                                     </Step>
                                 ))}
                             </ChakraStepper>
@@ -302,6 +302,7 @@ const Stepper = () => {
                         <select className='select_work' name='puesto_trabajo'
                             value={formValues.puesto_trabajo}
                             onChange={handleChange}>
+                            <option value=""></option>    
                             <option value="Productor de Multimedia Educativa">Productor de Multimedia Educativa</option>
                             <option value="Desarrollador de Contenidos de e-Learning">Desarrollador de Contenidos de e-Learning</option>
                             <option value="Coordinador de Programas de e-Learning">Coordinador de Programas de e-Learning</option>
