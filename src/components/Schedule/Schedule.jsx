@@ -45,11 +45,11 @@ const Schedule = () => {
 
     return (
         <>
-            <Container maxW='md' height="100vh" overflow="hidden" display="flex" flexDirection="column">
+            <Container maxW='md'  height="100vh" overflow="hidden" display="flex" flexDirection="column" width='375px' >
             <Box padding={3}>
                     <Heading size='md'>PROGRAMACIÓN</Heading>
                 </Box>
-                <Box position="sticky" top="0" zIndex="1" backgroundColor="white">
+                <Box position="sticky" top="0" zIndex="1" backgroundColor="white" width='343px'>
                     <Buttons options={options}/>
                     <Box marginBottom={4}>
                         <FormControl isRequired mt={4}>
@@ -64,7 +64,7 @@ const Schedule = () => {
                     </Box>
                     <Tags tags={tags}/>
                 </Box>
-                <Box flex="1" overflowY="auto">
+                <Box flex="1" overflowY="auto"width='100%'>
                     {events.map((event, i) => (
                         <Event key={i} event={event} />
                     ))}

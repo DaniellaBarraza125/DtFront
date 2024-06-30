@@ -7,7 +7,7 @@ import { getUsers } from '../../features/auth/authSlice';
 import Buttons from '../Buttons/Buttons';
 import Footer from '../Footer/Footer';
 
-const Users = ({ propUsers }) => {
+const Users = ({ propUsers, hideButtons }) => {
     const dispatch = useDispatch();
     const { users: stateUsers, isLoading } = useSelector((state) => state.auth);
 
@@ -21,8 +21,8 @@ const Users = ({ propUsers }) => {
 
     const tags = [
         { label: 'Todas', count: 10 },
-        { label: 'One to One', count: 1 },
-        { label: 'Matches', count: 5 }
+        { label: 'platinum', count: 1 },
+        { label: 'Gold', count: 5 }
     ];
 
     if (isLoading) {
@@ -36,11 +36,9 @@ const Users = ({ propUsers }) => {
     return (
         <Box height='65vh' display="flex" flexDirection="column" marginTop={5} width='100%'>
             <Container flex="1" display="flex" flexDirection="column" overflow="hidden" >
-            <Box padding={3}>
-                    <Heading size='md'>PROGRAMACIÓN</Heading>
-                </Box>
+       
                 <Box position="sticky" top="0" zIndex="1" backgroundColor="white">
-                    <Buttons options={options}/>
+                   {!hideButtons && <Buttons options={options}/>}
                 </Box>
                 <Box>
                     <Tags tags={tags} />
