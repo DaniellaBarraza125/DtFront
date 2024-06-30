@@ -21,13 +21,18 @@ const Stepper = () => {
         password: '',
         nombre: '',
         apellido: '',
+        pais: '',
+        direccion: '',
+        codigo_postal: '',
+        poblacion: '',
+        provincia: '',
+        telefono: '',
         image_path:'',
         nombre_empresa: '',
         puesto_trabajo: '',
         linkedin: '',
         interests: [],
         
-        pais: '',
         objectives: [],
         otherObjective: '',
         clientType: '',
@@ -241,7 +246,7 @@ const Stepper = () => {
                             name='nombre'
                             value={formValues.nombre}
                             onChange={handleChange}
-                            placeholder='Ramón'
+                            placeholder='Ejemplo'
                         />
                     </FormControl>
 
@@ -251,10 +256,76 @@ const Stepper = () => {
                             name='apellido'
                             value={formValues.apellido}
                             onChange={handleChange}
-                            placeholder='Sánchez'
+                            placeholder='Ejemplo'
+                        />
+                    </FormControl>
+
+                    <FormControl isRequired mt={4}>
+                        <FormLabel>País</FormLabel>
+                        <div className='container_work'>
+                        <select className='select_work' name='pais'
+                            value={formValues.pais}
+                            onChange={handleChange}>
+                            <option value=""></option>    
+                            <option value="">España</option>
+                            <option value="">Francia</option>
+                            <option value="">UK</option>
+                            <option value="">Alemania</option>
+                            <option value="">Canada</option>
+                        </select>
+                        </div>
+                    </FormControl>
+
+                    <FormControl isRequired mt={4}>
+                        <FormLabel>Dirección</FormLabel>
+                        <Input
+                            name='direccion'
+                            value={formValues.direccion}
+                            onChange={handleChange}
+                            placeholder='Ejemplo'
                         />
                     </FormControl>
                     
+                    <FormControl isRequired mt={4}>
+                        <FormLabel>Código postal / ZIP</FormLabel>
+                        <Input
+                            name='codigo_postal'
+                            value={formValues.codigo_postal}
+                            onChange={handleChange}
+                            placeholder='Ejemplo'
+                        />
+                    </FormControl>
+
+                    <FormControl isRequired mt={4}>
+                        <FormLabel>Población</FormLabel>
+                        <Input
+                            name='poblacion'
+                            value={formValues.poblacion}
+                            onChange={handleChange}
+                            placeholder='Ejemplo'
+                        />
+                    </FormControl>
+
+                    <FormControl isRequired mt={4}>
+                        <FormLabel>Provincia</FormLabel>
+                        <Input
+                            name='provincia'
+                            value={formValues.provincia}
+                            onChange={handleChange}
+                            placeholder='Ejemplo'
+                        />
+                    </FormControl>
+
+                    <FormControl isRequired mt={4}>
+                        <FormLabel>Teléfono</FormLabel>
+                        <Input
+                            name='telefono'
+                            value={formValues.telefono}
+                            onChange={handleChange}
+                            placeholder='Ejemplo'
+                        />
+                    </FormControl>
+
                     <FormControl isRequired mt={4}>
                         <FormLabel>Añadir foto</FormLabel>
                         <InputGroup>
@@ -359,7 +430,7 @@ const Stepper = () => {
             </Container>
             <Box className='btn_container' mt={4} display="flex" justifyContent="flex-center">
                 <Button className='btn_next' colorScheme="teal" onClick={activeStep === steps.length - 1 ? handleSubmit : handleNext} disabled={isSubmitting} isLoading={activeStep === steps.length - 1 && isSubmitting}>
-                    {activeStep === steps.length - 1 ? 'Enviar' : 'Siguiente'}
+                    {activeStep === 0 ? 'Crear cuenta' : activeStep === steps.length - 1 ? 'Enviar' : 'Siguiente'}
                 </Button>                
                 {activeStep > 0 && (
                     <Button className='btn_back' mr={4} onClick={handlePrev}>
