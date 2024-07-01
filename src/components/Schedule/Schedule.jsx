@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Container, FormControl, Heading, Select, Tag, Text } from '@chakra-ui/react';
-import SearchBar from '../SearchBar/SearchBar';
+import { Box, Container, FormControl, Heading, Select} from '@chakra-ui/react';
 import Event from '../Event/Event';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAll, getByDate } from '../../features/events/eventSlice';
+import { getAll, getByDate, getBySala } from '../../features/events/eventSlice';
 import Footer from '../Footer/Footer';
 import Buttons from '../Buttons/Buttons';
 import Tags from '../Tags/Tags';
 
-const Schedule = () => {
+const Schedule = ({hideFooter}) => {
 	const { isLoading, events } = useSelector((state) => state.event);
 	const dispatch = useDispatch();
 
@@ -18,16 +17,14 @@ const Schedule = () => {
 
 	console.log('events', events);
 
-	const [selectedSala, setSelectedSala] = useState('');
 
 	const handleSalaChange = (e) => {
-		const sala = e.target.value;
-		setSelectedSala(sala);
-		getBySala(sala);
-	};
-
-	const getBySala = (sala) => {
-		console.log(`Sala seleccionada: ${sala}`);
+		if(e.target.value == 'todas'){
+			dispatch(getByDate('2024-05-15'));
+		} else {
+			const sala = e.target.value;
+			dispatch(getBySala(sala));
+		}
 	};
 
 	const options = [
@@ -55,8 +52,9 @@ const Schedule = () => {
                                 name='sala'
                                 onChange={handleSalaChange}
                             >
-                                <option value='sala1'>Sala Principal - La font blanca</option>
-                                <option value='sala2'>Sala 2</option>
+                                <option value='todas'>Todas</option>
+                                <option value='1'>Sala Principal - La font blanca</option>
+                                <option value='2'>Sala 2</option>
                             </Select>
                         </FormControl>
                     </Box>
@@ -73,8 +71,10 @@ const Schedule = () => {
 					</>
 				)}
                 </Box>
+				<Footer hideFooter={hideFooter}/>
+
             </Container>          
-            <Footer/>
+          
         </>
     );
 };
