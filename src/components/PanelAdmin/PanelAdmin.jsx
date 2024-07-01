@@ -52,7 +52,7 @@ const PanelAdmin = ({ hideFooter }) => {
 									<Partners hideButtons={true} hideFooter={true} height='60vh' />
 									<Button
 										width='216px'
-										height='24px'
+										height='10px'
 										padding='30px'
 										borderRadius='80'
 										backgroundColor='#0F8BA0'
@@ -85,7 +85,7 @@ const PanelAdmin = ({ hideFooter }) => {
 						</Box>
 						<Box>
 							{asistentes.length > 0 ? (
-								<Users hideButtons={true} users={asistentes} hideFooter={true} />
+								<Users hideButtons={true} users={asistentes} hideFooter={true} height='60vh'/>
 							) : (
 								<Box textAlign='center' width='100%'>
 									No hay asistentes disponibles.
@@ -106,7 +106,7 @@ const PanelAdmin = ({ hideFooter }) => {
 						</Box>
 						<Box height='30%'>
 							{ponentes.length > 0 ? (
-								<Users hideButtons={true} users={ponentes} hideFooter={true} />
+								<Users hideButtons={true} users={ponentes} hideFooter={true} height='60vh' />
 							) : (
 								<Box textAlign='center' width='100%'>
 									No hay ponentes disponibles.
