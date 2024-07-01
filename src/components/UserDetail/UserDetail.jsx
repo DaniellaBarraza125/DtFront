@@ -32,8 +32,9 @@ if (!userDetail) {
     return null;
 }
 
-const events = userDetail?.Events;
+const events = userDetail?.Events?.filter(event => event.tipo_evento === 'Conference');
 console.log(userDetail);
+const speaker = userDetail?.rol==='speaker';
 
 return (
     <>
@@ -87,7 +88,7 @@ return (
                 <Box className='BoxPonencia' paddingTop='1' paddingBottom='4' textAlign='justify'>
                 <Heading size='16px'>Ponencia</Heading>
                 <Text fontSize="14px">
-                    {events.filter(event => event.tipo_evento === 'Conference').map(filteredEvent => (
+                    {events.map(filteredEvent => (
                     <span key={filteredEvent.id}>
                         <strong>{filteredEvent.titulo}:</strong>
                         <br />
@@ -100,11 +101,12 @@ return (
             )}
             </Box>
             <Center>
-            <Box mt='30px' justifyContent='center' display='flex' paddingRight='16px' paddingLeft='16px' bottom='0'>
+                {speaker && ( <Box mt='30px' justifyContent='center' display='flex' paddingRight='16px' paddingLeft='16px' bottom='0'>
                 <Button w='343px' h='48px' fontSize='16px' fontWeight='600' color='white' borderRadius='80px' bg='#0F8BA0'>
                 Agendar one to one
                 </Button>
-            </Box>
+            </Box>)}
+           
             </Center>
         </Container>
         <Footer />

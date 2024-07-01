@@ -24,7 +24,7 @@ const Event = ({ event }) => {
           </Box>
         </Flex>
       </Box>
-      <Stack width='22vw' minW='311px'>
+      <Stack width='100%' minW='311px'>
         <Card borderRadius='15'   border='1px solid #E2E8F0' direction={{ base: 'row', sm: 'row' }} overflow='hidden' variant='outline' padding='5px' >
           <Stack>
             <Link to={`/eventDetail/${event.id}`}>

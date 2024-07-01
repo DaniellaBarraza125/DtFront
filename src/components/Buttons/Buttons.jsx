@@ -35,14 +35,14 @@ const Buttons = ({ options }) => {
     };
 
     return (
-        <Box backgroundColor='white' display='flex' justifyContent='center' alignItems='center' borderRadius='100' borderWidth='2px' borderColor='#0F8BA0' height='32px' width='335px'>
+        <Box backgroundColor='white' display='flex' justifyContent='center' alignItems='center' borderRadius='100' borderWidth='2px' borderColor='#0F8BA0' height='30px' width='335px'>
         {options.map((option, i) => (
             <Button
                 key={i}
                 value={option.value}
                 width='50%'
                 height='24px'
-                padding='4px'
+                marginTop='-0.5px'
                 borderRadius='100'
                 backgroundColor={activeButton === option.value ? '#0F8BA0' : 'transparent'}
                 color={activeButton === option.value ? 'white' : '#191919'}

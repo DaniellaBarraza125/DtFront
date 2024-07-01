@@ -41,8 +41,8 @@ const Schedule = ({hideFooter}) => {
 	];
 
     return (
-        <>
-            <Container maxW='md'  height="100vh" overflow="hidden" display="flex" flexDirection="column" width='375px' >
+        <Box height="100vh">
+            <Container maxW='md'   overflow="hidden" display="flex" flexDirection="column" width='375px' >
             <Box padding={3}>
                     <Heading size='md'>PROGRAMACIÓN</Heading>
                 </Box>
@@ -72,11 +72,11 @@ const Schedule = ({hideFooter}) => {
 					</>
 				)}
                 </Box>
-				<Footer hideFooter={hideFooter}/>
 
             </Container>          
+				<Footer hideFooter={hideFooter}/>
 
-        </>
+        </Box>
     );
 };
 
