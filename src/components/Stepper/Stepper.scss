@@ -84,19 +84,28 @@
     padding: 10px;
 }
 
+//.interest {
+    //border-radius: 8px;
+    //border: 1px solid var(--Gris-bordes-cards, #A2C0C6);
+    //height: 20px;
+    //padding: 0px 8px;
+//}
+
 .btn_container {
     display: flex;
     flex-direction: column;
     justify-content: end;
     align-items: center;
-    position: fixed;
-    bottom: 40px;
+    //position: fixed; //bien hecho
+    //bottom: 40px; //bien hecho
     width: 100%; 
 }
 
 .btn_next {
     width: 343px;
     height: 48px;
+    margin-top: 60px; //chapuza
+    margin-bottom: 20px;
     background-color: #0F8BA0;
 }
 
@@ -104,6 +113,6 @@
     width: 343px;
     height: 48px;
     margin-left: 15px;
-    margin-top: 20px;
+    margin-bottom: 20px;
 }
 

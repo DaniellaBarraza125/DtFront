@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Stepper as ChakraStepper,Step,StepIndicator,StepStatus,StepIcon,StepNumber,StepTitle,StepDescription,StepSeparator,Container,Button,FormControl,FormLabel,FormErrorMessage, Input,InputGroup,InputLeftElement,InputRightElement,Checkbox,CheckboxGroup,Stack,Select,useToast} from '@chakra-ui/react';
+import { Box, Stepper as ChakraStepper,HStack,Tag,TagLabel,TagLeftIcon,TagRightIcon,TagCloseButton,Step,StepIndicator,StepStatus,StepIcon,StepNumber,StepTitle,StepDescription,StepSeparator,Container,Button,FormControl,FormLabel,FormErrorMessage, Input,InputGroup,InputLeftElement,InputRightElement,Checkbox,CheckboxGroup,Stack,Select,useToast} from '@chakra-ui/react';
 import { useDispatch } from 'react-redux';
 import { register } from '../../features/auth/authSlice';
 import { LuImagePlus } from "react-icons/lu";
@@ -12,6 +12,12 @@ const steps = [
     { title: 'Datos personales'},
     { title: 'Empresa' },
     { title: 'Extras' },
+    { title: 'Extras' },
+    { title: 'Extras' },
+    { title: 'Extras' },
+
+
+
 ];
 
 const Stepper = () => {
@@ -114,6 +120,10 @@ const Stepper = () => {
 
     const interestsOptions = [
         { id: 1, label: 'Interés 1' },
+        { id: 1, label: 'Interés 2' },
+        { id: 1, label: 'Interés 3' },
+        { id: 1, label: 'Interés 4' },
+        { id: 1, label: 'Interés 5' },
     ];
 
     const objectiveOptions = [
@@ -138,8 +148,10 @@ const Stepper = () => {
                 isValid = formValues.nombre_empresa !== '' && formValues.puesto_trabajo !== '' && formValues.linkedin !=='';
                 break;
             case 3:
-                isValid = formValues.objectives.length > 0 && (formValues.objectives.includes('Otro') ? formValues.otherObjective !== '' : true) && formValues.experience !== '' && formValues.clientType !== '' && formValues.interests.length > 0;
+                isValid = formValues.interests.length > 0;
                 break;
+            case 4:
+                //isValid = 
             default:
                 break;
         }
@@ -171,7 +183,7 @@ const Stepper = () => {
                 <Box>
                     {activeStep > 0 && (
                         <>
-                            <ChakraStepper className='stepper' size='sm' index={activeStep} gap='0'>
+                            <ChakraStepper className='stepper' size='sm' index={activeStep} gap='0' colorScheme='teal'>
                                 {steps.map((step, index) => (
                                     <Step key={index} gap='0'>
                                         <StepIndicator>
@@ -267,11 +279,11 @@ const Stepper = () => {
                             value={formValues.pais}
                             onChange={handleChange}>
                             <option value=""></option>    
-                            <option value="">España</option>
-                            <option value="">Francia</option>
-                            <option value="">UK</option>
-                            <option value="">Alemania</option>
-                            <option value="">Canada</option>
+                            <option value="España">España</option>
+                            <option value="Francia">Francia</option>
+                            <option value="UK">UK</option>
+                            <option value="Alemania">Alemania</option>
+                            <option value="Canada">Canada</option>
                         </select>
                         </div>
                     </FormControl>
@@ -401,10 +413,21 @@ const Stepper = () => {
             </Container>
 
             <Container maxW="container.md" p={4} display={activeStep === 3 ? 'block' : 'none'}>
-                <Box>
-                    
-                <FormControl mt={4} isInvalid={errors.interests}>
+                <Box>                  
+                    <FormControl mt={4} isInvalid={errors.interests}>
                         <FormLabel>Intereses</FormLabel>
+                                    
+                        {errors.interests && (
+                            <FormErrorMessage>Debe seleccionar al menos un interés.</FormErrorMessage>
+                        )}
+                    </FormControl>
+                </Box>
+            </Container>
+
+            <Container maxW="container.md" p={4} display={activeStep === 4 ? 'block' : 'none'}>
+                <Box>    
+                    <FormControl mt={4}>
+                        <FormLabel>Alérgenos</FormLabel>
                         <CheckboxGroup colorScheme='teal'>
                             <Stack>
                                 {interestsOptions.map((interest) => (
@@ -421,13 +444,34 @@ const Stepper = () => {
                                 ))}
                             </Stack>
                         </CheckboxGroup>
-                        {errors.interests && (
-                            <FormErrorMessage>Debe seleccionar al menos un interés.</FormErrorMessage>
-                        )}
-                    </FormControl>
-                    
+                    </FormControl>                    
                 </Box>
             </Container>
+
+            <Container maxW="container.md" p={4} display={activeStep === 5 ? 'block' : 'none'}>
+                <Box>    
+                    <FormControl mt={4}>
+                
+                    </FormControl>                    
+                </Box>
+            </Container>
+
+            <Container maxW="container.md" p={4} display={activeStep === 6 ? 'block' : 'none'}>
+                <Box>    
+                    <FormControl mt={4} isInvalid={errors.interests}>
+                
+                    </FormControl>                    
+                </Box>
+            </Container>
+
+            <Container maxW="container.md" p={4} display={activeStep === 7 ? 'block' : 'none'}>
+                <Box>    
+                    <FormControl mt={4}>
+                
+                    </FormControl>                    
+                </Box>
+            </Container>
+
             <Box className='btn_container' mt={4} display="flex" justifyContent="flex-center">
                 <Button className='btn_next' colorScheme="teal" onClick={activeStep === steps.length - 1 ? handleSubmit : handleNext} disabled={isSubmitting} isLoading={activeStep === steps.length - 1 && isSubmitting}>
                     {activeStep === 0 ? 'Crear cuenta' : activeStep === steps.length - 1 ? 'Enviar' : 'Siguiente'}
