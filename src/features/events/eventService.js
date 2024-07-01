@@ -34,12 +34,44 @@ const getByDate = async (date) => {
     });
     return res.data;
 };
+const subscribeEvent = async (eventId) => {
+    const token = localStorage.getItem("token");
+    console.log("token", token);
+    const res = await axios.put(API_URL + "/subscribe/" + eventId,{}, {
+        headers: {
+            Authorization: token,
+        },
+    });
+    return res.data;
+};
+const unsubscribeEvent = async (eventId) => {
+    const token = localStorage.getItem("token");
+    console.log("token", token);
+    const res = await axios.put(API_URL + "/unsubscribe/" + eventId,{}, {
+        headers: {
+            Authorization: token,
+        },
+    });
+    return res.data;
+};
+const getBySala = async (sala) => {
+    const token = localStorage.getItem('token');
+    const res = await axios.get(API_URL + '/sala/' + sala, {
+        headers: {
+            Authorization: token,
+        },
+    });
+    return res.data;
+}
 
 const eventService = {
     getAll,
     getById,
     getByDate,
     createEvent,
+    subscribeEvent,
+    unsubscribeEvent,
+    getBySala,
 };
 
 export default eventService;

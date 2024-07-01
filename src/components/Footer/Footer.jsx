@@ -8,7 +8,6 @@ import { useNavigate } from 'react-router-dom';
 
 const Footer = ({hideFooter}) => {
 	const navigate = useNavigate();
-    const dispatch = useDispatch();
 	const redirect = (to) => {
 		navigate(to);
 	};
