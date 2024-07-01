@@ -9,6 +9,7 @@ import {
   Input,
   VStack,
 } from '@chakra-ui/react';
+import "./Login.scss";
 
 const Login = () => {
   const [formData, setFormData] = useState({
