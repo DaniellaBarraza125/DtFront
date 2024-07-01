@@ -10,7 +10,12 @@ const Products = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/products');
+        const token = localStorage.getItem('token')
+        const response = await axios.get('http://localhost:3000/products', {
+          headers: {
+              Authorization: token,
+          },
+      });
         setProducts(response.data);
         setLoading(false);
       } catch (error) {

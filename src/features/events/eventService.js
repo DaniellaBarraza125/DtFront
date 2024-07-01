@@ -53,6 +53,15 @@ const unsubscribeEvent = async (eventId) => {
         },
     });
     return res.data;
+};
+const getBySala = async (sala) => {
+    const token = localStorage.getItem('token');
+    const res = await axios.get(API_URL + '/sala/' + sala, {
+        headers: {
+            Authorization: token,
+        },
+    });
+    return res.data;
 }
 
 const eventService = {
@@ -62,6 +71,7 @@ const eventService = {
     createEvent,
     subscribeEvent,
     unsubscribeEvent,
+    getBySala,
 };
 
 export default eventService;

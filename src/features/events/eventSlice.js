@@ -43,7 +43,6 @@ export const getById = createAsyncThunk(
 export const getByDate = createAsyncThunk(
     "event/getByDate",
     async (date, { rejectWithValue }) => {
-        console.log('getByDate',date);
         try {
             const response = await eventService.getByDate(date);
             return response;
@@ -70,6 +69,18 @@ export const unsubscribeEvent = createAsyncThunk(
     async (eventId, { rejectWithValue }) => {
         try {
             const response = await eventService.unsubscribeEvent(eventId);
+            return response;
+        } catch (error) {
+            console.error(error);
+            return rejectWithValue(error.response.data);
+        }
+    },
+);
+export const getBySala = createAsyncThunk(
+    "event/getBySala",
+    async (sala, { rejectWithValue }) => {
+        try {
+            const response = await eventService.getBySala(sala);
             return response;
         } catch (error) {
             console.error(error);
@@ -157,6 +168,17 @@ export const eventSlice = createSlice({
                 state.error = null;
             })
             .addCase(unsubscribeEvent.rejected, (state, action) => {
+                state.error = action.payload || action.error.message;
+            })
+            .addCase(getBySala.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.events = action.payload.events;
+            })
+            .addCase(getBySala.pending, (state) => {
+                state.isLoading = true;
+                state.error = null;
+            })
+            .addCase(getBySala.rejected, (state, action) => {
                 state.error = action.payload || action.error.message;
             })
     },
