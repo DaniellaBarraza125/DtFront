@@ -76,6 +76,10 @@ const Stepper = () => {
         return regex.test(email);
     };
 
+    const handleLoginClick = () => {
+        window.location.href = '/login';
+      };
+
     const handleInteresChange = (value) => {
         setFormData((prevState) => ({
           ...prevState,
@@ -223,7 +227,7 @@ const Stepper = () => {
                 <Box>
                     <div className='container_login'>
                         <p className='info_login'>¿Ya tienes una cuenta?</p>
-                        <button className='btn_login'>Iniciar Sesión</button>
+                        <button className='btn_login' onClick={handleLoginClick}>Iniciar Sesión</button>
                     </div>
                     <div className='spam'>
                         <img className="spam-image" src={ Logotipo }/>

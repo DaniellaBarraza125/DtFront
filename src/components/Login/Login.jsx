@@ -68,7 +68,7 @@ const Login = () => {
               <FormErrorMessage>Debe ingresar un correo electrónico válido.</FormErrorMessage>
             )}
           </FormControl>
-          <Button type="submit" colorScheme="teal" mt={3}>
+          <Button className="btn_login" type="submit" colorScheme="teal" mt={4} borderRadius="80px">
             Login
           </Button>
         </VStack>
