@@ -3,7 +3,7 @@ const API_URL = "http://localhost:3000/events";
 
 const createEvent = async (event) => {
     const token = localStorage.getItem("token");
-    const res = await axios.post(API_URL + "/",event,{
+    const res = await axios.post(API_URL + "/" ,event, {
         headers: {
             Authorization: token,
         }});

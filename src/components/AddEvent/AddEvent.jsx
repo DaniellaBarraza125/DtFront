@@ -25,33 +25,26 @@ const generateTimeOptions = (events, room) => {
   const reservedTimes = [];
 
   const timeToMinutes = (time) => {
-    const [hourMinute, suffix] = time.split(/(am|pm)/);
-    let [hours, minutes] = hourMinute.split(':').map(Number);
-    if (suffix === 'pm' && hours !== 12) hours += 12;
-    if (suffix === 'am' && hours === 12) hours = 0;
+    const [hours, minutes] = time.split(':').map(Number);
     return hours * 60 + minutes;
   };
 
   events.forEach(event => {
-    if (event.room === room) {
-      const start = timeToMinutes(event.startTime);
-      const end = timeToMinutes(event.endTime);
+    if (event.sala === room) {
+      const start = timeToMinutes(event.hora_inicio);
+      const end = timeToMinutes(event.hora_fin);
       for (let t = start; t < end; t += 5) { 
         reservedTimes.push(t);
       }
     }
   });
 
-  for (let i = 9 * 12; i <= 24 * 12; i++) { 
-    const hour = Math.floor(i / 12);
-    const minute = (i % 12) * 5;
-    const hourFormatted = hour % 12 === 0 ? 12 : hour % 12;
-    const minuteFormatted = minute.toString().padStart(2, '0');
-    const suffix = hour < 12 || hour === 24 ? 'am' : 'pm';
-    const time = `${hourFormatted.toString().padStart(2, '0')}:${minuteFormatted}${suffix}`;
-    const minutesSinceMidnight = hour * 60 + minute;
-
-    if (!reservedTimes.includes(minutesSinceMidnight)) {
+  for (let i = 9 * 60; i <= 24 * 60; i += 5) { 
+    const hour = Math.floor(i / 60);
+    const minute = i % 60;
+    const time = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
+    
+    if (!reservedTimes.includes(i)) {
       times.push(
         <option key={time} value={time}>
           {time}
@@ -61,6 +54,8 @@ const generateTimeOptions = (events, room) => {
   }
   return times;
 };
+
+
 
 const interesOptions = [
   'Accesibilidad', 'Analítica', 'Antiplagio', 'Certificación', 'Contenidos',
@@ -80,7 +75,7 @@ const AddEvent = () => {
     userId: id,
     titulo: "",
     descripcion: "",
-    interes: "Accesibilidad",
+    interes: [],
     sala: "",
     hora_inicio: "",
     hora_fin: "",
@@ -106,23 +101,21 @@ const AddEvent = () => {
     setFormData((prevState) => ({
       ...prevState,
       interes: prevState.interes.includes(value) 
-        ? prevState.interes.filter((interest) => interest !== value) 
+        ? prevState.interes.filter((interes) => interes !== value) 
         : [...prevState.interes, value]
     }));
   };
 
   const calculateDuration = (startTime, endTime) => {
     const timeToMinutes = (time) => {
-      const [hourMinute, suffix] = time.split(/(am|pm)/);
-      let [hours, minutes] = hourMinute.split(':').map(Number);
-      if (suffix === 'pm' && hours !== 12) hours += 12;
-      if (suffix === 'am' && hours === 12) hours = 0;
+      const [hours, minutes] = time.split(':').map(Number);
       return hours * 60 + minutes;
     };
     const start = timeToMinutes(startTime);
     const end = timeToMinutes(endTime);
     return end > start ? end - start : 0;
   };
+  
 
   useEffect(() => {
     if (formData.hora_inicio && formData.hora_fin) {
@@ -136,15 +129,25 @@ const AddEvent = () => {
 
   const handleAddEvent = async () => {
     try {
-      // const token = localStorage.getItem("token");
-      await dispatch(createEvent(formData))
+      await dispatch(createEvent(formData));
+      
+      const newEvent = {
+        ...formData,
+        startTime: formData.hora_inicio,
+        endTime: formData.hora_fin,
+        room: formData.sala
+      };
+  
+      const updatedEvents = [...events, newEvent];
+      setEvents(updatedEvents);
+      localStorage.setItem('events', JSON.stringify(updatedEvents));
   
       setFormData({
         tipo_evento: "Ponencia",
         userId: id,
         titulo: "",
         descripcion: "",
-        interes: "Accesibilidad",
+        interes: [],
         sala: "",
         hora_inicio: "",
         hora_fin: "",
@@ -154,9 +157,11 @@ const AddEvent = () => {
         numero_asistentes: 0
       });
     } catch (error) {
-      console.error("Error al añadir evento", error)
+      console.error("Error al añadir evento", error);
     }
   };
+  
+  
 
   return (
     <Box 
@@ -227,8 +232,8 @@ const AddEvent = () => {
         <FormControl id="sala">
           <FormLabel>Sala</FormLabel>
           <Select placeholder="Selecciona una sala" value={formData.sala} onChange={handleChange}>
-            <option value="Sala principal - La font blanca">Sala principal - La font blanca</option>
-            <option value="Sala secundaria - Sala Workshop">Sala secundaria - Sala Workshop</option>
+            <option value="1">Sala principal - La font blanca</option>
+            <option value="2">Sala secundaria - Sala Workshop</option>
           </Select>
         </FormControl>
         <HStack spacing="4" width="full">
