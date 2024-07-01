@@ -5,6 +5,7 @@ const token = localStorage.getItem("token") || "";
 const user = JSON.parse(localStorage.getItem("user")) || null;
 
 const initialState = {
+    userDetail: null,
     user: user,
     token: token,
     isError: false,
@@ -59,13 +60,26 @@ export const getUsers = createAsyncThunk("auth/getUsers", async () => {
     }
 });
 
-export const getUsersByRole = createAsyncThunk("auth/getUsersByRole", async (role) => {
-try {
-    return await authService.getUsersByRole(role);
-} catch (error) {
-    console.error(error);
-}
-})
+export const getUsersByRole = createAsyncThunk(
+    "auth/getUsersByRole",
+    async (role) => {
+        try {
+            return await authService.getUsersByRole(role);
+        } catch (error) {
+            console.error(error);
+        }
+    },
+);
+export const getUsersByid = createAsyncThunk(
+    "auth/getUsersById",
+    async (id) => {
+        try {
+            return await authService.getUsersByid(id);
+        } catch (error) {
+            console.error(error);
+        }
+    },
+);
 
 export const authSlice = createSlice({
     name: "auth",
@@ -87,7 +101,7 @@ export const authSlice = createSlice({
                 state.isSuccess = true;
                 state.isLoading = false;
             })
-            .addCase(login.rejected, (state, action) => {//---------------orden
+            .addCase(login.rejected, (state, action) => {
                 state.msg = action.payload;
                 state.isError = true;
                 state.isLoading = false;
@@ -98,7 +112,7 @@ export const authSlice = createSlice({
             .addCase(logout.fulfilled, (state) => {
                 state.user = null;
                 state.token = "";
-                state.isSuccess = false; //------------------
+                state.isSuccess = false;
                 state.isLoading = false;
             })
             .addCase(register.fulfilled, (state, action) => {
@@ -139,6 +153,18 @@ export const authSlice = createSlice({
                 state.isError = true;
                 state.isLoading = false;
             })
+            .addCase(getUsersByid.fulfilled, (state, action) => {
+                state.userDetail = action.payload.user;
+                state.isSuccess = true;
+                state.isLoading = false;
+            })
+            .addCase(getUsersByid.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(getUsersByid.rejected, (state) => {
+                state.isError = true;
+                state.isLoading = false;
+            });
     },
 });
 

@@ -9,7 +9,7 @@ export const UserCard = ({ user }) => {
       <Center>      
           <Divider flex='1' ml='4' borderColor='primary.50' paddingBottom='5' w='90%'/>
         </Center>
-        <Link to={`/eventDetail/${user.id}`}>
+        <Link to={`/userdetail/${user.id}`}>
           <Container padding='0' paddingTop='5' height='20vh' display='flex' justifyContent='space-between' alignContent='center'>
             <Box display="flex" direction="row" key={user.id}>
               <Box mr={4}>
