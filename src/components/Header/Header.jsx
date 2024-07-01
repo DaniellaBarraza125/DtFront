@@ -162,6 +162,7 @@ const logo = (
 		/>
 	</svg>
 );
+
 const Header = () => {
 	const { user } = useSelector((state) => state.auth);
 	const dispatch = useDispatch();
@@ -170,8 +171,24 @@ const Header = () => {
 	return (
 		<Box bg='primary.50' px={4} height='72px'>
 			<Box display='grid' gridTemplateColumns='1fr 1fr 1fr' alignItems='center' h={16}>
-				<Box className='logoGrande' display={{ base: 'none', md: 'block' }} gridColumn='1'>
+				<Box display={{ base: 'none', md: 'flex' }} alignItems='center' gridColumn='1'>
 					<Link to='/'>{logoGrande}</Link>
+				</Box>
+
+				<Box display={{ base: 'flex', md: 'none' }} alignItems='center' justifyContent='space-between' gridColumn='1'>
+					<IconButton
+						size='md'
+						icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
+						aria-label='Toggle Navigation'
+						onClick={onToggle}
+						color='secondary.white'
+						background='none'
+						_hover={{ background: 'none' }}
+						_active={{ background: 'none' }}
+					/>
+					<Center flex='1'>
+						<Link to='/'>{logo}</Link>
+					</Center>
 				</Box>
 
 				<Center>
@@ -193,29 +210,7 @@ const Header = () => {
 					)}
 				</Center>
 
-				<Box className='logo' display={{ base: 'flex', md: 'none' }} gridColumn='2' justifyContent='center'>
-					<Link to='/'>{logo}</Link>
-				</Box>
-
-				<Box
-					className='burgerIcon'
-					display='flex'
-					alignItems='center'
-					justifyContent={{ base: 'flex-end', md: 'flex-end' }}
-					gridColumn={{ base: '3', md: '3' }}
-					alignSelf='center'
-				>
-					<IconButton
-						size='md'
-						icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
-						aria-label='Toggle Navigation'
-						onClick={onToggle}
-						color='secondary.white'
-						background='none'
-						_hover={{ background: 'none' }}
-						_active={{ background: 'none' }}
-					/>
-				</Box>
+			
 			</Box>
 
 			{isOpen && (
@@ -250,6 +245,9 @@ const Header = () => {
 					</VStack>
 				</Box>
 			)}
+				<Box className='logo' display={{ base: 'none', md: 'none' }} gridColumn='3' justifyContent='center'>
+					<Link to='/'>{logo}</Link>
+				</Box>
 		</Box>
 	);
 };
