@@ -75,7 +75,7 @@ const Schedule = ({hideFooter}) => {
 				<Footer hideFooter={hideFooter}/>
 
             </Container>          
-          
+
         </>
     );
 };
