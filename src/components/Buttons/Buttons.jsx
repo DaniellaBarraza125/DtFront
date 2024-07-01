@@ -35,22 +35,27 @@ const Buttons = ({ options }) => {
     };
 
     return (
-        <Box backgroundColor='white' display='flex' justifyContent='space-around' padding={1} marginBottom='4' borderRadius='100' borderWidth='2px' borderColor='#0F8BA0' marginX="2">
+        <Box backgroundColor='white' display='flex' justifyContent='center' alignItems='center' borderRadius='100' borderWidth='2px' borderColor='#0F8BA0' height='32px' width='335px'>
         {options.map((option, i) => (
             <Button
                 key={i}
                 value={option.value}
                 width='50%'
+                height='24px'
+                padding='4px'
                 borderRadius='100'
                 backgroundColor={activeButton === option.value ? '#0F8BA0' : 'transparent'}
                 color={activeButton === option.value ? 'white' : '#191919'}
-                // variant={activeButton === option.value ? 'solid' : 'outline'}
                 onClick={() => handleClick(option.value)}
+                marginX='2px'
+                _hover={{ backgroundColor: activeButton === option.value ? '#0F8BA0' : 'transparent' }}
+                _active={{ backgroundColor: activeButton === option.value ? '#0F8BA0' : 'transparent' }}
             >
                 {option.label}
             </Button>
         ))}
     </Box>
+    
     );
 };
 

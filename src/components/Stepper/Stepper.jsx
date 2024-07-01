@@ -93,7 +93,6 @@ const Stepper = () => {
             : [...prevState.allergen, value]
         }));
       };
- 
 
     const handleCheckboxChange = (group, value) => {
         setFormValues(prevValues => {
@@ -356,7 +355,7 @@ const Stepper = () => {
                             placeholder='Ejemplo'
                         />
                     </FormControl>
-
+                    
                     <FormControl isRequired mt={4}>
                         <FormLabel>Añadir foto</FormLabel>
                         <InputGroup>
@@ -432,7 +431,7 @@ const Stepper = () => {
             </Container>
 
             <Container maxW="container.md" p={4} display={activeStep === 3 ? 'block' : 'none'}>
-                <Box>  
+                <Box>
                     <FormControl>
                         <FormLabel>Intereses</FormLabel>
                         <Wrap>
