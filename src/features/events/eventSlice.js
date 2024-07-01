@@ -17,6 +17,7 @@ export const createEvent = createAsyncThunk(
 export const getAll = createAsyncThunk(
     "event/getAll",
     async (_, { rejectWithValue }) => {
+        console.log("getAll");
         try {
             const response = await eventService.getAll();
             return response;
@@ -51,7 +52,49 @@ export const getByDate = createAsyncThunk(
         }
     },
 );
+ export const subscribeEvent = createAsyncThunk(
+    "event/subscribe",
+    async (eventId, { rejectWithValue }) => {
+        try {
+            const response = await eventService.subscribeEvent(eventId);
+            return response;
+        } catch (error) {
+            console.error(error);
+            return rejectWithValue(error.response.data);
+        }
+    },
+);
+export const unsubscribeEvent = createAsyncThunk(
+    "event/unsubscribe",
+    async (eventId, { rejectWithValue }) => {
+        try {
+            const response = await eventService.unsubscribeEvent(eventId);
+            return response;
+        } catch (error) {
+            console.error(error);
+            return rejectWithValue(error.response.data);
+        }
+    },
+);
+export const getBySala = createAsyncThunk(
+    "event/getBySala",
+    async (sala, { rejectWithValue }) => {
+        try {
+            const response = await eventService.getBySala(sala);
+            return response;
+        } catch (error) {
+            console.error(error);
+            return rejectWithValue(error.response.data);
+        }
+    },
+);
 
+const initialState = {
+    events: [],
+    isLoading: true,
+    event: null,
+    error: null,
+};
 
 export const eventSlice = createSlice({
     name: "event",
@@ -66,41 +109,52 @@ export const eventSlice = createSlice({
     reducers: {
         reset: (state) => {
             state.events = [];
-            // state.event = null;
-            state.eventsIsLoading = true;
-            state.eventIsLoading = true;
+            state.event = null;
+            state.isLoading = true;
             state.error = null;
         },
     },
     extraReducers: (builder) => {
         builder
+            .addCase(getAll.pending, (state) => {
+                state.isLoading = true;
+                state.error = null;
+            })
             .addCase(getAll.fulfilled, (state, action) => {
                 state.events = action.payload.events;
-                state.eventsIsLoading = false;
+                state.isLoading = false;
             })
             .addCase(getAll.pending, (state) => {
                 state.eventsIsLoading = true;
                 state.error = null;
             })
             .addCase(getAll.rejected, (state, action) => {
-                state.eventsIsLoading = false;
+                state.isLoading = false;
                 state.error = action.payload || action.error.message;
             })
+            .addCase(getById.pending, (state) => {
+                state.isLoading = true;
+                state.error = null;
+            })
             .addCase(getById.fulfilled, (state, action) => {
+                state.isLoading = false;
                 state.event = action.payload.event;
-                state.eventIsLoading = false;
             })
             .addCase(getById.pending, (state) => {
                 state.eventIsLoading = true;
                 state.error = null;
             })
             .addCase(getById.rejected, (state, action) => {
-                state.eventIsLoading = false;
+                state.isLoading = false;
                 state.error = action.payload || action.error.message;//----------------
             })
+            .addCase(getByDate.pending, (state) => {
+                state.isLoading = true;
+                state.error = null;
+            })
             .addCase(getByDate.fulfilled, (state, action) => {
+                state.isLoading = false;
                 state.events = action.payload.events;
-                state.eventsIsLoading = false;
             })
             .addCase(getByDate.pending, (state) => {
                 state.eventsIsLoading = true;
@@ -120,7 +174,40 @@ export const eventSlice = createSlice({
             .addCase(createEvent.rejected, (state, action) => {
             state.status = "failed";
             state.error = action.payload;
-            });
+            })
+            .addCase(subscribeEvent.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.event = action.payload.event;
+            })
+            .addCase(subscribeEvent.pending, (state) => {
+                state.isLoading = true;
+                state.error = null;
+            })
+            .addCase(subscribeEvent.rejected, (state, action) => {
+                state.error = action.payload || action.error.message;
+            })
+            .addCase(unsubscribeEvent.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.event = action.payload.event;
+            })
+            .addCase(unsubscribeEvent.pending, (state) => {
+                state.isLoading = true;
+                state.error = null;
+            })
+            .addCase(unsubscribeEvent.rejected, (state, action) => {
+                state.error = action.payload || action.error.message;
+            })
+            .addCase(getBySala.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.events = action.payload.events;
+            })
+            .addCase(getBySala.pending, (state) => {
+                state.isLoading = true;
+                state.error = null;
+            })
+            .addCase(getBySala.rejected, (state, action) => {
+                state.error = action.payload || action.error.message;
+            })
     },
 });
 

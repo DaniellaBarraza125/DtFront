@@ -5,11 +5,12 @@ const token = localStorage.getItem("token") || "";
 const user = JSON.parse(localStorage.getItem("user")) || null;
 
 const initialState = {
+    userDetail: null,
     user: user,
     token: token,
     isError: false,
     isSuccess: false,
-    isLoading: false,
+    isLoading: true,
     users: [],
     msg: "",
 };
@@ -30,7 +31,6 @@ export const register = createAsyncThunk(
 export const login = createAsyncThunk("auth/login", async (user, thunkAPI) => {
     try {
         const response = await authService.login(user);
-
         localStorage.setItem("token", response.token);
         localStorage.setItem("user", JSON.stringify(response.user));
         return response;
@@ -60,6 +60,27 @@ export const getUsers = createAsyncThunk("auth/getUsers", async () => {
     }
 });
 
+export const getUsersByRole = createAsyncThunk(
+    "auth/getUsersByRole",
+    async (role) => {
+        try {
+            return await authService.getUsersByRole(role);
+        } catch (error) {
+            console.error(error);
+        }
+    },
+);
+export const getUsersByid = createAsyncThunk(
+    "auth/getUsersById",
+    async (id) => {
+        try {
+            return await authService.getUsersByid(id);
+        } catch (error) {
+            console.error(error);
+        }
+    },
+);
+
 export const authSlice = createSlice({
     name: "auth",
     initialState,
@@ -67,8 +88,8 @@ export const authSlice = createSlice({
         reset: (state) => {
             state.isError = false;
             state.isSuccess = false;
+            state.isLoading = true;
             state.msg = "";
-            state.isLoading = false;//-----------------
         },
     },
     extraReducers: (builder) => {
@@ -80,7 +101,7 @@ export const authSlice = createSlice({
                 state.isSuccess = true;
                 state.isLoading = false;
             })
-            .addCase(login.rejected, (state, action) => {//---------------orden
+            .addCase(login.rejected, (state, action) => {
                 state.msg = action.payload;
                 state.isError = true;
                 state.isLoading = false;
@@ -91,7 +112,7 @@ export const authSlice = createSlice({
             .addCase(logout.fulfilled, (state) => {
                 state.user = null;
                 state.token = "";
-                state.isSuccess = false; //------------------
+                state.isSuccess = false;
                 state.isLoading = false;
             })
             .addCase(register.fulfilled, (state, action) => {
@@ -115,10 +136,34 @@ export const authSlice = createSlice({
             })
             .addCase(getUsers.rejected, (state) => {
                 state.isError = true;
-                state.isLoading = false;//------------falta mensaje
+                state.isLoading = false;
             })
             .addCase(getUsers.pending, (state) => {
                 state.isLoading = true;
+            })
+            .addCase(getUsersByRole.fulfilled, (state, action) => {
+                state.users = action.payload.users;
+                state.isSuccess = true;
+                state.isLoading = false;
+            })
+            .addCase(getUsersByRole.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(getUsersByRole.rejected, (state) => {
+                state.isError = true;
+                state.isLoading = false;
+            })
+            .addCase(getUsersByid.fulfilled, (state, action) => {
+                state.userDetail = action.payload.user;
+                state.isSuccess = true;
+                state.isLoading = false;
+            })
+            .addCase(getUsersByid.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(getUsersByid.rejected, (state) => {
+                state.isError = true;
+                state.isLoading = false;
             });
     },
 });

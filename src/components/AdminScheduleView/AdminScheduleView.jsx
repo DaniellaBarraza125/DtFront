@@ -36,7 +36,7 @@ const AdminScheduleView = () => {
     const eventosSalaWorkshop = events.filter(event => event.sala === 'Sala B');
 
     return (
-        <Flex justifyContent="center" p="3vh" height="98vh">
+        <Flex justifyContent="center" p="3vh" height="90vh">
             <Box borderRadius="1em"  width="65vw" heigth="70vh" overflow="hidden">
                 <Grid templateRows="auto 1fr" height="100%">
                     <Box>

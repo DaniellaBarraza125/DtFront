@@ -2,7 +2,12 @@ import axios from "axios";
 const API_URL = "http://localhost:3000/partners";
 
 const getAllPartners = async () => {
-    const res = await axios.get(API_URL + "/");
+    const token = localStorage.getItem("token");
+    const res = await axios.get(API_URL + "/", {
+        headers: {
+            Authorization: token,
+        },
+    });
     return res.data;
 };
 const getPartnerById = async (id) => {

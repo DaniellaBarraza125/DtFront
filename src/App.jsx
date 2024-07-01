@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import "./App.css";
 import Login from "./components/Login/Login";
 import Header from "./components/Header/Header";
@@ -26,44 +26,54 @@ import Partners from "./components/Partners/Partners";
 import PanelInfo from "./components/PanelInfo/PanelInfo";
 import Event from "./components/Event/Event";
 import Products from "./components/Products/Products";
-
-
+import UserDetail from "./components/UserDetail/UserDetail";
 
 // Carga tu clave pública de Stripe
 const stripePromise = loadStripe('pk_test_51PU6292MuIxm52bYvsBX37uZbLNzlaon35wbfpENgxW1ybFytd7Vdz7Pqp2bCvSfPYlcCBNZMBZxvQqtla0GLGV5006fBkWG84');
 
-function App() {
+function Layout({ children }) {
+  const location = useLocation();
   return (
     <>
-    <ChakraProvider theme={theme}>
-      <BrowserRouter>
-        <Header />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/profile" element={<PrivateZone><Profile /></PrivateZone>} />
-          <Route path='/register' element={<Stepper/>} />
-          <Route path="/schedule" element={<PrivateZone><Schedule/></PrivateZone>} />
-          <Route path="/eventDetail/:id" element={<PrivateZone><EventDetail/></PrivateZone>} />
-          <Route path="/personalInfo" element={<PrivateZone><PersonalInfo/></PrivateZone>} />
-          <Route path="/users" element={<Users/>}/>
-          <Route path="/footer" element={<Footer/>} />
-          <Route path="/addPartner" element={<PrivateZone><AddPartner /></PrivateZone>} />
-          <Route path="/addEvent" element={<PrivateZone><AddEvent /></PrivateZone>} />
-          <Route path="*" element={<NotFound />} />
-          <Route path="/panelInfo" element={<PanelInfo/>} />
-          <Route path="/partners" element={<PrivateZone><Partners/></PrivateZone>} />
-         
-          <Route path="/products" element={<Products />} />
-          <Route path="/checkoutForm" element={
-            <Elements stripe={stripePromise}>
-              <CheckoutForm />
-            </Elements>
-          } />
-          <Route path='/paneladmin' element={<AdminZone><PanelAdmin/></AdminZone>} />
-          <Route path='/adminscheduleview' element={<AdminZone><AdminScheduleView/></AdminZone>} />
+      {location.pathname !== '/register' && <Header />}
+      {children}
+    </>
+  );
+}
 
-          </Routes>
+function App() {
+  const hideFooter = false;
+  return (
+    <>
+      <ChakraProvider theme={theme}>
+        <BrowserRouter>
+          <Layout>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/profile" element={<PrivateZone><Profile /></PrivateZone>} />
+              <Route path='/register' element={<Stepper />} />
+              <Route path="/schedule" element={<PrivateZone><Schedule /></PrivateZone>} />
+              <Route path="/eventDetail/:id" element={<PrivateZone><EventDetail /></PrivateZone>} />
+              <Route path="/personalInfo" element={<PrivateZone><PersonalInfo /></PrivateZone>} />
+              <Route path="/users" element={<PrivateZone><Users /></PrivateZone>} />
+              <Route path="/addPartner" element={<PrivateZone><AddPartner /></PrivateZone>} />
+              <Route path="/addEvent" element={<PrivateZone><AddEvent /></PrivateZone>} />
+              <Route path="*" element={<NotFound />} />
+              <Route path="/panelInfo" element={<PanelInfo />} />
+              <Route path="/partners" element={<PrivateZone><Partners /></PrivateZone>} />
+              <Route path="/userdetail/:id" element={<UserDetail />} />
+              <Route path="/products" element={<Products />} />
+              <Route path="/checkoutForm" element={
+                <Elements stripe={stripePromise}>
+                  <CheckoutForm />
+                </Elements>
+              } />
+              <Route path='/paneladmin' element={<AdminZone><PanelAdmin /></AdminZone>} />
+              <Route path='/adminscheduleview' element={<AdminZone><AdminScheduleView /></AdminZone>} />
+              {/* <Route path="/footer" element={<Footer />} /> */}
+            </Routes>
+          </Layout>
         </BrowserRouter>
       </ChakraProvider>
     </>

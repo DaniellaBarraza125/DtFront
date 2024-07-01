@@ -7,7 +7,11 @@ const login = async (user) => {
     const res = await axios.post(API_URL + "/login", user);
     if (res.data) {
         console.log(res.data);
-        localStorage.setItem("user", JSON.stringify(res.data.user));//-------------repetido en slice
+<<<<<<< HEAD
+        localStorage.setItem("user", JSON.stringify(res.data.user)); //-------------repetido en slice
+=======
+        localStorage.setItem("user", JSON.stringify(res.data.user));
+>>>>>>> juancarlos
         localStorage.setItem("token", res.data.token);
     }
     return res.data;
@@ -42,12 +46,36 @@ const getUsers = async () => {
 
     return res.data;
 };
+const getUsersByRole = async (role) => {
+    const token = localStorage.getItem("token");
+
+    const res = await axios.get(API_URL + "/role/" + role, {
+        headers: {
+            Authorization: token,
+        },
+    });
+
+    return res.data;
+};
+const getUsersByid = async (id) => {
+    const token = localStorage.getItem("token");
+
+    const res = await axios.get(API_URL + "/id/" + id, {
+        headers: {
+            Authorization: token,
+        },
+    });
+
+    return res.data;
+};
 
 const authService = {
     login,
     logout,
     register,
     getUsers,
+    getUsersByRole,
+    getUsersByid,
 };
 
 export default authService;

@@ -1,47 +1,42 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Container, FormControl, Heading, Select, Tag, Text } from '@chakra-ui/react';
-import SearchBar from '../SearchBar/SearchBar';
+import { Box, Container, FormControl, Heading, Select} from '@chakra-ui/react';
 import Event from '../Event/Event';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAll } from '../../features/events/eventSlice';
+import { getAll, getByDate, getBySala } from '../../features/events/eventSlice';
 import Footer from '../Footer/Footer';
 import Buttons from '../Buttons/Buttons';
 import Tags from '../Tags/Tags';
 
-const Schedule = () => {
-    const { eventIsLoading, events } = useSelector((state) => state.event);
-    const dispatch = useDispatch();
+const Schedule = ({hideFooter}) => {
+	const { isLoading, events } = useSelector((state) => state.event);
+	const dispatch = useDispatch();
 
-    useEffect(() => {
-        dispatch(getAll());
-    }, [dispatch]);
+	useEffect(() => {
+		dispatch(getByDate('2024-05-15'));
+	}, [dispatch]);
 
-    const [selectedSala, setSelectedSala] = useState('');
+	console.log('events', events);
 
-    const handleSalaChange = (e) => {
-        const sala = e.target.value;
-        setSelectedSala(sala);
-        getBySala(sala);
-    };
 
-    const getBySala = (sala) => {
-        console.log(`Sala seleccionada: ${sala}`);
-    };
+	const handleSalaChange = (e) => {
+		if(e.target.value == 'todas'){
+			dispatch(getByDate('2024-05-15'));
+		} else {
+			const sala = e.target.value;
+			dispatch(getBySala(sala));
+		}
+	};
 
-    if (eventIsLoading) {
-        return <h1>Cargando eventos...</h1>;
-    }
+	const options = [
+		{ value: '2024-05-15', label: '25 de Junio' },
+		{ value: '2024-04-20', label: '26 de Junio' },
+	];
 
-    const options = [
-        { value: '2024-05-23', label: '23 de Mayo' },
-        { value: '2024-05-24', label: '24 de Mayo' }
-    ];
-
-    const tags = [
-        { label: 'Todas', count: 10 },
-        { label: 'One to One', count: 1 },
-        { label: 'Matches', count: 5 }
-    ];
+	const tags = [
+		{ label: 'Todas', count: 10 },
+		{ label: 'One to One', count: 1 },
+		{ label: 'Matches', count: 5 },
+	];
 
     return (
         <>
@@ -57,20 +52,29 @@ const Schedule = () => {
                                 name='sala'
                                 onChange={handleSalaChange}
                             >
-                                <option value='sala1'>Sala Principal - La font blanca</option>
-                                <option value='sala2'>Sala 2</option>
+                                <option value='todas'>Todas</option>
+                                <option value='1'>Sala Principal - La font blanca</option>
+                                <option value='2'>Sala 2</option>
                             </Select>
                         </FormControl>
                     </Box>
                     <Tags tags={tags}/>
                 </Box>
                 <Box flex="1" overflowY="auto"width='100%'>
-                    {events.map((event, i) => (
-                        <Event key={i} event={event} />
-                    ))}
+				{isLoading ? (
+					<p>Loading...</p>
+				) : (
+					<>
+						{events.map((event, i) => (
+							<Event key={i} event={event} />
+						))}
+					</>
+				)}
                 </Box>
+				<Footer hideFooter={hideFooter}/>
+
             </Container>          
-            <Footer/>
+          
         </>
     );
 };

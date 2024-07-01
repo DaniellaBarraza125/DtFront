@@ -1,27 +1,36 @@
 import React, { useState } from 'react';
-import { Box, Stepper as ChakraStepper,Step,StepIndicator,StepStatus,StepIcon,StepNumber,StepTitle,StepDescription,StepSeparator,Container,Button,FormControl,FormLabel,FormErrorMessage, Input,InputGroup,InputRightElement,Checkbox,CheckboxGroup,Stack,Select,useToast} from '@chakra-ui/react';
+import { Box, Stepper as ChakraStepper,Step,StepIndicator,StepStatus,StepIcon,StepNumber,StepTitle,StepDescription,StepSeparator,Container,Button,FormControl,FormLabel,FormErrorMessage, Input,InputGroup,InputLeftElement,InputRightElement,Checkbox,CheckboxGroup,Stack,Select,useToast} from '@chakra-ui/react';
 import { useDispatch } from 'react-redux';
 import { register } from '../../features/auth/authSlice';
+import { LuImagePlus } from "react-icons/lu";
+import { FiEye, FiEyeOff } from 'react-icons/fi';
+import Logotipo from "../../assets/Images/Logotipo.png"
+import "./Stepper.scss";
 
 const steps = [
-    { title: 'First', description: 'Contacto' },
-    { title: 'Second', description: 'Empresa' },
-    { title: 'Third', description: 'Intereses' },
+    { title: 'Cuenta'},
+    { title: 'Datos personales'},
+    { title: 'Empresa' },
+    { title: 'Extras' },
 ];
 
 const Stepper = () => {
     const initialFormValues = {
+        
         email: '',
-        name: '',
-        lastName: '',
         password: '',
-        country: '',
-        company: '',
-        sector: '',
+        nombre: '',
+        apellido: '',
+        image_path:'',
+        nombre_empresa: '',
+        puesto_trabajo: '',
+        linkedin: '',
+        interests: [],
+        
+        pais: '',
         objectives: [],
         otherObjective: '',
         clientType: '',
-        interests: []
     };
 
     const [formValues, setFormValues] = useState(initialFormValues);
@@ -32,6 +41,7 @@ const Stepper = () => {
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [activeStep, setActiveStep] = useState(0);
+    const activeStepText = steps[activeStep].title;
     const toast = useToast();
     const dispatch = useDispatch();
 
@@ -111,15 +121,18 @@ const Stepper = () => {
 
         switch (activeStep) {
             case 0:
-                isValid = formValues.email !== '' && formValues.name !== '' && formValues.lastName !== '' && formValues.password !== '';
+                isValid = formValues.email !== '' && formValues.password !== '';
                 if (isValid && !validateEmail(formValues.email)) {
                     isValid = false;
                 }
                 break;
             case 1:
-                isValid = formValues.country !== '' && formValues.company !== '' && formValues.sector !== '';
+                isValid = formValues.nombre !== '' && formValues.apellido !== '' && formValues.image_path !== '';
                 break;
             case 2:
+                isValid = formValues.nombre_empresa !== '' && formValues.puesto_trabajo !== '' && formValues.linkedin !=='';
+                break;
+            case 3:
                 isValid = formValues.objectives.length > 0 && (formValues.objectives.includes('Otro') ? formValues.otherObjective !== '' : true) && formValues.experience !== '' && formValues.clientType !== '' && formValues.interests.length > 0;
                 break;
             default:
@@ -150,80 +163,50 @@ const Stepper = () => {
     return (
         <>
             <Container maxW="container.sm" mt={4}>
-                <Box paddingTop='4' marginTop='4'>
-                    <ChakraStepper index={activeStep} orientation="horizontal" height="100px" marginBottom="4">
-                        {steps.map((step, index) => (
-                            <Step key={index}>
-                                <StepIndicator>
-                                    <StepStatus
-                                        complete={activeStep > index ? <StepIcon /> : <StepNumber />}
-                                        active={activeStep === index ? <StepNumber /> : null}
-                                        incomplete={activeStep < index ? <StepNumber /> : null}
-                                    />
-                                </StepIndicator>
-                                <Box flexShrink="0" paddingLeft="4">
-                                    <StepTitle>{step.title}</StepTitle>
-                                    <StepDescription>{step.description}</StepDescription>
-                                </Box>
-                                {index < steps.length - 1 && <StepSeparator />}
-                            </Step>
-                        ))}
-                    </ChakraStepper>
-                </Box>
-
-                <Box mt={4} display="flex" justifyContent="flex-end">
+                <Box>
                     {activeStep > 0 && (
-                        <Button mr={4} onClick={handlePrev}>
-                            Anterior
-                        </Button>
-                    )}
-                    {activeStep < steps.length - 1 && (
-                        <Button colorScheme="teal" onClick={handleNext} disabled={isSubmitting}>
-                            Siguiente
-                        </Button>
-                    )}
-                    {activeStep === steps.length - 1 && (
-                        <Button colorScheme="teal" onClick={handleSubmit} disabled={isSubmitting} isLoading={isSubmitting}>
-                            Enviar
-                        </Button>
+                        <>
+                            <ChakraStepper className='stepper' size='sm' index={activeStep} gap='0'>
+                                {steps.map((step, index) => (
+                                    <Step key={index} gap='0'>
+                                        <StepIndicator>
+                                            <StepStatus complete={<StepIcon />} />
+                                        </StepIndicator>
+                                        <StepSeparator _horizontal={{ ml: '0' }} />
+                                    </Step>
+                                ))}
+                            </ChakraStepper>
+                            <Box>
+                                {activeStepText}
+                            </Box>
+                        </>
                     )}
                 </Box>
             </Container>
 
             <Container maxW="container.md" p={4} display={activeStep === 0 ? 'block' : 'none'}>
-                <Box borderWidth="1px" borderRadius="lg" p={4}>
+                <Box>
+                    <div className='container_login'>
+                        <p className='info_login'>¿Ya tienes una cuenta?</p>
+                        <button className='btn_login'>Iniciar Sesión</button>
+                    </div>
+                    <div className='spam'>
+                        <img className="spam-image" src={ Logotipo }/>
+                        <p className='spam_info'>Descubre las últimas innovaciones en tecnología educativa.</p>
+                    </div>
+                    <h2 className='title_info'>Crea tu cuenta</h2>
                     <FormControl isRequired>
-                        <FormLabel>Email</FormLabel>
+                        <FormLabel className='label '>Correo</FormLabel>
                         <Input
                             type='email'
                             name='email'
                             value={formValues.email}
                             onChange={handleChange}
-                            placeholder='Ingrese su correo'
+                            placeholder='ejemplo@gmail.com'
                         />
                         {!validateEmail(formValues.email) && formValues.email !== '' && (
                             <FormErrorMessage>Debe ingresar un correo electrónico válido.</FormErrorMessage>
                         )}
-                    </FormControl>
-
-                    <FormControl isRequired mt={4}>
-                        <FormLabel>Nombre</FormLabel>
-                        <Input
-                            name='name'
-                            value={formValues.name}
-                            onChange={handleChange}
-                            placeholder='Nombre'
-                        />
-                    </FormControl>
-
-                    <FormControl isRequired mt={4}>
-                        <FormLabel>Apellido</FormLabel>
-                        <Input
-                            name='lastName'
-                            value={formValues.lastName}
-                            onChange={handleChange}
-                            placeholder='Apellido'
-                        />
                     </FormControl>
 
                     <FormControl isRequired mt={4}>
@@ -239,30 +222,74 @@ const Stepper = () => {
                             />
                             <InputRightElement width='4.5rem'>
                                 <Button h='1.75rem' size='sm' onClick={handlePasswordVisibility}>
-                                    {showPassword ? 'Ocultar' : 'Mostrar'}
+                                    {showPassword ? <FiEyeOff /> : <FiEye />}
                                 </Button>
                             </InputRightElement>
                         </InputGroup>
                     </FormControl>
+                    
                 </Box>
             </Container>
 
             <Container maxW="container.md" p={4} display={activeStep === 1 ? 'block' : 'none'}>
-                <Box borderWidth="1px" borderRadius="lg" p={4}>
-                    <FormControl isRequired>
-                        <FormLabel>País/Región</FormLabel>
+                <Box>
+                <h2 className='title_info'>Personaliza tu cuenta</h2>
+                <p className='info'>Ayúdanos a ofrecerte una experiencia unica y a sacar el mayor partido a nuestro evento.</p>
+                <FormControl isRequired mt={4}>
+                        <FormLabel>Nombre</FormLabel>
                         <Input
-                            name='country'
-                            value={formValues.country}
+                            name='nombre'
+                            value={formValues.nombre}
                             onChange={handleChange}
-                            placeholder='País/Región'
+                            placeholder='Ramón'
                         />
                     </FormControl>
 
                     <FormControl isRequired mt={4}>
-                        <FormLabel>Tu empresa</FormLabel>
+                        <FormLabel>Apellidos</FormLabel>
                         <Input
-                            name='company'
+                            name='apellido'
+                            value={formValues.apellido}
+                            onChange={handleChange}
+                            placeholder='Sánchez'
+                        />
+                    </FormControl>
+                    
+                    <FormControl isRequired mt={4}>
+                        <FormLabel>Añadir foto</FormLabel>
+                        <InputGroup>
+                        <Input
+                            name='image_path'
+                            value={formValues.image_path}
+                            onChange={handleChange}
+                            placeholder=''
+                            height="80px"
+                        />
+                        <Box
+                            position="absolute"
+                            top="50%"
+                            left="50%"
+                            transform="translate(-50%, -50%)"
+                            pointerEvents="none"
+                            color="gray.400"
+                        >
+                            <LuImagePlus />
+                        </Box>                       
+                    </InputGroup>
+                    </FormControl>
+
+                </Box>
+            </Container>
+
+            <Container maxW="container.md" p={4} display={activeStep === 2 ? 'block' : 'none'}>
+                <Box>
+                    <h2 className='title_info'>Personaliza tu cuenta</h2>
+                    <p className='info'>Indica la empresa a la que representas y tu puesto para ayudarte a sacar el máximo partido al networking.</p>
+
+                    <FormControl isRequired mt={4}>
+                        <FormLabel>Empresa</FormLabel>
+                        <Input
+                            name='nombre_empresa'
                             value={formValues.company}
                             onChange={handleChange}
                             placeholder='Tu empresa'
@@ -270,65 +297,42 @@ const Stepper = () => {
                     </FormControl>
 
                     <FormControl isRequired mt={4}>
-                        <FormLabel>Tu sector</FormLabel>
-                        <Select
-                            name='sector'
-                            value={formValues.sector}
+                        <FormLabel>Puesto de trabajo</FormLabel>
+                        <div className='container_work'>
+                        <select className='select_work' name='puesto_trabajo'
+                            value={formValues.puesto_trabajo}
+                            onChange={handleChange}>
+                            <option value=""></option>    
+                            <option value="Productor de Multimedia Educativa">Productor de Multimedia Educativa</option>
+                            <option value="Desarrollador de Contenidos de e-Learning">Desarrollador de Contenidos de e-Learning</option>
+                            <option value="Coordinador de Programas de e-Learning">Coordinador de Programas de e-Learning</option>
+                            <option value="Analista de Datos Educativos">Analista de Datos Educativos</option>
+                            <option value="Tutor o Facilitador de e-Learning">Tutor o Facilitador de e-Learning</option>
+                            <option value="Consultor de e-Learning">Consultor de e-Learning</option>
+                            <option value="Especialista en LMS">Especialista en LMS</option>
+                            <option value="Diseñador Gráfico para e-Learning">Diseñador Gráfico para e-Learning</option>
+                            <option value="Especialista en Evaluación y Certificación en Línea">Especialista en Evaluación y Certificación en Línea</option>
+                            <option value="Diseñador Instruccional">Diseñador Instruccional</option>
+                        </select>
+                        </div>
+                    </FormControl>
+
+                    <FormControl isRequired mt={4}>
+                        <FormLabel>Linkedin</FormLabel>
+                        <Input
+                            name='linkedin'
+                            value={formValues.linkedin}
                             onChange={handleChange}
-                            placeholder='Seleccione su sector'
-                        >
-                            <option value='Sector 1'>Sector 1</option>
-                            <option value='Sector 2'>Sector 2</option>
-                
-                        </Select>
+                            placeholder='Ejemplo'
+                        />
                     </FormControl>
                 </Box>
             </Container>
 
-            <Container maxW="container.md" p={4} display={activeStep === 2 ? 'block' : 'none'}>
-                <Box borderWidth="1px" borderRadius="lg" p={4}>
-                    <FormControl isRequired mt={4} isInvalid={errors.objectives}>
-                        <FormLabel>Objetivos</FormLabel>
-                        <CheckboxGroup colorScheme='teal'>
-                            <Stack>
-                                {objectiveOptions.map((objective) => (
-                                    <Checkbox
-                                        key={objective.id}
-                                        id={objective.id}
-                                        name='objectives'
-                                        value={objective.label}
-                                        isChecked={formValues.objectives.includes(objective.label)}
-                                        onChange={() => handleCheckboxChange('objectives', objective.label)}
-                                    >
-                                        {objective.label}
-                                    </Checkbox>
-                                ))}
-                            </Stack>
-                        </CheckboxGroup>
-                        {formValues.objectives.includes('Otro') && (
-                            <Input
-                                mt={2}
-                                name='otherObjective'
-                                value={formValues.otherObjective}
-                                onChange={handleChange}
-                                placeholder='Especifique otro objetivo'
-                            />
-                        )}
-                        {errors.objectives && (
-                            <FormErrorMessage>Debe seleccionar al menos un objetivo.</FormErrorMessage>
-                        )}
-                    </FormControl>
-                    <FormControl isRequired mt={4}>
-                        <FormLabel>Tipo de cliente</FormLabel>
-                        <Input
-                            name='clientType'
-                            value={formValues.clientType}
-                            onChange={handleChange}
-                            placeholder='Tipo de cliente'
-                        />
-                    </FormControl>
-
-                    <FormControl mt={4} isInvalid={errors.interests}>
+            <Container maxW="container.md" p={4} display={activeStep === 3 ? 'block' : 'none'}>
+                <Box>
+                    
+                <FormControl mt={4} isInvalid={errors.interests}>
                         <FormLabel>Intereses</FormLabel>
                         <CheckboxGroup colorScheme='teal'>
                             <Stack>
@@ -350,8 +354,19 @@ const Stepper = () => {
                             <FormErrorMessage>Debe seleccionar al menos un interés.</FormErrorMessage>
                         )}
                     </FormControl>
+                    
                 </Box>
             </Container>
+            <Box className='btn_container' mt={4} display="flex" justifyContent="flex-center">
+                <Button className='btn_next' colorScheme="teal" onClick={activeStep === steps.length - 1 ? handleSubmit : handleNext} disabled={isSubmitting} isLoading={activeStep === steps.length - 1 && isSubmitting}>
+                    {activeStep === steps.length - 1 ? 'Enviar' : 'Siguiente'}
+                </Button>                
+                {activeStep > 0 && (
+                    <Button className='btn_back' mr={4} onClick={handlePrev}>
+                        Anterior
+                    </Button>
+                )}
+            </Box>
         </>
     );
 };
