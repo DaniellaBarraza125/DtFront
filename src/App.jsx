@@ -26,6 +26,7 @@ import Partners from "./components/Partners/Partners";
 import PanelInfo from "./components/PanelInfo/PanelInfo";
 import Event from "./components/Event/Event";
 import Products from "./components/Products/Products";
+import UserDetail from "./components/UserDetail/UserDetail";
 
 
 
@@ -55,7 +56,7 @@ function App() {
           <Route path="*" element={<NotFound />} />
           <Route path="/panelInfo" element={<PanelInfo/>} />
           <Route path="/partners" element={<PrivateZone><Partners/></PrivateZone>} />
-         
+         <Route path="/userdetail/:id" element={<UserDetail/>} />
           <Route path="/products" element={<Products />} />
           <Route path="/checkoutForm" element={
             <Elements stripe={stripePromise}>
