@@ -13,12 +13,12 @@ const PanelAdmin = ({hideFooter}) => {
     const ponentes = users.filter(user => user.rol === 'speaker');
 
     return (
-        <Box className='panelAdmin' height="90vh" display="flex" flexDirection="column" alignItems="center" padding={5}>
+        <Box className='panelAdmin' height="90vh" display="flex" flexDirection="column" alignItems="center" paddingX='3rem'>
             <Box className='infoPanel' >
                 <PanelInfo />
             </Box>
             <Box flex="1" display='flex' justifyContent='center' overflow="hidden" width='100%'>
-            <Box className='componentes' bg='#f8f8f8' borderRadius='20px' p={4} m={2} width='70%'>
+            <Box className='componentes' bg='#fbfbfb' borderRadius='20px' p={4} m={2} width='70%' boxShadow="0 4px 6px rgba(0, 0, 0, 0.1)">
                     <Flex direction="column">
                         <Box padding='16px'  display="flex" flexDirection="column" alignItems="left" mb={1}>
                             <Heading as="h2" size="md" textAlign='left' color="primary.50" mb={2}>Partners</Heading>
