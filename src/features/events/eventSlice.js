@@ -116,10 +116,7 @@ export const eventSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            .addCase(getAll.pending, (state) => {
-                state.isLoading = true;
-                state.error = null;
-            })
+            
             .addCase(getAll.fulfilled, (state, action) => {
                 state.events = action.payload.events;
                 state.isLoading = false;
@@ -132,10 +129,6 @@ export const eventSlice = createSlice({
                 state.isLoading = false;
                 state.error = action.payload || action.error.message;
             })
-            .addCase(getById.pending, (state) => {
-                state.isLoading = true;
-                state.error = null;
-            })
             .addCase(getById.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.event = action.payload.event;
@@ -147,10 +140,6 @@ export const eventSlice = createSlice({
             .addCase(getById.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.payload || action.error.message;//----------------
-            })
-            .addCase(getByDate.pending, (state) => {
-                state.isLoading = true;
-                state.error = null;
             })
             .addCase(getByDate.fulfilled, (state, action) => {
                 state.isLoading = false;
