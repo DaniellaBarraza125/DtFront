@@ -175,7 +175,7 @@ const Header = () => {
 				</Box>
 
 				<Center>
-					{user?.role === 'admin' && (
+					{user?.rol === 'admin' && (
 						<Box className='iconsAdmin' gridColumn='2' justifyContent='center'>
 							<HStack display={{ base: 'none', md: 'flex' }} spacing={8}>
 								<Link to='/adminscheduleview'>
