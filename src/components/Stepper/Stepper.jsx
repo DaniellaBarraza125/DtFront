@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
-import { Box, Stepper as ChakraStepper,HStack,Tag,TagLabel,TagLeftIcon,TagRightIcon,TagCloseButton,Step,StepIndicator,StepStatus,StepIcon,StepNumber,StepTitle,StepDescription,StepSeparator,Container,Button,FormControl,FormLabel,FormErrorMessage, Input,InputGroup,InputLeftElement,InputRightElement,Checkbox,CheckboxGroup,Stack,Select,useToast} from '@chakra-ui/react';
+import axios from 'axios';
+import { Box, Stepper as ChakraStepper,HStack,Tag,TagLabel,TagLeftIcon,TagRightIcon,TagCloseButton,Step,StepIndicator,StepStatus,StepIcon,StepNumber,StepTitle,StepDescription,StepSeparator,Container,Button,FormControl,FormLabel,FormErrorMessage, Input,InputGroup,InputLeftElement,InputRightElement,Checkbox,CheckboxGroup,Stack,Select,useToast,Wrap,WrapItem} from '@chakra-ui/react';
 import { useDispatch } from 'react-redux';
 import { register } from '../../features/auth/authSlice';
 import { LuImagePlus } from "react-icons/lu";
 import { FiEye, FiEyeOff } from 'react-icons/fi';
 import Logotipo from "../../assets/Images/Logotipo.png"
+import Products from '../Products/Products';
 import "./Stepper.scss";
 
 const steps = [
     { title: 'Cuenta'},
     { title: 'Datos personales'},
     { title: 'Empresa' },
-    { title: 'Extras' },
     { title: 'Extras' },
     { title: 'Extras' },
     { title: 'Extras' },
@@ -37,9 +38,8 @@ const Stepper = () => {
         nombre_empresa: '',
         puesto_trabajo: '',
         linkedin: '',
-        interests: [],
-        
-        objectives: [],
+        interest: [],
+        allergen: [],
         otherObjective: '',
         clientType: '',
     };
@@ -76,6 +76,25 @@ const Stepper = () => {
         return regex.test(email);
     };
 
+    const handleInteresChange = (value) => {
+        setFormData((prevState) => ({
+          ...prevState,
+          interes: prevState.interes.includes(value) 
+            ? prevState.interes.filter((interest) => interest !== value) 
+            : [...prevState.interes, value]
+        }));
+      };
+
+      const handleAllergenChange = (value) => {
+        setFormData((prevState) => ({
+          ...prevState,
+          allergen: prevState.allergen.includes(value) 
+            ? prevState.allergen.filter((allergen) => allergen !== value) 
+            : [...prevState.allergen, value]
+        }));
+      };
+ 
+
     const handleCheckboxChange = (group, value) => {
         setFormValues(prevValues => {
             const newValues = prevValues[group].includes(value)
@@ -100,7 +119,7 @@ const Stepper = () => {
         if (objectivesError || interestsError) {
             setErrors({
                 objectives: objectivesError,
-                interests: interestsError
+                interest: interestsError
             });
             return;
         }
@@ -113,22 +132,22 @@ const Stepper = () => {
         setFormValues(initialFormValues);
         setErrors({
             objectives: false,
-            interests: false
+            interest: false
         });
         setIsSubmitting(false); 
     };
 
-    const interestsOptions = [
-        { id: 1, label: 'Interés 1' },
-        { id: 1, label: 'Interés 2' },
-        { id: 1, label: 'Interés 3' },
-        { id: 1, label: 'Interés 4' },
-        { id: 1, label: 'Interés 5' },
-    ];
+    const interesOptions = [
+        'Accesibilidad', 'Analítica', 'Antiplagio', 'Certificación', 'Contenidos',
+        'Generación de vídeo', 'Gestión de la formación', 'Herramientas del autor',
+        'Inteligencia artificial', 'Laboratorios Virtuales', 'LMS Educativo', 
+        'LMS Corporativo', 'Proctoring', 'Repositorio digital', 'Sistema de Gestión', 
+        'Videoconferencia'
+      ];
 
-    const objectiveOptions = [
-        { id: "obj1", label: 'Objetivo 1' },
-        { id: "obj4", label: 'Otro' }
+    const allergenOptions = [
+        'Leche', 'Huevos', 'Pescado', 'Mariscos', 'Frutos secos', 'Cacahuetes', 'Trigo',
+        'Soja', 'Sésamo', 'Mostaza', 'Apio', 'Sulfitos', 'Lupino', 'Altramuz'
     ];
 
     const handleNext = () => {
@@ -148,10 +167,10 @@ const Stepper = () => {
                 isValid = formValues.nombre_empresa !== '' && formValues.puesto_trabajo !== '' && formValues.linkedin !=='';
                 break;
             case 3:
-                isValid = formValues.interests.length > 0;
+                //isValid = formValues.interest.length > 0;
                 break;
             case 4:
-                //isValid = 
+                
             default:
                 break;
         }
@@ -413,71 +432,65 @@ const Stepper = () => {
             </Container>
 
             <Container maxW="container.md" p={4} display={activeStep === 3 ? 'block' : 'none'}>
-                <Box>                  
-                    <FormControl mt={4} isInvalid={errors.interests}>
+                <Box>  
+                    <FormControl>
                         <FormLabel>Intereses</FormLabel>
-                                    
-                        {errors.interests && (
-                            <FormErrorMessage>Debe seleccionar al menos un interés.</FormErrorMessage>
-                        )}
+                        <Wrap>
+                            {interesOptions.map((interes) => (
+                                <WrapItem key={interes}>
+                                    <Tag
+                                        size="lg"
+                                        borderRadius="full"
+                                        variant={formValues.interest.includes(interes) ? "solid" : "outline"}
+                                        colorScheme={formValues.interest.includes(interes) ? "teal" : "gray"}
+                                        onClick={() => handleInteresChange(interes)}
+                                        cursor="pointer"
+                                    >
+                                        <TagLabel>{interes}</TagLabel>
+                                    </Tag>
+                                </WrapItem>
+                            ))}
+                        </Wrap>
                     </FormControl>
                 </Box>
             </Container>
-
+ 
             <Container maxW="container.md" p={4} display={activeStep === 4 ? 'block' : 'none'}>
                 <Box>    
-                    <FormControl mt={4}>
-                        <FormLabel>Alérgenos</FormLabel>
-                        <CheckboxGroup colorScheme='teal'>
-                            <Stack>
-                                {interestsOptions.map((interest) => (
-                                    <Checkbox
-                                        key={interest.id}
-                                        id={interest.id}
-                                        name='interests'
-                                        value={interest.label}
-                                        isChecked={formValues.interests.includes(interest.label)}
-                                        onChange={() => handleCheckboxChange('interests', interest.label)}
+                <FormControl>
+                        <FormLabel>Alergenos</FormLabel>
+                        <Wrap>
+                            {allergenOptions.map((allergen) => (
+                                <WrapItem key={allergen}>
+                                    <Tag
+                                        size="lg"
+                                        borderRadius="full"
+                                        variant={formValues.allergen.includes(allergen) ? "solid" : "outline"}
+                                        colorScheme={formValues.allergen.includes(allergen) ? "teal" : "gray"}
+                                        onClick={() => handleAllergenChange(allergen)}
+                                        cursor="pointer"
                                     >
-                                        {interest.label}
-                                    </Checkbox>
-                                ))}
-                            </Stack>
-                        </CheckboxGroup>
-                    </FormControl>                    
+                                        <TagLabel>{allergen}</TagLabel>
+                                    </Tag>
+                                </WrapItem>
+                            ))}
+                        </Wrap>
+                    </FormControl>                
                 </Box>
             </Container>
 
             <Container maxW="container.md" p={4} display={activeStep === 5 ? 'block' : 'none'}>
                 <Box>    
-                    <FormControl mt={4}>
-                
-                    </FormControl>                    
-                </Box>
-            </Container>
-
-            <Container maxW="container.md" p={4} display={activeStep === 6 ? 'block' : 'none'}>
-                <Box>    
-                    <FormControl mt={4} isInvalid={errors.interests}>
-                
-                    </FormControl>                    
-                </Box>
-            </Container>
-
-            <Container maxW="container.md" p={4} display={activeStep === 7 ? 'block' : 'none'}>
-                <Box>    
-                    <FormControl mt={4}>
-                
-                    </FormControl>                    
+                <Products />               
                 </Box>
             </Container>
 
             <Box className='btn_container' mt={4} display="flex" justifyContent="flex-center">
-                <Button className='btn_next' colorScheme="teal" onClick={activeStep === steps.length - 1 ? handleSubmit : handleNext} disabled={isSubmitting} isLoading={activeStep === steps.length - 1 && isSubmitting}>
+                <Button className='btn_next' colorScheme="teal" onClick={activeStep === steps.length - 1 ? handleSubmit : handleNext} disabled={isSubmitting} isLoading={activeStep === steps.length - 1 && isSubmitting} borderRadius="80px">
                     {activeStep === 0 ? 'Crear cuenta' : activeStep === steps.length - 1 ? 'Enviar' : 'Siguiente'}
                 </Button>                
                 {activeStep > 0 && (
-                    <Button className='btn_back' mr={4} onClick={handlePrev}>
+                    <Button className='btn_back' mr={4} onClick={handlePrev} borderRadius="80px">
                         Anterior
                     </Button>
                 )}
