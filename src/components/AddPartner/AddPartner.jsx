@@ -20,15 +20,7 @@ const AddPartner = () => {
   };
 
   return (
-    <Box 
-      maxW="md" 
-      mx="auto" 
-      mt="10" 
-      p="6" 
-      borderWidth="1px" 
-      borderRadius="lg" 
-      boxShadow="lg"
-    >
+   <>
       <Heading as="h2" size="md" mb="6" textAlign="center">
         Añade un nuevo partner
       </Heading>
@@ -57,7 +49,7 @@ const AddPartner = () => {
           Guardar
         </Button>
       </VStack>
-    </Box>
+   </>
   );
 };
 

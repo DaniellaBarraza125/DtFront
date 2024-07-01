@@ -38,7 +38,7 @@ const Users = ({ propUsers, hideButtons, hideFooter }) => {
 				<Box position='sticky' top='0' zIndex='1' backgroundColor='white'>
 					{!hideButtons && <Buttons options={options} />}
 				</Box>
-				<Box  margin='10px' width='305px' height='27px'alignContent='center'
+				<Box  width='305px' height='27px'alignContent='center'
 				>
 					<Tags tags={tags} />
 				</Box>
@@ -54,7 +54,6 @@ const Users = ({ propUsers, hideButtons, hideFooter }) => {
 					)}
 				</Box>
 				<Footer hideFooter={hideFooter}/>
-		
 			</Container>
 		</Box>
 	);
