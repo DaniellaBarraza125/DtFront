@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import {
 	Box,
@@ -24,11 +24,32 @@ import AddPartner from '../AddPartner/AddPartner';
 const PanelAdmin = ({ hideFooter }) => {
 	const { users } = useSelector((state) => state.auth);
 	const { isOpen, onOpen, onClose } = useDisclosure();
+	const [componentToRender, setComponentToRender] = useState(null);
+
+	const handleOpenModal = (component) => {
+		setComponentToRender(component);
+		onOpen();
+	  };
 
 	// console.log(users);
 	const asistentes = users.filter((user) => user.rol === 'user');
 	const ponentes = users.filter((user) => user.rol === 'speaker');
 	const partners = users.filter((user) => user.rol === 'partner');
+
+	const renderComponent = () => {
+    switch (componentToRender) {
+      case 'partner':
+        return <AddPartner />;
+      case 'enviar':
+        return (
+          <Box>
+            <Text>Enviar contenido</Text>
+          </Box>
+        );
+      default:
+        return null;
+    }
+  };
 
 	return (
 		<Box className='panelAdmin' height='90vh' display='flex' flexDirection='column' alignItems='center' paddingX='3rem'>
@@ -60,7 +81,7 @@ const PanelAdmin = ({ hideFooter }) => {
 										position='relative'
 										bottom='2.5rem'
 										right='0'
-										onClick={onOpen}
+										onClick={() => handleOpenModal('partner')}
 										_hover={{ bg: '#0F8BA0'}}
 									>
 										Añadir
@@ -99,7 +120,7 @@ const PanelAdmin = ({ hideFooter }) => {
 										position='relative'
 										bottom='2.5rem'
 										right='0'
-										onClick={onOpen}
+										onClick={() => handleOpenModal('enviar')}
 									>
 										Enviar contenido
 									</Button>
@@ -138,7 +159,7 @@ const PanelAdmin = ({ hideFooter }) => {
 				<ModalContent maxW='md' mx='auto' mt='10' p='6' borderWidth='1px' borderRadius='lg' boxShadow='lg'>
 					<ModalBody>
 						<ModalCloseButton />
-						<AddPartner />
+						{renderComponent()}
 					</ModalBody>
 				</ModalContent>
 			</Modal>
