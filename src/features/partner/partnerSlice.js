@@ -26,6 +26,18 @@ export const getPartnerById = createAsyncThunk(
         }
     },
 );
+export const addPartner = createAsyncThunk(
+    "partner/addPartner",
+    async (partner, { rejectWithValue }) => {
+        try {
+            const response = await partnerService.addPartner(partner);
+            return response;
+        } catch (error) {
+            console.error(error);
+            return rejectWithValue(error.response.data);
+        }
+    },
+);
 
 const initialState = {
     partners: [],
@@ -70,6 +82,18 @@ export const partnerSlice = createSlice({
                 state.eventIsLoading = false;
             })
             .addCase(getPartnerById.rejected, (state, action) => {
+                state.eventIsLoading = false;
+                state.error = action.payload || action.error.message;
+            })
+            .addCase(addPartner.pending, (state) => {
+                state.eventIsLoading = true;
+                state.error = null;
+            })
+            .addCase(addPartner.fulfilled, (state, action) => {
+                state.partner = action.payload.partner;
+                state.eventIsLoading = false;
+            })
+            .addCase(addPartner.rejected, (state, action) => {
                 state.eventIsLoading = false;
                 state.error = action.payload || action.error.message;
             });

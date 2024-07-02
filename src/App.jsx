@@ -47,7 +47,7 @@ function App() {
     <>
       <ChakraProvider theme={theme}>
         <BrowserRouter>
-          <Layout>
+          <Layout />
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
@@ -73,7 +73,6 @@ function App() {
               <Route path='/adminscheduleview' element={<AdminZone><AdminScheduleView /></AdminZone>} />
               {/* <Route path="/footer" element={<Footer />} /> */}
             </Routes>
-          </Layout>
         </BrowserRouter>
       </ChakraProvider>
     </>
