@@ -42,7 +42,7 @@ const Buttons = ({ options }) => {
                 value={option.value}
                 width='50%'
                 height='24px'
-                marginTop='-0.5px'
+                marginTop='-0.1px'
                 borderRadius='100'
                 backgroundColor={activeButton === option.value ? '#0F8BA0' : 'transparent'}
                 color={activeButton === option.value ? 'white' : '#191919'}

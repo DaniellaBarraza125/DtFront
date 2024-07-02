@@ -24,6 +24,21 @@ export const getMeetingByUser = createAsyncThunk(
         }
     },
 );
+export const createMeeting = createAsyncThunk(
+    "meeting/createMeeting",
+    async () => {
+        try {
+            const token = localStorage.getItem("token");
+            if (!token) {
+                throw new Error("Token not found in localStorage");
+            }
+            return await meetingService.createMeeting(token);
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
+    },
+);
 
 export const meetingSlice = createSlice({
     name: "meeting",
