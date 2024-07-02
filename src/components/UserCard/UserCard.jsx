@@ -6,27 +6,28 @@ export const UserCard = ({ user }) => {
   return (
     <>
       <Container maxW="md" spacing={4}> 
-      <Center>      
-          <Divider flex='1' ml='4' borderColor='primary.50' paddingBottom='5' w='90%'/>
-        </Center>
+      
+    
         <Link to={`/userdetail/${user.id}`}>
-          <Container padding='0' paddingTop='5' height='20vh' display='flex' justifyContent='space-between' alignContent='center'>
-            <Box display="flex" direction="row" key={user.id}>
+        
+          <Container  paddingX='0' paddingY='16px' display='flex' justifyContent='space-between' alignContent='center' borderTop='#718096 1px solid' >
+            <Box display="flex" direction="row" w='343px' key={user.id} height='108px' >
               <Box mr={4}>
                 <Image
                   borderRadius='10px'
                   objectFit="cover"
-                  width="100%"
-                  height="14vh"
+                  width="95px"
+                  minW='95px'
+                  height="108px"
                   src="https://images.unsplash.com/photo-1667489022797-ab608913feeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw5fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=800&q=60"
                   alt="Caffe Latte"
                 />
               </Box>
               <Box display='flex' justifyContent='center' flexDirection='column'>
-                <Heading fontSize="md">{user?.nombre} {user?.apellido}</Heading>
-                <Text fontSize="sm" py="2">{user.puesto_trabajo}</Text>
+                <Heading fontSize="14px">{user?.nombre} {user?.apellido}</Heading>
+                <Text fontSize="12px" py="2">{user.puesto_trabajo}</Text>
                 <Box className='Tags'>
-                <Tag variant='outline' fontSize="sm" py="2" borderRadius={12}>{user.nombre_empresa}</Tag>
+                <Tag variant='outline' fontSize="12px" py="2" height='20px' borderRadius={12}>{user.nombre_empresa}</Tag>
                 </Box>
               </Box>
             </Box>
