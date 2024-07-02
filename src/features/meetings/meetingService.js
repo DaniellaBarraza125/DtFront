@@ -10,9 +10,19 @@ const getMeetingByUser = async () => {
     });
     return res.data;
 };
+const createMeeting = async () => {
+    const token = localStorage.getItem("token");
+    const res = await axios.post(API_URL + "/", {
+        headers: {
+            Authorization: token,
+        },
+    });
+    return res.data;
+};
 
 const meetingService = {
     getMeetingByUser,
+    createMeeting,
 };
 
 export default meetingService;
