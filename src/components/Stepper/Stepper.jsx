@@ -76,24 +76,27 @@ const Stepper = () => {
         return regex.test(email);
     };
 
-    const handleInteresChange = (value) => {
-        setFormData((prevState) => ({
-          ...prevState,
-          interes: prevState.interes.includes(value) 
-            ? prevState.interes.filter((interest) => interest !== value) 
-            : [...prevState.interes, value]
-        }));
+    const handleLoginClick = () => {
+        window.location.href = '/login';
       };
 
-      const handleAllergenChange = (value) => {
-        setFormData((prevState) => ({
-          ...prevState,
-          allergen: prevState.allergen.includes(value) 
-            ? prevState.allergen.filter((allergen) => allergen !== value) 
-            : [...prevState.allergen, value]
+      const handleInteresChange = (value) => {
+        setFormValues((prevState) => ({
+            ...prevState,
+            interest: prevState.interest.includes(value)
+                ? prevState.interest.filter((interest) => interest !== value)
+                : [...prevState.interest, value]
         }));
-      };
- 
+    };
+
+    const handleAllergenChange = (value) => {
+        setFormValues((prevState) => ({
+            ...prevState,
+            allergen: prevState.allergen.includes(value)
+                ? prevState.allergen.filter((allergen) => allergen !== value)
+                : [...prevState.allergen, value]
+        }));
+    };
 
     const handleCheckboxChange = (group, value) => {
         setFormValues(prevValues => {
@@ -224,7 +227,7 @@ const Stepper = () => {
                 <Box>
                     <div className='container_login'>
                         <p className='info_login'>¿Ya tienes una cuenta?</p>
-                        <button className='btn_login'>Iniciar Sesión</button>
+                        <button className='btn_login_register' onClick={handleLoginClick}>Iniciar Sesión</button>
                     </div>
                     <div className='spam'>
                         <img className="spam-image" src={ Logotipo }/>
@@ -356,7 +359,7 @@ const Stepper = () => {
                             placeholder='Ejemplo'
                         />
                     </FormControl>
-
+                    
                     <FormControl isRequired mt={4}>
                         <FormLabel>Añadir foto</FormLabel>
                         <InputGroup>
@@ -432,7 +435,7 @@ const Stepper = () => {
             </Container>
 
             <Container maxW="container.md" p={4} display={activeStep === 3 ? 'block' : 'none'}>
-                <Box>  
+                <Box>
                     <FormControl>
                         <FormLabel>Intereses</FormLabel>
                         <Wrap>

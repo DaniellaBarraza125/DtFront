@@ -12,6 +12,7 @@ import {
   Text,
   VStack,
 } from '@chakra-ui/react';
+import "./Products.scss";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
