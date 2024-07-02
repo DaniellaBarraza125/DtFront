@@ -9,6 +9,7 @@ import {
   Input,
   VStack,
 } from '@chakra-ui/react';
+import Logotipo from "../../assets/Images/Logotipo.png"
 import "./Login.scss";
 
 const Login = () => {
@@ -44,6 +45,11 @@ const Login = () => {
 
   return (
     <Box maxW="md" mx="auto" mt={5} p={4}>
+      <div className='spam'>
+        <img className="spam-image" src={ Logotipo }/>
+        <p className='spam_info'>Descubre las últimas innovaciones en tecnología educativa.</p>
+      </div>
+      <h2 className='title_info'>Crea tu cuenta</h2>
       <form onSubmit={onSubmit}>
         <VStack spacing={4}>
           <FormControl isRequired>
