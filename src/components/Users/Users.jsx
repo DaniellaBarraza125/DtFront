@@ -1,14 +1,16 @@
 import React, { useEffect } from 'react';
 import { UserCard } from '../UserCard/UserCard';
-import { Box, Container, Heading } from '@chakra-ui/react';
+import { Box, Button, Container, Heading, Modal, ModalBody, ModalCloseButton, ModalContent, useDisclosure } from '@chakra-ui/react';
 import Tags from '../Tags/Tags';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUsers } from '../../features/auth/authSlice';
 import Buttons from '../Buttons/Buttons';
 import Footer from '../Footer/Footer';
+import AddPartner from '../AddPartner/AddPartner';
 
-const Users = ({ propUsers, hideButtons, hideFooter, height }) => {
+const Users = ({ propUsers, hideButtons, hideFooter, height, deleteButton }) => {
 	const dispatch = useDispatch();
+	const { isOpen, onOpen, onClose } = useDisclosure();
 	const { users: stateUsers, isLoading } = useSelector((state) => state.auth);
 
 	useEffect(() => {
@@ -31,7 +33,7 @@ const Users = ({ propUsers, hideButtons, hideFooter, height }) => {
 	];
 
 	return (
-		<Box height={height ? height : '100vh'} display='flex' flexDirection='column' marginTop={5} width='100%'>
+		<Box height={height ? height : '100vh'} display='flex' flexDirection='column' marginTop={5} width='100%' onClick={onOpen}>
 			<Container flex='1' display='flex' flexDirection='column' overflow='hidden'>
 				<Box></Box>
 
@@ -47,14 +49,24 @@ const Users = ({ propUsers, hideButtons, hideFooter, height }) => {
 						<p>Loading...</p>
 					) : (
 						<>
-							{users.map((user, i) => (
-								<UserCard key={i} user={user} />
+							{users.map((user) => (
+								<>
+								<UserCard key={user.id} user={user} />
+								</>
 							))}
 						</>
 					)}
 				</Box>
 				<Footer hideFooter={hideFooter}/>
 			</Container>
+			<Modal isOpen={isOpen} onClose={onClose}>
+				<ModalContent maxW='md' mx='auto' mt='10' p='6' borderWidth='1px' borderRadius='lg' boxShadow='lg'>
+					<ModalBody>
+						<ModalCloseButton />
+						<AddPartner />
+					</ModalBody>
+				</ModalContent>
+			</Modal>
 		</Box>
 	);
 };

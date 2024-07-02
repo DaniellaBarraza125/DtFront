@@ -61,6 +61,7 @@ const PanelAdmin = ({ hideFooter }) => {
 										bottom='2.5rem'
 										right='0'
 										onClick={onOpen}
+										_hover={{ bg: '#0F8BA0'}}
 									>
 										Añadir
 									</Button>
@@ -83,9 +84,26 @@ const PanelAdmin = ({ hideFooter }) => {
 								<Divider borderColor='black' />
 							</Box>
 						</Box>
-						<Box>
+						<Box display='flex' flexDirection='column' alignItems='end'>
 							{asistentes.length > 0 ? (
+								<>
 								<Users hideButtons={true} users={asistentes} hideFooter={true} height='60vh'/>
+								<Button
+										width='216px'
+										height='10px'
+										padding='30px'
+										borderRadius='80'
+										backgroundColor='#0F8BA0'
+										_hover={{ bg: '#0F8BA0'}}
+										color='white'
+										position='relative'
+										bottom='2.5rem'
+										right='0'
+										onClick={onOpen}
+									>
+										Enviar contenido
+									</Button>
+								</>
 							) : (
 								<Box textAlign='center' width='100%'>
 									No hay asistentes disponibles.
@@ -106,7 +124,7 @@ const PanelAdmin = ({ hideFooter }) => {
 						</Box>
 						<Box height='30%'>
 							{ponentes.length > 0 ? (
-								<Users hideButtons={true} users={ponentes} hideFooter={true} height='60vh' />
+								<Users hideButtons={true} users={ponentes} hideFooter={true} height='60vh' deleteButton={true}/>
 							) : (
 								<Box textAlign='center' width='100%'>
 									No hay ponentes disponibles.
