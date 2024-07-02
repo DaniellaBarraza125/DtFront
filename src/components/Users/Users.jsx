@@ -59,7 +59,7 @@ const Users = ({ propUsers, hideButtons, hideFooter, height, deleteButton }) => 
         const match = stateUser.cluster == parseInt(user.cluster);
         return match;
     });
-
+console.log(meetings);
     const tags = [
         { label: 'Todas', value: 'all', count: users.length },
         { label: 'One to One', value: 'oneToOne', count: meetings.length },
