@@ -20,6 +20,7 @@ import PanelInfo from '../PanelInfo/PanelInfo';
 import Users from '../Users/Users';
 import Partners from '../Partners/Partners';
 import AddPartner from '../AddPartner/AddPartner';
+import { sendSummary } from '../../features/emails/emailSlice';
 
 const PanelAdmin = ({ hideFooter }) => {
 	const { users } = useSelector((state) => state.auth);
@@ -30,32 +31,44 @@ const PanelAdmin = ({ hideFooter }) => {
 	const handleOpenModal = (component) => {
 		setComponentToRender(component);
 		onOpen();
-	  };
+	};
 	const sendEmails = () => {
 		console.log('enviando emails');
-		dispatch(sendEmails());
-	}
+		dispatch(sendSummary());
+	};
 
 	const asistentes = users.filter((user) => user.rol === 'user');
 	const ponentes = users.filter((user) => user.rol === 'speaker');
 	const partners = users.filter((user) => user.rol === 'partner');
-    console.log( ponentes);
+	console.log(ponentes);
 
 	const renderComponent = () => {
-    switch (componentToRender) {
-      case 'partner':
-        return <AddPartner />;
-      case 'enviar':
-        return (
-          <Box>
-            <Text>¿Quieres enviar todos los resumenes de las ponencias a los usuarios que se inscribieron en ellas?</Text>
-			<Button onClick={sendEmails}>Enviar correos</Button>
-          </Box>
-        );
-      default:
-        return null;
-    }
-  };
+		switch (componentToRender) {
+			case 'partner':
+				return <AddPartner />;
+			case 'enviar':
+				return (
+					<>
+						<Text>¿Quieres enviar todos los resumenes de las ponencias a los usuarios que se inscribieron en ellas?</Text>
+						<Button
+							width='216px'
+							height='10px'
+							padding='30px'
+							borderRadius='80'
+							backgroundColor='#0F8BA0'
+							color='white'
+							bottom='2.5rem'
+							_hover={{ bg: '#0F8BA0' }}
+							onClick={sendEmails}
+						>
+							Enviar correos
+						</Button>
+					</>
+				);
+			default:
+				return null;
+		}
+	};
 
 	return (
 		<Box className='panelAdmin' height='90vh' display='flex' flexDirection='column' alignItems='center' paddingX='3rem'>
@@ -88,7 +101,7 @@ const PanelAdmin = ({ hideFooter }) => {
 										bottom='2.5rem'
 										right='0'
 										onClick={() => handleOpenModal('partner')}
-										_hover={{ bg: '#0F8BA0'}}
+										_hover={{ bg: '#0F8BA0' }}
 									>
 										Añadir
 									</Button>
@@ -114,14 +127,14 @@ const PanelAdmin = ({ hideFooter }) => {
 						<Box display='flex' flexDirection='column' alignItems='end'>
 							{asistentes.length > 0 ? (
 								<>
-								<Users hideButtons={true} users={asistentes} hideFooter={true} height='60vh'/>
-								<Button
+									<Users hideButtons={true} users={asistentes} hideFooter={true} height='60vh' />
+									<Button
 										width='216px'
 										height='10px'
 										padding='30px'
 										borderRadius='80'
 										backgroundColor='#0F8BA0'
-										_hover={{ bg: '#0F8BA0'}}
+										_hover={{ bg: '#0F8BA0' }}
 										color='white'
 										position='relative'
 										bottom='2.5rem'
@@ -151,7 +164,7 @@ const PanelAdmin = ({ hideFooter }) => {
 						</Box>
 						<Box height='30%'>
 							{ponentes.length > 0 ? (
-								<Users hideButtons={true} users={ponentes} hideFooter={true} height='60vh' deleteButton={true}/>
+								<Users hideButtons={true} propUsers={ponentes} hideFooter={true} height='60vh' deleteButton={true} editButton={true}/>
 							) : (
 								<Box textAlign='center' width='100%'>
 									No hay ponentes disponibles.
@@ -163,7 +176,7 @@ const PanelAdmin = ({ hideFooter }) => {
 			</Box>
 			<Modal isOpen={isOpen} onClose={onClose}>
 				<ModalContent maxW='md' mx='auto' mt='10' p='6' borderWidth='1px' borderRadius='lg' boxShadow='lg'>
-					<ModalBody>
+					<ModalBody display={'flex'} flexDirection={'column'}>
 						<ModalCloseButton />
 						{renderComponent()}
 					</ModalBody>

@@ -19,7 +19,7 @@ export const register = createAsyncThunk(
     "auth/register",
     async (user, thunkAPI) => {
         try {
-            const response = await authService.login(user);
+            const response = await authService.register(user);
             localStorage.setItem("token", response.token);
             localStorage.setItem("user", JSON.stringify(response.user));    
             return response;
@@ -47,7 +47,6 @@ export const login = createAsyncThunk("auth/login", async (user, thunkAPI) => {
 export const logout = createAsyncThunk("auth/logout", async () => {
     try {
         await authService.logout();
-
         localStorage.removeItem("token");
         localStorage.removeItem("user");
     } catch (error) {
@@ -77,6 +76,7 @@ export const getUsersByid = createAsyncThunk(
     "auth/getUsersById",
     async (id) => {
         try {
+            console.log('slice', id);
             return await authService.getUsersByid(id);
         } catch (error) {
             console.error(error);

@@ -7,7 +7,7 @@ import Buttons from '../Buttons/Buttons';
 import Footer from '../Footer/Footer';
 import AddPartner from '../AddPartner/AddPartner';
 
-const Users = ({ propUsers, hideButtons, hideFooter, height, deleteButton }) => {
+const Users = ({ propUsers, hideButtons, hideFooter, height, deleteButton, editButton }) => {
     const dispatch = useDispatch();
     const { users: stateUsers, isLoading, user } = useSelector((state) => state.auth);
 	const { isOpen, onOpen, onClose } = useDisclosure();
@@ -77,7 +77,6 @@ const Users = ({ propUsers, hideButtons, hideFooter, height, deleteButton }) => 
         <Box height={height ? height : '100vh'} display='flex' flexDirection='column' marginTop={5} width='100%' onClick={onOpen}>
             <Container flex='1' display='flex' flexDirection='column' overflow='hidden'>
                 <Box></Box>
-
                 <Box position='sticky' top='0' zIndex='1' backgroundColor='white' >
                     {!hideButtons && <Buttons options={options} />}
                 </Box>
@@ -116,7 +115,7 @@ const Users = ({ propUsers, hideButtons, hideFooter, height, deleteButton }) => 
                             ) : (
                                 <>
                                     {filteredUsers.map((user, i) => (
-                                        <UserCard key={i} user={user} />
+                                        <UserCard key={i} user={user} editButton={editButton ? true: false}/>
                                     ))}
                                     {matches.map((match, i) => (
                                         <UserCard key={i} user={match} />

@@ -55,7 +55,7 @@ const getUsersByRole = async (role) => {
 };
 const getUsersByid = async (id) => {
     const token = localStorage.getItem("token");
-
+    console.log("service", id);
     const res = await axios.get(API_URL + "/id/" + id, {
         headers: {
             Authorization: token,

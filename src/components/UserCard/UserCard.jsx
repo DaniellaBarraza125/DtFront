@@ -1,11 +1,23 @@
-import { Card, CardBody, Text, Stack, Heading, Divider, Box, Image, Container, Center, Tag } from '@chakra-ui/react';
-import React from 'react';
+import { Card, CardBody, Text, Stack, Heading, Divider, Box, Image, Container, Center, Tag, Button, Modal, ModalContent, ModalBody, ModalCloseButton, useDisclosure } from '@chakra-ui/react';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import AddPartner from '../AddPartner/AddPartner';
 
-export const UserCard = ({ user }) => {
+export const UserCard = ({ user, editButton }) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [id, setId] = useState(null);
+	const dispatch = useDispatch();
+
+  const handleOpenModal = (id) => {
+		onOpen();
+    setId(id)
+	};
+
   return (
     <>
-      <Container maxW="md" spacing={4}> 
+      <Container maxW="md" spacing={4}>
+      {editButton && <Button onClick={()=> handleOpenModal(user.id)}>Edit</Button>}
       <Center>      
           <Divider flex='1' ml='4' borderColor='primary.50' paddingBottom='5' w='90%'/>
         </Center>
@@ -33,6 +45,14 @@ export const UserCard = ({ user }) => {
         
           </Container>
         </Link>
+        <Modal isOpen={isOpen} onClose={onClose}>
+				<ModalContent maxW='md' mx='auto' mt='10' p='6' borderWidth='1px' borderRadius='lg' boxShadow='lg'>
+					<ModalBody display={'flex'} flexDirection={'column'}>
+						<ModalCloseButton />
+						{<AddPartner admin={true} id={id}/>}
+					</ModalBody>
+				</ModalContent>
+			</Modal>
       </Container>
     </>
   );
