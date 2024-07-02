@@ -2,6 +2,7 @@ import { Card, CardBody, Box, Text, Heading, Center, Grid, GridItem } from '@cha
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUsers } from '../../features/auth/authSlice';
+import { getAllPartners } from '../../features/partner/partnerSlice';
 
 const PanelInfo = () => {
 	const dispatch = useDispatch();
@@ -10,6 +11,7 @@ const PanelInfo = () => {
 
 	useEffect(() => {
 		dispatch(getUsers());
+		dispatch(getAllPartners());
 	}, [dispatch]);
 
 	if (error) {

@@ -3,15 +3,17 @@ import { SearchIcon } from '@chakra-ui/icons';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUsers, getUsersByid } from '../../features/auth/authSlice';
-import { addPartner, getPartnerById } from '../../features/partner/partnerSlice';
+import { addPartner, getPartnerByIdUser, updatePartner } from '../../features/partner/partnerSlice';
 
 const AddPartner = ({ admin, id: idUser }) => {
 	const { users, user, userDetail } = useSelector((state) => state.auth);
+	const { partner, partners } = useSelector((state) => state.partner);
 	const [searchTerm, setSearchTerm] = useState('');
 	const [filteredOptions, setFilteredOptions] = useState(users);
 	const [id, setId] = useState(idUser);
 	const dispatch = useDispatch();
 	let editUser = {};
+	let partnerToEdit = {};
 	useEffect(() => {
 		setId(idUser);
 		console.log('id', id);
@@ -20,10 +22,11 @@ const AddPartner = ({ admin, id: idUser }) => {
 			console.log('id', id);
 			console.log('users', users);
 			editUser = users.find((user) => user.id === id);
+			partnerToEdit = partners.find((partner) => partner.user_id === id);
 			console.log('edituser', editUser);
 		}
 	}, [dispatch]);
-
+	console.log('partner', partner);
 	console.log('admin', admin);
 	const initialValues = {
 		nombre_empresa: '',
@@ -39,7 +42,7 @@ const AddPartner = ({ admin, id: idUser }) => {
 	console.log('formdata', formData);
 
 	useEffect(() => {
-		setFormData(editUser);
+		setFormData(partnerToEdit);
 	}, [useState]);
 
 	const handleChange = (e) => {
@@ -63,6 +66,20 @@ const AddPartner = ({ admin, id: idUser }) => {
 		setFormData(initialValues);
 		setSearchTerm('');
 	};
+	const editPartner = () => {
+		const { numero_meetings, eventos_participados, importe_pagado } = formData;
+		const numeroMeetingsToInt = parseInt(numero_meetings);
+		const eventosParticipadosToInt = parseInt(eventos_participados);
+		const importePagadoFormat = importe_pagado + '€';
+		dispatch(updatePartner({
+			...formData,
+			numero_meetings: numeroMeetingsToInt,
+			eventos_participados: eventosParticipadosToInt,
+			importe_pagado: importePagadoFormat,
+		}));
+		setFormData(initialValues);
+		setSearchTerm('');
+	}
 
 	const handleKeyUp = async (event) => {
 		if (event.key === 'Enter') {
@@ -142,7 +159,7 @@ const AddPartner = ({ admin, id: idUser }) => {
 						))}
 					</Select>
 				</FormControl>
-        {admin ? (<Button colorScheme='teal' size='md' width='auto' onClick={handleSavePartner}>
+        {admin ? (<Button colorScheme='teal' size='md' width='auto' onClick={editPartner}>
 					Edita el partner
 				</Button>) : (<Button colorScheme='teal' size='md' width='auto' onClick={handleSavePartner}>
 					Añadir

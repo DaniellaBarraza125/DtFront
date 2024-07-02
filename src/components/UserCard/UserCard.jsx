@@ -1,27 +1,31 @@
 import { Card, CardBody, Text, Stack, Heading, Divider, Box, Image, Container, Center, Tag, Button, Modal, ModalContent, ModalBody, ModalCloseButton, useDisclosure } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import AddPartner from '../AddPartner/AddPartner';
 
 export const UserCard = ({ user, editButton }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [id, setId] = useState(null);
 	const dispatch = useDispatch();
-
+  const navigate = useNavigate();
+  
   const handleOpenModal = (id) => {
-		onOpen();
     setId(id)
+		onOpen();
 	};
 
+  const handleClik = () => {
+    console.log('editButton', editButton);
+    editButton ? handleOpenModal(user.id) : navigate(`/userdetail/${user.id}`)
+  }
   return (
     <>
       <Container maxW="md" spacing={4}>
-      {editButton && <Button onClick={()=> handleOpenModal(user.id)}>Edit</Button>}
       <Center>      
           <Divider flex='1' ml='4' borderColor='primary.50' paddingBottom='5' w='90%'/>
         </Center>
-        <Link to={`/userdetail/${user.id}`}>
+        <Link onClick={handleClik}>
           <Container padding='0' paddingTop='5' height='20vh' display='flex' justifyContent='space-between' alignContent='center'>
             <Box display="flex" direction="row" key={user.id}>
               <Box mr={4}>
