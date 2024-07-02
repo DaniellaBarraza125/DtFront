@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { UserCard } from '../UserCard/UserCard';
-import { Box, Container, Button, Text } from '@chakra-ui/react';
+import { Box, Container, Button, Text, useDisclosure } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUsers } from '../../features/auth/authSlice';
 import { getMeetingByUser } from '../../features/meetings/meetingSlice';
 import Buttons from '../Buttons/Buttons';
 import Footer from '../Footer/Footer';
 
-const Users = ({ propUsers, hideButtons, hideFooter }) => {
+const Users = ({ propUsers, hideButtons, hideFooter, height, deleteButton }) => {
     const dispatch = useDispatch();
     const { users: stateUsers, isLoading, user } = useSelector((state) => state.auth);
     const { meetings } = useSelector((state) => state.meeting);
+	const { isOpen, onOpen, onClose } = useDisclosure();
     const [filteredUsers, setFilteredUsers] = useState([]);
     const [noMeetings, setNoMeetings] = useState(false);
     const [selectedTag, setSelectedTag] = useState('all');
@@ -66,7 +67,7 @@ const Users = ({ propUsers, hideButtons, hideFooter }) => {
     ];
 
     return (
-        <Box height='100vh' display='flex' flexDirection='column' marginTop={5} width='100%'>
+        <Box height={height ? height : '100vh'} display='flex' flexDirection='column' marginTop={5} width='100%' onClick={onOpen}>
             <Container flex='1' display='flex' flexDirection='column' overflow='hidden'>
                 <Box></Box>
 

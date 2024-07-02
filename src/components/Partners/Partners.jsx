@@ -5,8 +5,9 @@ import { getAllPartners } from '../../features/partner/partnerSlice';
 
 import { Box, Button, Text } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
+import Footer from '../Footer/Footer';
 
-const Partners = () => {
+const Partners = ({height, hideFooter, hideButtons}) => {
   const dispatch = useDispatch();
   const { partners, isLoading } = useSelector((state) => state.partner);
   const [filteredPartners, setFilteredPartners] = useState([]);
@@ -46,8 +47,8 @@ const Partners = () => {
   ];
 
   return (
-    <Box>
-      <Box display="flex" justifyContent="space-evenly" marginBottom="20px">
+<Box height={height ? height : '100vh'} display='flex' flexDirection='column' marginTop={5} width='100%'>
+        <Box display="flex" justifyContent="space-evenly" marginBottom="20px">
         {tags.map((tag, index) => (
           <Button
             key={index}
@@ -76,6 +77,7 @@ const Partners = () => {
           <Partner  key={partner.id} partner={partner} />
         ))}
       </Box>
+      <Footer hideFooter={hideFooter}/>
     </Box>
   );
 };

@@ -103,7 +103,7 @@ const initialValues ={
 					<FormLabel>Representante</FormLabel>
           <Input type='text' placeholder='Pulsa Enter para buscar' value={searchTerm} onKeyUp={handleKeyUp} onChange={(e) => setSearchTerm(e.target.value)}/>
 					<Select placeholder={formData.user_id != 0 ? (formData.nombre + ' '+ formData.apellido) : 'Selecciona una opción'} value={formData.user_id != 0 ? formData.user_id : 'Selecciona una opción'} onChange={handleChange}>
-						{filteredOptions.map((user) => <option value={user.id}>{user.nombre} {user.apellido}</option>)}
+						{filteredOptions.map((user) => <option key={user.id} value={user.id}>{user.nombre} {user.apellido}</option>)}
 					</Select>
 				</FormControl>
 				<Button colorScheme='teal' size='md' width='auto' onClick={handleSavePartner}>
