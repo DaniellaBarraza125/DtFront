@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
 	Box,
 	Button,
@@ -25,13 +25,17 @@ const PanelAdmin = ({ hideFooter }) => {
 	const { users } = useSelector((state) => state.auth);
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const [componentToRender, setComponentToRender] = useState(null);
+	const dispatch = useDispatch();
 
 	const handleOpenModal = (component) => {
 		setComponentToRender(component);
 		onOpen();
 	  };
+	const sendEmails = () => {
+		console.log('enviando emails');
+		dispatch(sendEmails());
+	}
 
-	// console.log(users);
 	const asistentes = users.filter((user) => user.rol === 'user');
 	const ponentes = users.filter((user) => user.rol === 'speaker');
 	const partners = users.filter((user) => user.rol === 'partner');
@@ -44,7 +48,8 @@ const PanelAdmin = ({ hideFooter }) => {
       case 'enviar':
         return (
           <Box>
-            <Text>Enviar contenido</Text>
+            <Text>¿Quieres enviar todos los resumenes de las ponencias a los usuarios que se inscribieron en ellas?</Text>
+			<Button onClick={sendEmails}>Enviar correos</Button>
           </Box>
         );
       default:

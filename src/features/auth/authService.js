@@ -64,6 +64,15 @@ const getUsersByid = async (id) => {
 
     return res.data;
 };
+const updateUser = async (user) => {
+    const token = localStorage.getItem("token");
+    const res = await axios.put(API_URL + "/id/" + user.id, user, {
+        headers: {
+            Authorization: token,
+        },
+    });
+    return res.data;
+};
 
 const authService = {
     login,
@@ -72,6 +81,7 @@ const authService = {
     getUsers,
     getUsersByRole,
     getUsersByid,
+    updateUser,
 };
 
 export default authService;

@@ -19,7 +19,10 @@ export const register = createAsyncThunk(
     "auth/register",
     async (user, thunkAPI) => {
         try {
-            return await authService.register(user);
+            const response = await authService.login(user);
+            localStorage.setItem("token", response.token);
+            localStorage.setItem("user", JSON.stringify(response.user));    
+            return response;
         } catch (error) {
             console.error(error);
             const msgError = error.response.data.msg;
@@ -79,6 +82,16 @@ export const getUsersByid = createAsyncThunk(
             console.error(error);
         }
     },
+);
+export const updateUser = createAsyncThunk(
+    "auth/updateUser",
+    async (user) => {
+        try {
+            return await authService.updateUser(user);
+        } catch (error) {
+            console.error(error);
+        }
+    }, 
 );
 
 
