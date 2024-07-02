@@ -1,0 +1,30 @@
+.ticket_h1 {
+    color: var(--Dark, #191919);
+    font-family: "Montserrat", sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 30px;
+    letter-spacing: -0.44px;
+    margin-top: 24px;
+    margin-bottom: 8px;
+    margin-left: 16px;
+}
+
+.ticket_p {
+    font-family: "Montserrat", sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-left: 16px;
+    width: 483px;
+    margin-bottom: 24px;
+}
+
+.select_plan {
+    border-radius: 6px;
+    border: 1px solid var(--Gris-bordes-cards, #A2C0C6);
+    width: 480px;
+    padding: 10px;
+}

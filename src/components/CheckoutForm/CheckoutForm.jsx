@@ -17,6 +17,7 @@ const CheckoutForm = () => {
   const [cardElement, setCardElement] = useState(''); // Estado para almacenar los datos de la tarjeta
 
   const imageUrl = "https://img.freepik.com/fotos-premium/mano-portatil-persona-escribiendo-correo-electronico-o-mensaje-negocios-marketing-redes-sociales-o-redes_590464-269480.jpg?w=900";
+
   const navigate = useNavigate()
 
 
@@ -26,11 +27,11 @@ const handleSubmit = async (event) => {
     setProcessing(true);
 
     const { error, paymentMethod } = await stripe.createPaymentMethod({
-        type: 'card',
-        card: elements.getElement(CardElement),
-        billing_details: {
-            name: fullName, // Incluir el nombre completo en los detalles de facturación
-        },
+      type: 'card',
+      card: elements.getElement(CardElement),
+      billing_details: {
+        name: fullName, // Incluir el nombre completo en los detalles de facturación
+      },
     });
 
     if (error) {
@@ -64,6 +65,8 @@ const handleSubmit = async (event) => {
     }
 };
 
+
+  const formCompleted = fullName !== "" && cardElement !== "";
 
   const formCompleted = fullName !== "" && cardElement !== "";
 

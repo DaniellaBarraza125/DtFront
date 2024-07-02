@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { Box, Stepper as ChakraStepper,Step,StepIndicator,StepStatus,StepIcon,StepNumber,StepTitle,StepDescription,StepSeparator,Container,Button,FormControl,FormLabel,FormErrorMessage, Input,InputGroup,InputLeftElement,InputRightElement,Checkbox,CheckboxGroup,Stack,Select,useToast} from '@chakra-ui/react';
+import axios from 'axios';
+import { Box, Stepper as ChakraStepper,HStack,Tag,TagLabel,TagLeftIcon,TagRightIcon,TagCloseButton,Step,StepIndicator,StepStatus,StepIcon,StepNumber,StepTitle,StepDescription,StepSeparator,Container,Button,FormControl,FormLabel,FormErrorMessage, Input,InputGroup,InputLeftElement,InputRightElement,Checkbox,CheckboxGroup,Stack,Select,useToast,Wrap,WrapItem} from '@chakra-ui/react';
 import { useDispatch } from 'react-redux';
 import { register } from '../../features/auth/authSlice';
 import { LuImagePlus } from "react-icons/lu";
 import { FiEye, FiEyeOff } from 'react-icons/fi';
 import Logotipo from "../../assets/Images/Logotipo.png"
+import Products from '../Products/Products';
 import "./Stepper.scss";
 
 const steps = [
@@ -12,6 +14,11 @@ const steps = [
     { title: 'Datos personales'},
     { title: 'Empresa' },
     { title: 'Extras' },
+    { title: 'Extras' },
+    { title: 'Extras' },
+
+
+
 ];
 
 const Stepper = () => {
@@ -21,14 +28,18 @@ const Stepper = () => {
         password: '',
         nombre: '',
         apellido: '',
+        pais: '',
+        direccion: '',
+        codigo_postal: '',
+        poblacion: '',
+        provincia: '',
+        telefono: '',
         image_path:'',
         nombre_empresa: '',
         puesto_trabajo: '',
         linkedin: '',
-        interests: [],
-        
-        pais: '',
-        objectives: [],
+        interest: [],
+        allergen: [],
         otherObjective: '',
         clientType: '',
     };
@@ -65,6 +76,28 @@ const Stepper = () => {
         return regex.test(email);
     };
 
+    const handleLoginClick = () => {
+        window.location.href = '/login';
+      };
+
+      const handleInteresChange = (value) => {
+        setFormValues((prevState) => ({
+            ...prevState,
+            interest: prevState.interest.includes(value)
+                ? prevState.interest.filter((interest) => interest !== value)
+                : [...prevState.interest, value]
+        }));
+    };
+
+    const handleAllergenChange = (value) => {
+        setFormValues((prevState) => ({
+            ...prevState,
+            allergen: prevState.allergen.includes(value)
+                ? prevState.allergen.filter((allergen) => allergen !== value)
+                : [...prevState.allergen, value]
+        }));
+    };
+
     const handleCheckboxChange = (group, value) => {
         setFormValues(prevValues => {
             const newValues = prevValues[group].includes(value)
@@ -89,7 +122,7 @@ const Stepper = () => {
         if (objectivesError || interestsError) {
             setErrors({
                 objectives: objectivesError,
-                interests: interestsError
+                interest: interestsError
             });
             return;
         }
@@ -102,18 +135,22 @@ const Stepper = () => {
         setFormValues(initialFormValues);
         setErrors({
             objectives: false,
-            interests: false
+            interest: false
         });
         setIsSubmitting(false); 
     };
 
-    const interestsOptions = [
-        { id: 1, label: 'Interés 1' },
-    ];
+    const interesOptions = [
+        'Accesibilidad', 'Analítica', 'Antiplagio', 'Certificación', 'Contenidos',
+        'Generación de vídeo', 'Gestión de la formación', 'Herramientas del autor',
+        'Inteligencia artificial', 'Laboratorios Virtuales', 'LMS Educativo', 
+        'LMS Corporativo', 'Proctoring', 'Repositorio digital', 'Sistema de Gestión', 
+        'Videoconferencia'
+      ];
 
-    const objectiveOptions = [
-        { id: "obj1", label: 'Objetivo 1' },
-        { id: "obj4", label: 'Otro' }
+    const allergenOptions = [
+        'Leche', 'Huevos', 'Pescado', 'Mariscos', 'Frutos secos', 'Cacahuetes', 'Trigo',
+        'Soja', 'Sésamo', 'Mostaza', 'Apio', 'Sulfitos', 'Lupino', 'Altramuz'
     ];
 
     const handleNext = () => {
@@ -133,8 +170,10 @@ const Stepper = () => {
                 isValid = formValues.nombre_empresa !== '' && formValues.puesto_trabajo !== '' && formValues.linkedin !=='';
                 break;
             case 3:
-                isValid = formValues.objectives.length > 0 && (formValues.objectives.includes('Otro') ? formValues.otherObjective !== '' : true) && formValues.experience !== '' && formValues.clientType !== '' && formValues.interests.length > 0;
+                //isValid = formValues.interest.length > 0;
                 break;
+            case 4:
+                
             default:
                 break;
         }
@@ -166,7 +205,7 @@ const Stepper = () => {
                 <Box>
                     {activeStep > 0 && (
                         <>
-                            <ChakraStepper className='stepper' size='sm' index={activeStep} gap='0'>
+                            <ChakraStepper className='stepper' size='sm' index={activeStep} gap='0' colorScheme='teal'>
                                 {steps.map((step, index) => (
                                     <Step key={index} gap='0'>
                                         <StepIndicator>
@@ -188,7 +227,7 @@ const Stepper = () => {
                 <Box>
                     <div className='container_login'>
                         <p className='info_login'>¿Ya tienes una cuenta?</p>
-                        <button className='btn_login'>Iniciar Sesión</button>
+                        <button className='btn_login_register' onClick={handleLoginClick}>Iniciar Sesión</button>
                     </div>
                     <div className='spam'>
                         <img className="spam-image" src={ Logotipo }/>
@@ -241,7 +280,7 @@ const Stepper = () => {
                             name='nombre'
                             value={formValues.nombre}
                             onChange={handleChange}
-                            placeholder='Ramón'
+                            placeholder='Ejemplo'
                         />
                     </FormControl>
 
@@ -251,7 +290,73 @@ const Stepper = () => {
                             name='apellido'
                             value={formValues.apellido}
                             onChange={handleChange}
-                            placeholder='Sánchez'
+                            placeholder='Ejemplo'
+                        />
+                    </FormControl>
+
+                    <FormControl isRequired mt={4}>
+                        <FormLabel>País</FormLabel>
+                        <div className='container_work'>
+                        <select className='select_work' name='pais'
+                            value={formValues.pais}
+                            onChange={handleChange}>
+                            <option value=""></option>    
+                            <option value="España">España</option>
+                            <option value="Francia">Francia</option>
+                            <option value="UK">UK</option>
+                            <option value="Alemania">Alemania</option>
+                            <option value="Canada">Canada</option>
+                        </select>
+                        </div>
+                    </FormControl>
+
+                    <FormControl isRequired mt={4}>
+                        <FormLabel>Dirección</FormLabel>
+                        <Input
+                            name='direccion'
+                            value={formValues.direccion}
+                            onChange={handleChange}
+                            placeholder='Ejemplo'
+                        />
+                    </FormControl>
+                    
+                    <FormControl isRequired mt={4}>
+                        <FormLabel>Código postal / ZIP</FormLabel>
+                        <Input
+                            name='codigo_postal'
+                            value={formValues.codigo_postal}
+                            onChange={handleChange}
+                            placeholder='Ejemplo'
+                        />
+                    </FormControl>
+
+                    <FormControl isRequired mt={4}>
+                        <FormLabel>Población</FormLabel>
+                        <Input
+                            name='poblacion'
+                            value={formValues.poblacion}
+                            onChange={handleChange}
+                            placeholder='Ejemplo'
+                        />
+                    </FormControl>
+
+                    <FormControl isRequired mt={4}>
+                        <FormLabel>Provincia</FormLabel>
+                        <Input
+                            name='provincia'
+                            value={formValues.provincia}
+                            onChange={handleChange}
+                            placeholder='Ejemplo'
+                        />
+                    </FormControl>
+
+                    <FormControl isRequired mt={4}>
+                        <FormLabel>Teléfono</FormLabel>
+                        <Input
+                            name='telefono'
+                            value={formValues.telefono}
+                            onChange={handleChange}
+                            placeholder='Ejemplo'
                         />
                     </FormControl>
                     
@@ -331,38 +436,64 @@ const Stepper = () => {
 
             <Container maxW="container.md" p={4} display={activeStep === 3 ? 'block' : 'none'}>
                 <Box>
-                    
-                <FormControl mt={4} isInvalid={errors.interests}>
+                    <FormControl>
                         <FormLabel>Intereses</FormLabel>
-                        <CheckboxGroup colorScheme='teal'>
-                            <Stack>
-                                {interestsOptions.map((interest) => (
-                                    <Checkbox
-                                        key={interest.id}
-                                        id={interest.id}
-                                        name='interests'
-                                        value={interest.label}
-                                        isChecked={formValues.interests.includes(interest.label)}
-                                        onChange={() => handleCheckboxChange('interests', interest.label)}
+                        <Wrap>
+                            {interesOptions.map((interes) => (
+                                <WrapItem key={interes}>
+                                    <Tag
+                                        size="lg"
+                                        borderRadius="full"
+                                        variant={formValues.interest.includes(interes) ? "solid" : "outline"}
+                                        colorScheme={formValues.interest.includes(interes) ? "teal" : "gray"}
+                                        onClick={() => handleInteresChange(interes)}
+                                        cursor="pointer"
                                     >
-                                        {interest.label}
-                                    </Checkbox>
-                                ))}
-                            </Stack>
-                        </CheckboxGroup>
-                        {errors.interests && (
-                            <FormErrorMessage>Debe seleccionar al menos un interés.</FormErrorMessage>
-                        )}
+                                        <TagLabel>{interes}</TagLabel>
+                                    </Tag>
+                                </WrapItem>
+                            ))}
+                        </Wrap>
                     </FormControl>
-                    
                 </Box>
             </Container>
+ 
+            <Container maxW="container.md" p={4} display={activeStep === 4 ? 'block' : 'none'}>
+                <Box>    
+                <FormControl>
+                        <FormLabel>Alergenos</FormLabel>
+                        <Wrap>
+                            {allergenOptions.map((allergen) => (
+                                <WrapItem key={allergen}>
+                                    <Tag
+                                        size="lg"
+                                        borderRadius="full"
+                                        variant={formValues.allergen.includes(allergen) ? "solid" : "outline"}
+                                        colorScheme={formValues.allergen.includes(allergen) ? "teal" : "gray"}
+                                        onClick={() => handleAllergenChange(allergen)}
+                                        cursor="pointer"
+                                    >
+                                        <TagLabel>{allergen}</TagLabel>
+                                    </Tag>
+                                </WrapItem>
+                            ))}
+                        </Wrap>
+                    </FormControl>                
+                </Box>
+            </Container>
+
+            <Container maxW="container.md" p={4} display={activeStep === 5 ? 'block' : 'none'}>
+                <Box>    
+                <Products />               
+                </Box>
+            </Container>
+
             <Box className='btn_container' mt={4} display="flex" justifyContent="flex-center">
-                <Button className='btn_next' colorScheme="teal" onClick={activeStep === steps.length - 1 ? handleSubmit : handleNext} disabled={isSubmitting} isLoading={activeStep === steps.length - 1 && isSubmitting}>
-                    {activeStep === steps.length - 1 ? 'Enviar' : 'Siguiente'}
+                <Button className='btn_next' colorScheme="teal" onClick={activeStep === steps.length - 1 ? handleSubmit : handleNext} disabled={isSubmitting} isLoading={activeStep === steps.length - 1 && isSubmitting} borderRadius="80px">
+                    {activeStep === 0 ? 'Crear cuenta' : activeStep === steps.length - 1 ? 'Enviar' : 'Siguiente'}
                 </Button>                
                 {activeStep > 0 && (
-                    <Button className='btn_back' mr={4} onClick={handlePrev}>
+                    <Button className='btn_back' mr={4} onClick={handlePrev} borderRadius="80px">
                         Anterior
                     </Button>
                 )}

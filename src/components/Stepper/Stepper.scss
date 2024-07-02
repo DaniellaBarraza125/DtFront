@@ -17,7 +17,7 @@
     font-weight: 400;
 }
 
-.btn_login {
+.btn_login_register {
     margin-left: 10px;
     padding: 0 8px;;
     border-radius: 80px;
@@ -89,21 +89,22 @@
     flex-direction: column;
     justify-content: end;
     align-items: center;
-    position: fixed;
-    bottom: 40px;
+    //position: fixed; //bien hecho
+    //bottom: 40px; //bien hecho
     width: 100%; 
 }
 
 .btn_next {
     width: 343px;
     height: 48px;
-    background-color: #0F8BA0;
+    margin-top: 60px; //chapuza
+    margin-bottom: 20px;
 }
 
 .btn_back {
     width: 343px;
     height: 48px;
     margin-left: 15px;
-    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
