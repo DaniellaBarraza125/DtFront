@@ -20,7 +20,11 @@ const mail = (
 const UserDetail = () => {
 const dispatch = useDispatch();
 const { id } = useParams();
-const { userDetail, isLoading } = useSelector((state) => state.auth);
+const { userDetail, isLoading,user } = useSelector((state) => state.auth);
+const userId = user.id 
+
+const handleOneToOne = (userId) => {
+    console.log(userId)}
 
 useEffect(() => {
     if (id) {
@@ -102,7 +106,7 @@ return (
             </Box>
             <Center>
                 {speaker && ( <Box mt='30px' justifyContent='center' display='flex' paddingRight='16px' paddingLeft='16px' bottom='0'>
-                <Button w='343px' h='48px' fontSize='16px' fontWeight='600' color='white' borderRadius='80px' bg='#0F8BA0'>
+                <Button onClick={()=> handleOneToOne(userId)} w='343px' h='48px' fontSize='16px' fontWeight='600' color='white' borderRadius='80px' bg='#0F8BA0'>
                 Agendar one to one
                 </Button>
             </Box>)}
