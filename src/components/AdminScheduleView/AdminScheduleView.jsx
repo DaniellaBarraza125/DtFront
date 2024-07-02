@@ -1,12 +1,25 @@
-import { Box, Grid, GridItem, Heading, Flex, Divider, Center, IconButton, Modal, ModalOverlay, ModalContent, ModalBody, useDisclosure, Text, Button } from '@chakra-ui/react';
+import {
+    Box,
+    Grid,
+    GridItem,
+    Heading,
+    Flex,
+    Divider,
+    Center,
+    Modal,
+    ModalOverlay,
+    ModalContent,
+    ModalBody,
+    useDisclosure,
+    Text,
+    Button
+} from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getByDate } from '../../features/events/eventSlice';
 import Event from '../Event/Event';
 import Buttons from '../Buttons/Buttons';
-import { AddIcon } from '@chakra-ui/icons';
 import AddEvent from '../AddEvent/AddEvent';
-import Tags from '../Tags/Tags';
 
 const AdminScheduleView = () => {
     const { eventIsLoading, events } = useSelector((state) => state.event);
@@ -36,8 +49,6 @@ const AdminScheduleView = () => {
     const eventosSalaPrincipal = events.filter(event => event.sala === 'Sala A');
     const eventosSalaWorkshop = events.filter(event => event.sala === 'Sala B');
 
-
-
     return (
         <Flex justifyContent="center">
             <Box borderRadius="1em" width="69vw" overflow="hidden">
@@ -64,27 +75,27 @@ const AdminScheduleView = () => {
                                             border="1px solid #0F8BA0"
                                             borderRadius="55px"
                                             height='3vh'
+                                            onClick={onOpen} // Asegúrate de que onOpen se llama aquí
                                         >
                                             Añadir Ponencia
                                         </Button>
                                     </Box>
                                 </GridItem>
                                 <GridItem colSpan={3}>
-                                    <Box className='fondo' bg='#ededed' width='100%' height='5vh'></Box>
-                            
+                                    <Box className='fondo' bg='#ededed' width='100%' height='2vh'></Box>
                                 </GridItem>
                             </Grid>
                         </Box>
-                        <Box height='615px' className='salas' marginTop={6}>
+                        <Box height='655px' className='salas' marginTop={0}>
                             <GridItem bg='#ededed' flex="1" display="flex" flexDirection="row" overflow="hidden" width="100%" justifyContent='space-around' paddingBottom='15px'>
-                                <Box bg='white' width='31vw' height='70vh' borderRadius='15px' margin='15px 1px' display="flex" flexDirection="column" alignItems="center" paddingX="1.5vw" paddingBottom='3vh' paddingTop='3vh'>
+                                <Box bg='white' width='31vw' height='67vh' borderRadius='15px' margin='15px 1px' display="flex" flexDirection="column" alignItems="center" paddingX="1.5vw" paddingBottom='3vh' paddingTop='3vh'>
                                     <Box position="sticky" top="0" zIndex="1" width="100%">
                                         <Box display="flex" flexDirection="column" alignItems="center" borderBottom='1px black' width="100%" paddingTop="1.25em">
                                             <Center>
                                                 <Heading size="md" paddingBottom="0.5em">Sala Principal - La font blanca</Heading>
                                             </Center>
                                             <Divider mb="1em" width="85%" />
-                                            </Box>
+                                        </Box>
                                     </Box>
                                     <Box flex="1" overflowY="scroll" paddingX='1em' width="100%" css={{
                                         '&::-webkit-scrollbar': {
@@ -110,13 +121,13 @@ const AdminScheduleView = () => {
                                     </Box>
                                 </Box>
                                 {eventosSalaWorkshop.length > 0 ? (
-                                    <Box bg='white' width='31vw' height='70vh' borderRadius='15px' margin='15px 1px' display="flex" flexDirection="column" alignItems="center" paddingX="1.5vw" paddingBottom='3vh' paddingTop='3vh'>
+                                    <Box bg='white' width='31vw' height='67vh' borderRadius='15px' margin='15px 1px' display="flex" flexDirection="column" alignItems="center" paddingX="1.5vw" paddingBottom='3vh' paddingTop='3vh'>
                                         <Box position="sticky" top="0" zIndex="1" width="100%">
                                             <Box display="flex" flexDirection="column" borderBottom='1px black' alignItems="center" width="100%" paddingTop="10px">
                                                 <Center>
                                                     <Heading size="md" paddingBottom="0.5em">Sala Workshop - La Alcazaba</Heading>
                                                 </Center>
-                                                <Divider mb="1em" width="85%"  />
+                                                <Divider mb="1em" width="85%" />
                                             </Box>
                                         </Box>
                                         <Box flex="1" overflowY="scroll" paddingX='1em' width="100%" css={{
@@ -142,11 +153,13 @@ const AdminScheduleView = () => {
                                             ))}
                                         </Box>
                                     </Box>
-                                ):(   <Box bg='white' width='31vw' height='70vh' borderRadius='15px' margin='15px 1px' display="flex" flexDirection="column" alignItems="center" paddingX="1.5vw" paddingBottom='3vh' paddingTop='3vh'>
-                                    <Center>
-                                        <Text>No hay eventos en esta sala</Text>
-                                    </Center>
-                                </Box>)}
+                                ) : (
+                                    <Box bg='white' width='31vw' height='70vh' borderRadius='15px' margin='15px 1px' display="flex" flexDirection="column" alignItems="center" paddingX="1.5vw" paddingBottom='3vh' paddingTop='3vh'>
+                                        <Center>
+                                            <Text>No hay eventos en esta sala</Text>
+                                        </Center>
+                                    </Box>
+                                )}
                             </GridItem>
                         </Box>
                     </Box>
