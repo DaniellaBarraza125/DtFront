@@ -49,7 +49,7 @@ const Login = () => {
         <img className="spam-image" src={ Logotipo }/>
         <p className='spam_info'>Descubre las últimas innovaciones en tecnología educativa.</p>
       </div>
-      <h2 className='title_info'>Crea tu cuenta</h2>
+      <h2 className='title_info'>Entra en tu cuenta</h2>
       <form onSubmit={onSubmit}>
         <VStack spacing={4}>
           <FormControl isRequired>
