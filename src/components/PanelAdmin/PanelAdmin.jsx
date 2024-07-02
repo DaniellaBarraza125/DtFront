@@ -35,6 +35,7 @@ const PanelAdmin = ({ hideFooter }) => {
 	const asistentes = users.filter((user) => user.rol === 'user');
 	const ponentes = users.filter((user) => user.rol === 'speaker');
 	const partners = users.filter((user) => user.rol === 'partner');
+    console.log( ponentes);
 
 	const renderComponent = () => {
     switch (componentToRender) {
