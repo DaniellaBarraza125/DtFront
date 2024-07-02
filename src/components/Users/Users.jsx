@@ -3,13 +3,14 @@ import { UserCard } from '../UserCard/UserCard';
 import { Box, Container, Button, Text } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUsers } from '../../features/auth/authSlice';
+import { getMeetingByUser } from '../../features/meetings/meetingSlice';
 import Buttons from '../Buttons/Buttons';
 import Footer from '../Footer/Footer';
-import AddPartner from '../AddPartner/AddPartner';
 
 const Users = ({ propUsers, hideButtons, hideFooter }) => {
     const dispatch = useDispatch();
     const { users: stateUsers, isLoading, user } = useSelector((state) => state.auth);
+    const { meetings } = useSelector((state) => state.meeting);
     const [filteredUsers, setFilteredUsers] = useState([]);
     const [noMeetings, setNoMeetings] = useState(false);
     const [selectedTag, setSelectedTag] = useState('all');
@@ -22,6 +23,7 @@ const Users = ({ propUsers, hideButtons, hideFooter }) => {
     useEffect(() => {
         if (!propUsers) {
             dispatch(getUsers());
+            dispatch(getMeetingByUser());
         }
     }, [dispatch, propUsers]);
 
@@ -41,17 +43,8 @@ const Users = ({ propUsers, hideButtons, hideFooter }) => {
         if (tagValue === 'all') {
             setFilteredUsers(users);
         } else if (tagValue === 'oneToOne') {
-            if (user.meetings && user.meetings.length > 0) {
-                const filtered = users.filter((u) => 
-                    user.meetings.some((meeting) => meeting.userId === u.id)
-                );
-                if (filtered.length > 0) {
-                    setFilteredUsers(filtered);
-                } else {
-                    setNoMeetings(true);
-                    setFilteredUsers([]);
-                }
-            } else {
+            // No filtrar, solo mostrar el número de reuniones
+            if (meetings.length === 0) {
                 setNoMeetings(true);
                 setFilteredUsers([]);
             }
@@ -62,14 +55,14 @@ const Users = ({ propUsers, hideButtons, hideFooter }) => {
     };
 
     const matches = stateUsers.filter((stateUser) => {
-        const match = stateUser.cluster === parseInt(user.cluster, 10);
+        const match = stateUser.cluster == parseInt(user.cluster);
         return match;
     });
 
     const tags = [
         { label: 'Todas', value: 'all', count: users.length },
-        { label: 'One to One', value: 'oneToOne', count: user.meetings ? users.filter((u) => user.meetings.some((meeting) => meeting.userId === u.id)).length : 0 },
-        { label: 'Matches', value: 'matches', count: users.filter((u) => u.tag === 'matches').length },
+        { label: 'One to One', value: 'oneToOne', count: meetings.length },
+        { label: 'Matches', value: 'matches', count: matches.length },
     ];
 
     return (
@@ -77,11 +70,11 @@ const Users = ({ propUsers, hideButtons, hideFooter }) => {
             <Container flex='1' display='flex' flexDirection='column' overflow='hidden'>
                 <Box></Box>
 
-                <Box position='sticky' top='0' zIndex='1' backgroundColor='white' >
+                <Box position='sticky' top='0' zIndex='1' backgroundColor='white'>
                     {!hideButtons && <Buttons options={options} />}
                 </Box>
                 <Box margin='10px' width='305px' height='27px' alignContent='center'>
-                    <Box display="flex" justifyContent="space-around" marginBottom="20px"paddingTop='20px'>
+                    <Box display="flex" justifyContent="space-around" marginBottom="20px" paddingTop='20px'>
                         {tags.map((tag, index) => (
                             <Button
                                 key={index}
@@ -100,7 +93,7 @@ const Users = ({ propUsers, hideButtons, hideFooter }) => {
                                 onClick={() => handleTagClick(tag.value)}
                             >
                                 <Text isTruncated minWidth="70%">{tag.label}</Text>
-                                {tag.count && <Text ml="5px">{tag.count}</Text>}
+                                {tag.count !== undefined && <Text ml="5px">{tag.count}</Text>}
                             </Button>
                         ))}
                     </Box>
@@ -114,12 +107,18 @@ const Users = ({ propUsers, hideButtons, hideFooter }) => {
                                 <p>No tienes agendados One to One</p>
                             ) : (
                                 <>
-                                    {filteredUsers.map((user, i) => (
-                                        <UserCard key={i} user={user} />
-                                    ))}
-                                    {matches.map((match, i) => (
-                                        <UserCard key={i} user={match} />
-                                    ))}
+                                    {selectedTag === 'oneToOne' ? (
+                                        <p>Tienes {meetings.length} reuniones One to One</p>
+                                    ) : (
+                                        <>
+                                            {filteredUsers.map((user, i) => (
+                                                <UserCard key={i} user={user} />
+                                            ))}
+                                            {matches.map((match, i) => (
+                                                <UserCard key={i} user={match} />
+                                            ))}
+                                        </>
+                                    )}
                                 </>
                             )}
                         </>
