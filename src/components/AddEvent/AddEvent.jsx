@@ -17,26 +17,29 @@ import {
   TagLabel,
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { createEvent } from "../../features/events/eventSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { createEvent, getByDate, getBySala } from "../../features/events/eventSlice";
 
-const generateTimeOptions = (events, room) => {
+const generateTimeOptions = (events, room, fecha) => {
   const times = [];
   const reservedTimes = [];
 
+  // console.log("consoleamos los eventos de la bd", events)
   const timeToMinutes = (time) => {
     const [hours, minutes] = time.split(':').map(Number);
     return hours * 60 + minutes;
   };
 
   events.forEach(event => {
-    if (event.sala === room) {
+    const dateFromEvent = new Date(event.fecha)
+    const dateFromForm = new Date(fecha)
+    if (event.sala === room && dateFromEvent.getDate() === dateFromForm.getDate()) {
       const start = timeToMinutes(event.hora_inicio);
       const end = timeToMinutes(event.hora_fin);
       for (let t = start; t < end; t += 5) { 
         reservedTimes.push(t);
       }
-    }
+    } 
   });
 
   for (let i = 9 * 60; i <= 24 * 60; i += 5) { 
@@ -66,7 +69,6 @@ const interesOptions = [
 ];
 
 const AddEvent = () => {
-  const dispatch = useDispatch(); 
 
   const { id } = JSON.parse(localStorage.getItem("user"))
 
@@ -85,17 +87,30 @@ const AddEvent = () => {
     numero_asistentes: 0
   });
 
-  const [events, setEvents] = useState([]);
+  const [newEvents, setNewEvents] = useState([]);
 
-  useEffect(() => {
-    const storedEvents = JSON.parse(localStorage.getItem('events')) || [];
-    setEvents(storedEvents);
-  }, []);
+  const { events } = useSelector((state) => state.event);
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		dispatch(getByDate('2024-08-06'));
+	}, [dispatch]);
+
 
   const handleChange = (e) => {
+    getEventsWhenRoomChanges(e)
     const { id, value } = e.target;
     setFormData({ ...formData, [id]: value });
   };
+
+  const getEventsWhenRoomChanges = (e) => {
+    if (e.target.id === 'sala') {
+      if(e.target.value !== 0){
+        const sala = e.target.value;
+        dispatch(getBySala(sala));
+      }
+		}
+  }
 
   const handleInteresChange = (value) => {
     setFormData((prevState) => ({
@@ -138,8 +153,8 @@ const AddEvent = () => {
         room: formData.sala
       };
   
-      const updatedEvents = [...events, newEvent];
-      setEvents(updatedEvents);
+      const updatedEvents = [...newEvents, newEvent];
+      setNewEvents(updatedEvents);
       localStorage.setItem('events', JSON.stringify(updatedEvents));
   
       setFormData({
@@ -231,22 +246,23 @@ const AddEvent = () => {
 
         <FormControl id="sala">
           <FormLabel>Sala</FormLabel>
-          <Select placeholder="Selecciona una sala" value={formData.sala} onChange={handleChange}>
+          <Select value={formData.sala} onChange={handleChange}>
+            <option>Selecciona una sala</option>
             <option value="1">Sala principal - La font blanca</option>
             <option value="2">Sala secundaria - Sala Workshop</option>
           </Select>
         </FormControl>
         <HStack spacing="4" width="full">
-          <FormControl id="hora_inicio" isDisabled={!formData.sala}>
+          <FormControl id="hora_inicio" isDisabled={!formData.sala || !formData.fecha}>
             <FormLabel>Inicio</FormLabel>
             <Select placeholder="Hora de inicio" value={formData.hora_inicio} onChange={handleChange}>
-              {generateTimeOptions(events, formData.sala)}
+              {generateTimeOptions(events, formData.sala, formData.fecha)}
             </Select>
           </FormControl>
-          <FormControl id="hora_fin" isDisabled={!formData.sala}>
+          <FormControl id="hora_fin" isDisabled={!formData.sala || !formData.fecha}>
             <FormLabel>Fin</FormLabel>
             <Select placeholder="Hora de fin" value={formData.hora_fin} onChange={handleChange}>
-              {generateTimeOptions(events, formData.sala)}
+              {generateTimeOptions(events, formData.sala, formData.fecha)}
             </Select>
           </FormControl>
         </HStack>
