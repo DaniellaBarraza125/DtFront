@@ -1,8 +1,9 @@
 import { useLocation } from 'react-router-dom';
 import { useState } from 'react';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
-import { Box, Button, FormControl, FormLabel, Text } from '@chakra-ui/react';
+import { Box, Button, FormControl, FormLabel, Input, Text } from '@chakra-ui/react'; // Asegúrate de importar Input para el campo "Nombre completo"
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom'
 
 const CheckoutForm = () => {
   const location = useLocation();
@@ -12,57 +13,90 @@ const CheckoutForm = () => {
   const [error, setError] = useState(null);
   const [processing, setProcessing] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [fullName, setFullName] = useState(''); // Estado para almacenar el nombre completo
+  const [cardElement, setCardElement] = useState(''); // Estado para almacenar los datos de la tarjeta
 
-  const handleSubmit = async (event) => {
+  const imageUrl = "https://img.freepik.com/fotos-premium/mano-portatil-persona-escribiendo-correo-electronico-o-mensaje-negocios-marketing-redes-sociales-o-redes_590464-269480.jpg?w=900";
+  const navigate = useNavigate()
+
+
+// Dentro de tu componente
+const handleSubmit = async (event) => {
     event.preventDefault();
     setProcessing(true);
 
     const { error, paymentMethod } = await stripe.createPaymentMethod({
-      type: 'card',
-      card: elements.getElement(CardElement),
+        type: 'card',
+        card: elements.getElement(CardElement),
+        billing_details: {
+            name: fullName, // Incluir el nombre completo en los detalles de facturación
+        },
     });
 
     if (error) {
-      setError(error.message);
-      setProcessing(false);
-      return;
+        setError(error.message);
+        setProcessing(false);
+        return;
     }
 
     try {
-      const { id } = paymentMethod;
-      const response = await axios.post('http://localhost:3000/checkout', {
-        id,
-        amount: product.prices[0].unit_amount,
-      });
+        const { id } = paymentMethod;
+        const response = await axios.post('http://localhost:3000/checkout', {
+            id,
+            amount: product.prices[0].unit_amount,
+        });
 
-      if (response.data.msg === 'Successful payment') {
-        setSuccess(true);
-        setProcessing(false);
-      } else {
+        if (response.data.msg === 'Successful payment') {
+            setSuccess(true);
+            setProcessing(false);
+
+            // Redirigir después de 2 segundos
+            setTimeout(() => {
+                navigate('/schedule');
+            }, 2000);
+        } else {
+            setError('Payment failed');
+            setProcessing(false);
+        }
+    } catch (error) {
         setError('Payment failed');
         setProcessing(false);
-      }
-    } catch (error) {
-      setError('Payment failed');
-      setProcessing(false);
     }
-  };
+};
+
+
+  const formCompleted = fullName !== "" && cardElement !== "";
 
   return (
     <Box maxW="lg" mx="auto" p={6} borderWidth="1px" borderRadius="lg" marginTop={50}>
-      <Text as="h1" fontSize="xl" mb={4}>Verifica tu producto:</Text>
+      <Text as="h1" fontSize="xl" mb={4} fontFamily="Montserrat" fontWeight="medium" fontStyle="normal">Verifica tu producto:</Text>
       {product && (
         <Box mb={4}>
-          <Text as="h2" fontSize="lg" fontWeight="bold">{product.name}</Text>
-          <Text>{product.description}</Text>
-          <Text>Precio: {(product.prices[0].unit_amount / 100).toFixed(2)} {product.prices[0].currency.toUpperCase()}</Text>
+          <img src={imageUrl} alt="Product" />
+          <Text as="h2" fontSize="lg" fontWeight="bold" fontFamily="Montserrat" marginTop="30px">{product.name}</Text>
+          <Text fontFamily="Montserrat" >{product.description}</Text>
+          <Text fontFamily="Montserrat" >Precio: {(product.prices[0].unit_amount / 100).toFixed(2)} {product.prices[0].currency.toUpperCase()}</Text>
         </Box>
       )}
       <form onSubmit={handleSubmit}>
         <FormControl mb={4}>
-          <FormLabel>Detalles de la tarjeta</FormLabel>
+          <FormLabel fontFamily="Montserrat">Nombre completo</FormLabel>
+          <Input
+            type="text"
+            value={fullName}
+            onChange={(e) => setFullName(e.target.value)}
+            fontFamily="Montserrat"
+            fontSize="16px"
+            fontWeight="400"
+            lineHeight="19.5px"
+            placeholder="Ingrese su nombre completo"
+            required
+          />
+        </FormControl>
+        <FormControl mb={4}>
+          <FormLabel fontFamily="Montserrat">Detalles de la tarjeta</FormLabel>
           <Box borderWidth="1px" borderRadius="lg" p={4}>
-            <CardElement options={{
+            <CardElement value={cardElement} onChange={(e) => setCardElement(e.target.value)} options={{
               style: {
                 base: {
                   fontSize: '16px',
@@ -78,7 +112,15 @@ const CheckoutForm = () => {
             }} />
           </Box>
         </FormControl>
-        <Button type="submit" colorScheme="blue" isLoading={processing} loadingText="Processing..." disabled={!stripe || processing || success}>
+        <Button  
+          borderRadius="full" 
+          width="100%"
+          size="md" 
+          type="submit" 
+          colorScheme="blue" 
+          isLoading={processing} 
+          loadingText="Processing..." 
+          disabled={!formCompleted || !stripe || processing || success}>
           {processing ? 'Processing...' : 'Pagar'}
         </Button>
       </form>

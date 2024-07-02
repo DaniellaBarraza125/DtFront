@@ -1,21 +1,35 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import {
+  Box,
+  Button,
+  Container,
+  Heading,
+  HStack,
+  Image,
+  Select,
+  Text,
+  VStack,
+} from '@chakra-ui/react';
 
 const Products = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate(); 
+  const [category, setCategory] = useState('');
+  const navigate = useNavigate();
+
+  const imageUrl = "https://img.freepik.com/fotos-premium/mano-portatil-persona-escribiendo-correo-electronico-o-mensaje-negocios-marketing-redes-sociales-o-redes_590464-269480.jpg?w=900";
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const token = localStorage.getItem('token')
+        const token = localStorage.getItem('token');
         const response = await axios.get('http://localhost:3000/products', {
           headers: {
-              Authorization: token,
+            Authorization: token,
           },
-      });
+        });
         setProducts(response.data);
         setLoading(false);
       } catch (error) {
@@ -31,32 +45,80 @@ const Products = () => {
     navigate('/checkoutForm', { state: { product } });
   };
 
+  const handleCategoryChange = (event) => {
+    setCategory(event.target.value);
+  };
+
+  const filterProducts = () => {
+    if (category === 'empresas privadas') {
+      return products.filter(product => product.name.toLowerCase().includes('privadas'));
+    } else if (category === 'administración pública') {
+      return products.filter(product => product.name.toLowerCase().includes('pública'));
+    } else {
+      return products;
+    }
+  };
+
   if (loading) {
-    return <p>Loading...</p>;
+    return <Text>Loading...</Text>;
   }
 
-  if (!Array.isArray(products)) {
-    return <p>Error: products is not an array.</p>;
-  }
+  const filteredProducts = filterProducts();
 
   return (
-    <div>
-      <h1>Selecciona TU ENTRADA</h1>
-      <ul>
-        {products.map(product => (
-          <li key={product.id}>
-            <h2>{product.name}</h2>
-            <p>{product.description}</p>
-            {product.prices.map(price => (
-              <div key={price.id}>
-                <p>Precio: {(price.unit_amount / 100).toFixed(2)} {price.currency.toUpperCase()}</p>
-              </div>
-            ))}
-            <button onClick={() => handleBuyClick(product)}>Comprar</button>
-          </li>
+    <Container maxW="container.md" centerContent mt={8} mb={8}>
+      <Heading as="h1" mb={4} textAlign="center">Selecciona TU ENTRADA</Heading>
+      <Box mb={4} w="100%">
+        <Text
+          fontFamily="Montserrat"
+          fontSize="16px"
+          fontWeight="400"
+          lineHeight="19.5px"
+          textAlign="left"
+          color="#919191"
+          mb={2}
+        >
+          Elige el tipo de entrada que mejor se adapte a tus necesidades y prepárate para descubrir las últimas novedades:
+        </Text>
+        <Select placeholder="Selecciona la categoría" value={category} onChange={handleCategoryChange}>
+          <option value="">Todas</option>
+          <option value="empresas privadas">Empresas Privadas</option>
+          <option value="administración pública">Administración Pública</option>
+        </Select>
+      </Box>
+      <VStack spacing={4} align="stretch" w="100%">
+        {filteredProducts.map(product => (
+          <Box
+            key={product.id}
+            p={4}
+            borderWidth="1px"
+            borderRadius="md"
+            boxShadow="md"
+            w="100%"
+          >
+            <HStack spacing={4}>
+              <Image src={imageUrl} alt="Product" boxSize="150px" objectFit="cover" />
+              <VStack align="start">
+                <Heading as="h2" size="md" fontFamily="Montserrat" fontSize="16px" fontWeight="400" lineHeight="19.5px">
+                  {product.name}
+                </Heading>
+                <Text fontFamily="Montserrat" fontSize="16px" fontWeight="400" lineHeight="19.5px">
+                  {product.description}
+                </Text>
+                {product.prices.map(price => (
+                  <Text key={price.id} fontFamily="Montserrat" fontSize="16px" fontWeight="400" lineHeight="19.5px">
+                    Precio: {(price.unit_amount / 100).toFixed(2)} {price.currency.toUpperCase()}
+                  </Text>
+                ))}
+                <Button fontFamily="Montserrat" fontSize="16px" fontWeight="400" lineHeight="19.5px" colorScheme="blue" onClick={() => handleBuyClick(product)}>
+                  Comprar
+                </Button>
+              </VStack>
+            </HStack>
+          </Box>
         ))}
-      </ul>
-    </div>
+      </VStack>
+    </Container>
   );
 };
 
