@@ -80,23 +80,23 @@ const Stepper = () => {
         window.location.href = '/login';
       };
 
-    const handleInteresChange = (value) => {
-        setFormData((prevState) => ({
-          ...prevState,
-          interes: prevState.interes.includes(value) 
-            ? prevState.interes.filter((interest) => interest !== value) 
-            : [...prevState.interes, value]
+      const handleInteresChange = (value) => {
+        setFormValues((prevState) => ({
+            ...prevState,
+            interest: prevState.interest.includes(value)
+                ? prevState.interest.filter((interest) => interest !== value)
+                : [...prevState.interest, value]
         }));
-      };
+    };
 
-      const handleAllergenChange = (value) => {
-        setFormData((prevState) => ({
-          ...prevState,
-          allergen: prevState.allergen.includes(value) 
-            ? prevState.allergen.filter((allergen) => allergen !== value) 
-            : [...prevState.allergen, value]
+    const handleAllergenChange = (value) => {
+        setFormValues((prevState) => ({
+            ...prevState,
+            allergen: prevState.allergen.includes(value)
+                ? prevState.allergen.filter((allergen) => allergen !== value)
+                : [...prevState.allergen, value]
         }));
-      };
+    };
 
     const handleCheckboxChange = (group, value) => {
         setFormValues(prevValues => {
@@ -227,7 +227,7 @@ const Stepper = () => {
                 <Box>
                     <div className='container_login'>
                         <p className='info_login'>¿Ya tienes una cuenta?</p>
-                        <button className='btn_login' onClick={handleLoginClick}>Iniciar Sesión</button>
+                        <button className='btn_login_register' onClick={handleLoginClick}>Iniciar Sesión</button>
                     </div>
                     <div className='spam'>
                         <img className="spam-image" src={ Logotipo }/>
