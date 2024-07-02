@@ -8,7 +8,6 @@ const Tags = ({ tags, onClick }) => {
                 <Button 
                     key={index} 
                     fontSize='10px' 
-                    minW='80px'
                     h='15px' 
                     alignItems='center' 
                     paddingY='8px' 

@@ -26,8 +26,25 @@ const PanelAdmin = () => {
                                 <Divider borderColor="black" />
                             </Box>
                         </Box>
-                        <Box>
-                            <Partners/>
+                        <Box overflowY="scroll" paddingX='1em' width="100%" css={{
+                                            '&::-webkit-scrollbar': {
+                                                width: '0.5em',
+                                            },
+                                            '&::-webkit-scrollbar-track': {
+                                                background: 'transparent',
+                                            },
+                                            '&::-webkit-scrollbar-thumb': {
+                                                background: '#C4C4C4',
+                                                borderRadius: '1em',
+                                            },
+                                            '&::-webkit-scrollbar-thumb:hover': {
+                                                background: '#A0A0A0',
+                                            },
+                                            '&::-webkit-scrollbar-button': {
+                                                display: 'none',
+                                            },
+                                        }}>
+                            <Partners  />
                         </Box>
                     </Flex>
                 </Box>
