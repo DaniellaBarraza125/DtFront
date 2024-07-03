@@ -81,7 +81,6 @@ export const getUsersByid = createAsyncThunk(
     },
 );
 
-
 export const authSlice = createSlice({
     name: "auth",
     initialState,
@@ -101,6 +100,7 @@ export const authSlice = createSlice({
                 state.msg = action.payload.msg;
                 state.isSuccess = true;
                 state.isLoading = false;
+                state.isError = false;
             })
             .addCase(login.rejected, (state, action) => {
                 state.msg = action.payload;
