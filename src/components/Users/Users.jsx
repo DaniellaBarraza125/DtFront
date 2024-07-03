@@ -72,15 +72,15 @@ const Users = ({ propUsers, hideButtons, hideFooter, height, deleteButton, editB
     ];
 
     return (
-        <Box height={height ? height : '100vh'} display='flex' flexDirection='column' marginTop={5} width='100%' onClick={onOpen}>
+        <Box height={height ? height : '100vh'} display='flex' flexDirection='column'  width='100%' onClick={onOpen}>
             <Container flex='1' display='flex' flexDirection='column' overflow='hidden'>
                 <Box></Box>
 
                 <Box position='sticky' top='0' zIndex='1' backgroundColor='white'>
                     {!hideButtons && <Buttons options={options} />}
                 </Box>
-                <Box margin='10px' width='305px' height='27px' alignContent='center'>
-                    <Box display="flex" justifyContent="space-around" marginBottom="20px" paddingTop='20px'>
+                <Box margin='10px' width='100%' height='27px' alignContent='center'>
+                    <Box display="flex" justifyContent="space-around"  paddingY='7px'>
                         {tags.map((tag, index) => (
                             <Button
                                 key={index}
@@ -159,6 +159,9 @@ const Users = ({ propUsers, hideButtons, hideFooter, height, deleteButton, editB
                                                 <UserCard key={i} user={user} editButton={editButton ? true: false}/>
                                             ))}
                                             {matches?.map((match, i) => (
+                                                <UserCard key={i} user={user} />
+                                            ))}
+                                            {selectedTag === 'matches' && matches?.map((match, i) => (
                                                 <UserCard key={i} user={match} />
                                             ))}
                                         </>

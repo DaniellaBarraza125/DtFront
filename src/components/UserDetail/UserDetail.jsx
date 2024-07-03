@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { getUsersByid } from '../../features/auth/authSlice';
+import { createMeeting } from '../../features/meetings/meetingSlice';
 import { Box, Container, Heading, Text, Button, Center, ModalCloseButton, Image, Tag, ModalHeader, ModalBody, Select, ModalFooter, useDisclosure, Modal, ModalOverlay, ModalContent, Flex, FormControl, FormLabel } from '@chakra-ui/react';
 import Footer from '../Footer/Footer';
 
@@ -52,14 +53,14 @@ const UserDetail = ({editButton}) => {
         const horaFin = `${String(endHour).padStart(2, '0')}:${String(endMinute).padStart(2, '0')}`;
 
         const formData = {
-            time_inicio: selectedDay + ' ' + selectedTime,
+            hora_inicio: selectedTime,
             partner_id: userDetail.id,
             hora_fin: selectedDay + ' ' + horaFin,
             fecha: selectedDay,
 
          
         };
-        console.log(formData);
+        dispatch(createMeeting(formData));
         onClose();
     };
 
@@ -125,11 +126,11 @@ const UserDetail = ({editButton}) => {
                                     </Tag>
                                 </Box>
                             </Box>
-                            {events && events.length > 0 && (
+                            {events && events?.length > 0 && (
                                 <Box className='BoxPonencia' paddingTop='1' paddingBottom='4' textAlign='justify'>
                                     <Heading size='16px'>Ponencia</Heading>
                                     <Text fontSize="14px">
-                                        {events.map(filteredEvent => (
+                                        {events?.map(filteredEvent => (
                                             <span key={filteredEvent.id}>
                                                 <strong>{filteredEvent.titulo}:</strong>
                                                 <br />
