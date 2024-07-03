@@ -16,18 +16,11 @@ const AddPartner = ({ admin, id: idUser }) => {
 	let partnerToEdit = {};
 	useEffect(() => {
 		setId(idUser);
-		console.log('id', id);
 		if (admin) {
-			console.log('id en if', id);
-			console.log('id', id);
-			console.log('users', users);
 			editUser = users.find((user) => user.id === id);
 			partnerToEdit = partners.find((partner) => partner.user_id === id);
-			console.log('edituser', editUser);
 		}
 	}, [dispatch]);
-	console.log('partner', partner);
-	console.log('admin', admin);
 	const initialValues = {
 		nombre_empresa: '',
 		tipo_partnership: '',
@@ -39,7 +32,6 @@ const AddPartner = ({ admin, id: idUser }) => {
 		pagado: 0,
 	};
 	const [formData, setFormData] = useState(initialValues);
-	console.log('formdata', formData);
 
 	useEffect(() => {
 		setFormData(partnerToEdit);

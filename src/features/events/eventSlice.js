@@ -17,7 +17,6 @@ export const createEvent = createAsyncThunk(
 export const getAll = createAsyncThunk(
     "event/getAll",
     async (_, { rejectWithValue }) => {
-        console.log("getAll");
         try {
             const response = await eventService.getAll();
             return response;

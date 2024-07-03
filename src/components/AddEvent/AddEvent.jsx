@@ -24,7 +24,6 @@ const generateTimeOptions = (events, room, fecha) => {
   const times = [];
   const reservedTimes = [];
 
-  // console.log("consoleamos los eventos de la bd", events)
   const timeToMinutes = (time) => {
     const [hours, minutes] = time.split(':').map(Number);
     return hours * 60 + minutes;
@@ -179,15 +178,7 @@ const AddEvent = () => {
   
 
   return (
-    <Box 
-      maxW="md" 
-      mx="auto" 
-      mt="10" 
-      p="6" 
-      borderWidth="1px" 
-      borderRadius="lg" 
-      boxShadow="lg"
-    >
+    <>
       <Heading as="h2" size="md" mb="6" textAlign="center">
         Añade un evento
       </Heading>
@@ -252,6 +243,10 @@ const AddEvent = () => {
             <option value="2">Sala secundaria - Sala Workshop</option>
           </Select>
         </FormControl>
+        <FormControl>
+          <FormLabel>Fecha</FormLabel>
+          <Input type="date" id="fecha" placeholder="Fecha" value={formData.fecha} onChange={handleChange} />
+        </FormControl>
         <HStack spacing="4" width="full">
           <FormControl id="hora_inicio" isDisabled={!formData.sala || !formData.fecha}>
             <FormLabel>Inicio</FormLabel>
@@ -266,11 +261,6 @@ const AddEvent = () => {
             </Select>
           </FormControl>
         </HStack>
-       
-        <FormControl>
-          <FormLabel>Fecha</FormLabel>
-          <Input type="date" id="fecha" placeholder="Fecha" value={formData.fecha} onChange={handleChange} />
-        </FormControl>
         <FormControl>
           <FormLabel>Duración (minutos)</FormLabel>
           <Input type="number" id="duracion_minutos" placeholder="Duración" value={formData.duracion_minutos} onChange={handleChange} readOnly />
@@ -283,7 +273,7 @@ const AddEvent = () => {
           Añadir Evento
         </Button>
       </VStack>
-    </Box>
+      </>
   );
 };
 

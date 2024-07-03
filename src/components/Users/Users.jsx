@@ -63,7 +63,6 @@ const Users = ({ propUsers, hideButtons, hideFooter, height, deleteButton, editB
     });
 
     const oneToOneUsers = meetings?.map(meeting => meeting.Partner?.User).filter(user => user);  
-    console.log(oneToOneUsers);
 
     const tags = [
         { label: 'Todas', value: 'all', count: users?.length },

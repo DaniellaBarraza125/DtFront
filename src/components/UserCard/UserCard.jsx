@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import AddPartner from '../AddPartner/AddPartner';
+import { getUsersByid } from '../../features/auth/authSlice';
 
 export const UserCard = ({ user, editButton }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -15,14 +16,17 @@ export const UserCard = ({ user, editButton }) => {
 		onOpen();
 	};
 
-  const handleClik = () => {
-    console.log('editButton', editButton);
-    editButton ? handleOpenModal(user.id) : navigate(`/userdetail/${user.id}`)
+  const handleClik = (id) => {
+    editButton ? handleOpenModal(user.id) : navigate('/userdetail/' + id)
+    console.log('hola',editButton);
+    console.log(id);
+    console.log(user);
+    dispatch(getUsersByid(id))
   }
   return (
     <>
       <Container maxW="md" spacing={4}>
-        <Link onClick={handleClik}>
+        <Link onClick={()=>handleClik(user.id)}>
           <Container paddingX='0' paddingY='16px' display='flex' justifyContent='space-between' alignContent='center' borderTop='#718096 1px solid'>
             <Box display="flex" direction="row" w='343px' key={user.id} height='108px'>
               <Box mr={4}>

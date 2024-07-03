@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import Partner from '../Partner/Partner';
 import { getAllPartners } from '../../features/partner/partnerSlice';

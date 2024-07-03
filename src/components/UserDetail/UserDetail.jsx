@@ -66,7 +66,6 @@ const UserDetail = ({editButton}) => {
 
 	useEffect(() => {
 		if (id) {
-			console.log('hola', id);
 			dispatch(getUsersByid(id));
 		}
 	}, [id]);
