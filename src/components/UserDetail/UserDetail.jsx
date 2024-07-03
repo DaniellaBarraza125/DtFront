@@ -70,9 +70,16 @@ const UserDetail = ({editButton}) => {
 		}
 	}, [id]);
 
+<<<<<<< HEAD
 	if (!userDetail) {
 		return null;
 	}
+=======
+    if (!userDetail) {
+        return null;
+    }
+    const intereses = JSON.parse(userDetail.interes);
+>>>>>>> superdani
 
     const events = userDetail?.Events?.filter(event => event.tipo_evento === 'Conference');
     const speaker = userDetail?.rol === 'speaker';
@@ -119,11 +126,25 @@ const UserDetail = ({editButton}) => {
                             </Box>
                             <Box paddingTop='1' paddingBottom='2' textAlign='justify'>
                                 <Heading size='16px'>Intereses</Heading>
-                                <Box paddingTop='5'>
-                                    <Tag size='sm' w='143px' variant='outline' d='flex' justifyContent='center' colorScheme='gray' h='20px' px='8px' borderRadius='20px'>
-                                        {userDetail.interes}
+                                <Box paddingTop='5'display='flex' justifyContent='space-evenly'>
+                                {intereses.map((interes, index) => (
+                                    <Tag
+                                        key={index}
+                                        size='sm'
+                                        w='143px'
+                                        variant='outline'
+                                        d='flex'
+                                        justifyContent='center'
+                                        colorScheme='gray'
+                                        h='20px'
+                                        px='8px'
+                                        borderRadius='20px'
+                                        marginBottom='4px' 
+                                    >
+                                        {interes}
                                     </Tag>
-                                </Box>
+                                ))}
+                            </Box>
                             </Box>
                             {events && events?.length > 0 && (
                                 <Box className='BoxPonencia' paddingTop='1' paddingBottom='4' textAlign='justify'>

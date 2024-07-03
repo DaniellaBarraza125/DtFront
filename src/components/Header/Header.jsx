@@ -242,62 +242,65 @@ const profile = (
 								_active={{ background: 'none' }}
 							/>
 						</Flex>
-						<VStack as='nav' spacing={'4'} mt={'4'}>
-							<Button variant="unstyled" width="90%" fontSize="16px" borderRadius="10px" color="white" _hover={{ color: '#0F8BA0', border: '1px solid white', borderRadius: '10px' }}>
-								INICIO
-							</Button>
-							<Link to='/schedule' style={{ width: '90%' }}>
-								<Button
-									variant="unstyled"
-									width="100%"
-									fontSize="16px"
-									borderRadius="10px"
-									color="white"
-									_hover={{ color: '#0F8BA0', border: '1px solid white', borderRadius: '10px' }}
-								>
-									PROGRAMACION
+						<VStack as='nav' spacing={'4'} mt={'4'} flex="1" justifyContent="space-between">
+							<Box>
+								<Button variant="unstyled" width="90%" fontSize="16px" borderRadius="10px" color="white" _hover={{ color: '#0F8BA0', border: '1px solid white', borderRadius: '10px' }}>
+									INICIO
 								</Button>
-							</Link>
-							<Link to='/users' style={{ width: '90%' }}>
-								<Button variant="unstyled" width="100%" fontSize="16px" borderRadius="10px" color="white" _hover={{ color: '#0F8BA0', border: '1px solid white', borderRadius: '10px' }}>
-									PONENTES
-								</Button>
-							</Link>
-							<Link to='/' style={{ width: '90%' }}>
-								<Button variant="unstyled" width="100%" fontSize="16px" borderRadius="10px" color="white" _hover={{ color: '#0F8BA0', border: '1px solid white', borderRadius: '10px' }}>
-									PREMIOS DIGIT
-								</Button>
-							</Link>
-							<Link to='/' style={{ width: '90%' }}>
-								<Button variant="unstyled" width="100%" fontSize="16px" borderRadius="10px" color="white" _hover={{ color: '#0F8BA0', border: '1px solid white', borderRadius: '10px' }}>
-									ALOJAMIENTO
-								</Button>
-							</Link>
-							<Link to='/' style={{ width: '90%' }}>
-								<Button variant="unstyled" width="100%" fontSize="16px" borderRadius="10px" color="white" _hover={{ color: '#0F8BA0', border: '1px solid white', borderRadius: '10px' }}>
-									OTRAS EDICIONES
-								</Button>
-							</Link>
-							<Link to='/' style={{ width: '90%' }}>
-								<Button variant="unstyled" width="100%" fontSize="16px" borderRadius="10px" color="white" _hover={{ color: '#0F8BA0', border: '1px solid white', borderRadius: '10px' }}>
-									CONTACTO
-								</Button>
-							</Link>
-							<Link to='/login' style={{ width: '90%' }}>
-								<Button variant="unstyled" width="100%" fontSize="16px" position='relative'bottom='0' borderRadius="80px" bg='#0F8BA0' color="white" marginTop='150px'>
-									Iniciar sesion
-								</Button>
-							</Link>
-							{!user && (
-								<>
-									<Link to='/login' style={{ color: 'white' }}>
-										Login
-									</Link>
-									<Link to='/register' style={{ color: 'white' }}>
-										Register
-									</Link>
-								</>
-							)}
+								<Link to='/schedule' style={{ width: '90%' }}>
+									<Button
+										variant="unstyled"
+										width="100%"
+										fontSize="16px"
+										borderRadius="10px"
+										color="white"
+										_hover={{ color: '#0F8BA0', border: '1px solid white', borderRadius: '10px' }}
+									>
+										PROGRAMACION
+									</Button>
+								</Link>
+								<Link to='/users' style={{ width: '90%' }}>
+									<Button variant="unstyled" width="100%" fontSize="16px" borderRadius="10px" color="white" _hover={{ color: '#0F8BA0', border: '1px solid white', borderRadius: '10px' }}>
+										PONENTES
+									</Button>
+								</Link>
+								<Link to='/' style={{ width: '90%' }}>
+									<Button variant="unstyled" width="100%" fontSize="16px" borderRadius="10px" color="white" _hover={{ color: '#0F8BA0', border: '1px solid white', borderRadius: '10px' }}>
+										PREMIOS DIGIT
+									</Button>
+								</Link>
+								<Link to='/' style={{ width: '90%' }}>
+									<Button variant="unstyled" width="100%" fontSize="16px" borderRadius="10px" color="white" _hover={{ color: '#0F8BA0', border: '1px solid white', borderRadius: '10px' }}>
+										ALOJAMIENTO
+									</Button>
+								</Link>
+								<Link to='/' style={{ width: '90%' }}>
+									<Button variant="unstyled" width="100%" fontSize="16px" borderRadius="10px" color="white" _hover={{ color: '#0F8BA0', border: '1px solid white', borderRadius: '10px' }}>
+										OTRAS EDICIONES
+									</Button>
+								</Link>
+								<Link to='/' style={{ width: '90%' }}>
+									<Button variant="unstyled" width="100%" fontSize="16px" borderRadius="10px" color="white" _hover={{ color: '#0F8BA0', border: '1px solid white', borderRadius: '10px' }}>
+										CONTACTO
+									</Button>
+								</Link>
+							</Box>
+							<Box width="100%">
+								<Link to='/register' style={{ width: '90%' }}>
+									<Button
+										variant="unstyled"
+										width="100%"
+										fontSize="16px"
+										borderRadius="10px"
+										bg='#0F8BA0'
+										color="white"
+										mt="auto"
+										hover={{ color: '#0F8BA0', border: '1px solid white', borderRadius: '5px' }}
+									>
+										Iniciar sesión
+									</Button>
+								</Link>
+							</Box>
 						</VStack>
 					</Box>
 				)}
@@ -306,4 +309,5 @@ const profile = (
 	};
 	
 	export default Header;
+	
 	
