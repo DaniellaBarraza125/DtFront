@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { getUsersByid } from '../../features/auth/authSlice';
-import { Box, Container, Heading, Text, Button, Center, Image, Tag, VStack } from '@chakra-ui/react';
+import { createMeeting } from '../../features/meetings/meetingSlice';
+import { Box, Container, Heading, Text, Button, Center, ModalCloseButton, Image, Tag, ModalHeader, ModalBody, Select, ModalFooter, useDisclosure, Modal, ModalOverlay, ModalContent, Flex, FormControl, FormLabel } from '@chakra-ui/react';
 import Footer from '../Footer/Footer';
 
 const linkedIn = (
@@ -18,106 +19,171 @@ const mail = (
 );
 
 const UserDetail = () => {
-const dispatch = useDispatch();
-const { id } = useParams();
-const { userDetail, isLoading,user } = useSelector((state) => state.auth);
-const userId = user.id 
+    const dispatch = useDispatch();
+    const { id } = useParams();
+    const { userDetail, isLoading, user } = useSelector((state) => state.auth);
+    const userId = user.id;
+    const { isOpen, onOpen, onClose } = useDisclosure();
 
-const handleOneToOne = (userId) => {
-    console.log(userId)}
+    const [selectedTime, setSelectedTime] = useState('');
+    const [selectedDay, setSelectedDay] = useState('');
 
-useEffect(() => {
-    if (id) {
-    dispatch(getUsersByid(id));
+    const handleOneToOne = () => {
+        onOpen();
+    };
+
+    const handleTimeChange = (e) => {
+        setSelectedTime(e.target.value);
+    };
+
+    const handleDayChange = (e) => {
+        setSelectedDay(e.target.value);
+    };
+
+    const handleSubmit = () => {
+        const [hour, minute] = selectedTime.split(':').map(Number);
+        const endHour = hour + Math.floor((minute + 15) / 60);
+        const endMinute = (minute + 15) % 60;
+        const horaFin = `${String(endHour).padStart(2, '0')}:${String(endMinute).padStart(2, '0')}`;
+
+        const formData = {
+            hora_inicio: selectedTime,
+            partner_id: userDetail.id,
+            hora_fin: selectedDay + ' ' + horaFin,
+            fecha: selectedDay,
+
+         
+        };
+        dispatch(createMeeting(formData));
+        onClose();
+    };
+
+    useEffect(() => {
+        if (id) {
+            dispatch(getUsersByid(id));
+        }
+    }, [id, dispatch]);
+
+    if (!userDetail) {
+        return null;
     }
-}, [id, dispatch]);
 
-if (!userDetail) {
-    return null;
-}
+    const events = userDetail?.Events?.filter(event => event.tipo_evento === 'Conference');
+    const speaker = userDetail?.rol === 'speaker';
 
-const events = userDetail?.Events?.filter(event => event.tipo_evento === 'Conference');
-console.log(userDetail);
-const speaker = userDetail?.rol==='speaker';
-
-return (
-    <>
-    {isLoading ? (
-        <div>cargando...</div>
-    ) : (
-        <Box>
-        <Container width='100vw' height='100vh' padding='5'>
-            <Box height='69vh'>
-            <Box>
-                <Center>
-                <Image
-                    borderRadius='10px'
-                    objectFit="cover"
-                    width="343px"
-                    height="250px"
-                    src="https://images.unsplash.com/photo-1667489022797-ab608913feeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw5fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=800&q=60"
-                    alt="Caffe Latte"
-                />
-                </Center>
-            </Box>
-            <Box paddingTop='4' textAlign='justify'>
-                <Heading size='20px'>{userDetail?.nombre} <strong>{userDetail?.apellido}</strong></Heading>
-            </Box>
-            <Box paddingTop='1' paddingBottom='2' textAlign='justify'>
-                <Text fontSize='14px'>{userDetail?.puesto_trabajo} de <strong>{userDetail?.nombre_empresa}</strong></Text>
-            </Box>
-            <Box padding="10px">
-                <Box display="flex" alignItems="center" justifyContent="start" mb="8px">
-                <Box mr="10px">
-                    {linkedIn}
-                </Box>
-                <Text fontSize="14px">{userDetail?.linkedIn?.split('://')[1]}</Text>
-                </Box>
-                <Box display="flex" alignItems="center" justifyContent="start">
-                <Box ml='2px' mr="10px">
-                    {mail}
-                </Box>
-                <Text fontSize="14px">{userDetail?.email}</Text>
-                </Box>
-            </Box>
-            <Box paddingTop='1' paddingBottom='2' textAlign='justify'>
-                <Heading size='16px'>Intereses</Heading>
-                <Box paddingTop='5'>
-                <Tag size='sm' w='143px' variant='outline' d='flex' justifyContent='center' colorScheme='gray' h='20px' px='8px' borderRadius='20px'>
-                    {userDetail.interes}
-                </Tag>
-                </Box>
-            </Box>
-            {events && events.length > 0 && (
-                <Box className='BoxPonencia' paddingTop='1' paddingBottom='4' textAlign='justify'>
-                <Heading size='16px'>Ponencia</Heading>
-                <Text fontSize="14px">
-                    {events.map(filteredEvent => (
-                    <span key={filteredEvent.id}>
-                        <strong>{filteredEvent.titulo}:</strong>
-                        <br />
-                        {filteredEvent.descripcion}
-                        <br />
-                    </span>
-                    ))}
-                </Text>
+    return (
+        <>
+            {isLoading ? (
+                <div>cargando...</div>
+            ) : (
+                <Box>
+                    <Container width='100vw' height='100vh' padding='5'>
+                        <Box height='69vh'>
+                            <Box>
+                                <Center>
+                                    <Image
+                                        borderRadius='10px'
+                                        objectFit="cover"
+                                        width="343px"
+                                        height="250px"
+                                        src="https://images.unsplash.com/photo-1667489022797-ab608913feeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw5fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=800&q=60"
+                                        alt="Caffe Latte"
+                                    />
+                                </Center>
+                            </Box>
+                            <Box paddingTop='4' textAlign='justify'>
+                                <Heading size='20px'>{userDetail?.nombre} <strong>{userDetail?.apellido}</strong></Heading>
+                            </Box>
+                            <Box paddingTop='1' paddingBottom='2' textAlign='justify'>
+                                <Text fontSize='14px'>{userDetail?.puesto_trabajo} de <strong>{userDetail?.nombre_empresa}</strong></Text>
+                            </Box>
+                            <Box padding="10px">
+                                <Box display="flex" alignItems="center" justifyContent="start" mb="8px">
+                                    <Box mr="10px">
+                                        {linkedIn}
+                                    </Box>
+                                    <Text fontSize="14px">{userDetail?.linkedIn?.split('://')[1]}</Text>
+                                </Box>
+                                <Box display="flex" alignItems="center" justifyContent="start">
+                                    <Box ml='2px' mr="10px">
+                                        {mail}
+                                    </Box>
+                                    <Text fontSize="14px">{userDetail?.email}</Text>
+                                </Box>
+                            </Box>
+                            <Box paddingTop='1' paddingBottom='2' textAlign='justify'>
+                                <Heading size='16px'>Intereses</Heading>
+                                <Box paddingTop='5'>
+                                    <Tag size='sm' w='143px' variant='outline' d='flex' justifyContent='center' colorScheme='gray' h='20px' px='8px' borderRadius='20px'>
+                                        {userDetail.interes}
+                                    </Tag>
+                                </Box>
+                            </Box>
+                            {events && events?.length > 0 && (
+                                <Box className='BoxPonencia' paddingTop='1' paddingBottom='4' textAlign='justify'>
+                                    <Heading size='16px'>Ponencia</Heading>
+                                    <Text fontSize="14px">
+                                        {events?.map(filteredEvent => (
+                                            <span key={filteredEvent.id}>
+                                                <strong>{filteredEvent.titulo}:</strong>
+                                                <br />
+                                                {filteredEvent.descripcion}
+                                                <br />
+                                            </span>
+                                        ))}
+                                    </Text>
+                                </Box>
+                            )}
+                        </Box>
+                        <Center>
+                            {speaker && (
+                                <Box mt='30px' justifyContent='center' display='flex' paddingRight='16px' paddingLeft='16px' bottom='0'>
+                                    <Button onClick={handleOneToOne} w='343px' h='48px' fontSize='16px' fontWeight='600' color='white' borderRadius='80px' bg='#0F8BA0'>
+                                        Agendar one to one
+                                    </Button>
+                                </Box>
+                            )}
+                        </Center>
+                    </Container>
+                    <Footer />
                 </Box>
             )}
-            </Box>
-            <Center>
-                {speaker && ( <Box mt='30px' justifyContent='center' display='flex' paddingRight='16px' paddingLeft='16px' bottom='0'>
-                <Button onClick={()=> handleOneToOne(userId)} w='343px' h='48px' fontSize='16px' fontWeight='600' color='white' borderRadius='80px' bg='#0F8BA0'>
-                Agendar one to one
-                </Button>
-            </Box>)}
-           
-            </Center>
-        </Container>
-        <Footer />
-        </Box>
-    )}
-    </>
-);
+            <Modal isOpen={isOpen} onClose={onClose}>
+                <ModalOverlay />
+                <ModalContent>
+                    <ModalHeader>Agendar One to One</ModalHeader>
+                    <ModalCloseButton />
+                    <ModalBody>
+                        <Flex justify="space-between">
+                            <FormControl>
+                                <FormLabel>Seleccionar hora</FormLabel>
+                                <Select placeholder="Seleccionar hora" onChange={handleTimeChange}>
+                                    <option value="10:00">10:00</option>
+                                    <option value="11:00">11:00</option>
+                                    <option value="12:00">12:00</option>
+                                    <option value="13:00">13:00</option>
+                                    <option value="14:00">14:00</option>
+                                </Select>
+                            </FormControl>
+                            <FormControl ml={2}>
+                                <FormLabel>Seleccionar día</FormLabel>
+                                <Select placeholder="Seleccionar día" onChange={handleDayChange}>
+                                    <option value="2024-06-24">24 de Mayo</option>
+                                    <option value="2024-06-25">25 de Mayo</option>
+                                </Select>
+                            </FormControl>
+                        </Flex>
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button colorScheme="blue" mr={3} onClick={handleSubmit}>
+                            Agendar
+                        </Button>
+                        <Button variant="ghost" onClick={onClose}>Cancelar</Button>
+                    </ModalFooter>
+                </ModalContent>
+            </Modal>
+        </>
+    );
 };
 
 export default UserDetail;
