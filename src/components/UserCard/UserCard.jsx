@@ -1,17 +1,30 @@
-import { Card, CardBody, Text, Stack, Heading, Divider, Box, Image, Container, Center, Tag } from '@chakra-ui/react';
-import React from 'react';
-import { Link } from 'react-router-dom';
+import { Card, CardBody, Text, Stack, Heading, Divider, Box, Image, Container, Center, Tag, Button, Modal, ModalContent, ModalBody, ModalCloseButton, useDisclosure } from '@chakra-ui/react';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import AddPartner from '../AddPartner/AddPartner';
 
-export const UserCard = ({ user }) => {
+export const UserCard = ({ user, editButton }) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [id, setId] = useState(null);
+	const dispatch = useDispatch();
+  const navigate = useNavigate();
+  
+  const handleOpenModal = (id) => {
+    setId(id)
+		onOpen();
+	};
+
+  const handleClik = () => {
+    console.log('editButton', editButton);
+    editButton ? handleOpenModal(user.id) : navigate(`/userdetail/${user.id}`)
+  }
   return (
     <>
-      <Container maxW="md" spacing={4}> 
-      
-    
-        <Link to={`/userdetail/${user.id}`}>
-        
-          <Container  paddingX='0' paddingY='16px' display='flex' justifyContent='space-between' alignContent='center' borderTop='#718096 1px solid' >
-            <Box display="flex" direction="row" w='343px' key={user.id} height='108px' >
+      <Container maxW="md" spacing={4}>
+        <Link onClick={handleClik}>
+          <Container paddingX='0' paddingY='16px' display='flex' justifyContent='space-between' alignContent='center' borderTop='#718096 1px solid'>
+            <Box display="flex" direction="row" w='343px' key={user.id} height='108px'>
               <Box mr={4}>
                 <Image
                   borderRadius='10px'
@@ -34,6 +47,14 @@ export const UserCard = ({ user }) => {
         
           </Container>
         </Link>
+        <Modal isOpen={isOpen} onClose={onClose}>
+				<ModalContent maxW='md' mx='auto' mt='10' p='6' borderWidth='1px' borderRadius='lg' boxShadow='lg'>
+					<ModalBody display={'flex'} flexDirection={'column'}>
+						<ModalCloseButton />
+						{<AddPartner admin={true} id={id}/>}
+					</ModalBody>
+				</ModalContent>
+			</Modal>
       </Container>
     </>
   );

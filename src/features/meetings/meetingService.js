@@ -1,5 +1,5 @@
 import axios from "axios";
-const API_URL = "http://localhost:3000/meetings";
+const API_URL = "https://e-learning-expeirence.onrender.com/meetings";
 
 const getMeetingByUser = async () => {
     const token = localStorage.getItem("token");

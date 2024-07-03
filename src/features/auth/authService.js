@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:3000/users";
+const API_URL = "https://e-learning-expeirence.onrender.com/users";
 
 const login = async (user) => {
     console.log("service", user);
@@ -33,7 +33,6 @@ const logout = async () => {
 };
 const getUsers = async () => {
     const token = localStorage.getItem("token");
-
     const res = await axios.get(API_URL + "/", {
         headers: {
             Authorization: token,
@@ -55,13 +54,22 @@ const getUsersByRole = async (role) => {
 };
 const getUsersByid = async (id) => {
     const token = localStorage.getItem("token");
-
+    console.log("service", id);
     const res = await axios.get(API_URL + "/id/" + id, {
         headers: {
             Authorization: token,
         },
     });
 
+    return res.data;
+};
+const updateUser = async (user) => {
+    const token = localStorage.getItem("token");
+    const res = await axios.put(API_URL + "/id/" + user.id, user, {
+        headers: {
+            Authorization: token,
+        },
+    });
     return res.data;
 };
 
@@ -72,6 +80,7 @@ const authService = {
     getUsers,
     getUsersByRole,
     getUsersByid,
+    updateUser,
 };
 
 export default authService;

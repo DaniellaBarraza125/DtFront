@@ -7,7 +7,7 @@ import { getMeetingByUser } from '../../features/meetings/meetingSlice';
 import Buttons from '../Buttons/Buttons';
 import Footer from '../Footer/Footer';
 
-const Users = ({ propUsers, hideButtons, hideFooter, height, deleteButton }) => {
+const Users = ({ propUsers, hideButtons, hideFooter, height, deleteButton, editButton }) => {
     const dispatch = useDispatch();
     const { users: stateUsers, isLoading, user } = useSelector((state) => state.auth);
     const { meetings } = useSelector((state) => state.meeting);
@@ -113,7 +113,7 @@ console.log(meetings);
                                     ) : (
                                         <>
                                             {filteredUsers.map((user, i) => (
-                                                <UserCard key={i} user={user} />
+                                                <UserCard key={i} user={user} editButton={editButton ? true: false}/>
                                             ))}
                                             {matches.map((match, i) => (
                                                 <UserCard key={i} user={match} />
