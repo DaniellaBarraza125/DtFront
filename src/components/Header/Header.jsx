@@ -170,142 +170,134 @@ const profile = (
 	</svg>
 	)
 
-const Header = () => {
-    const { isOpen, onToggle, onClose } = useDisclosure();
-    const user = useSelector((state) => state.auth.user);
-    const dispatch = useDispatch();
-
-    return (
-        <Box bg='primary.50' px={4} height='72px' backgroundColor='#191919' position='relative'>
-            <Box display='grid' gridTemplateColumns='1fr 1fr 1fr' alignItems='center' height='100%' position='relative'>
-                <Box className='burgerIcon' display={{ base: 'flex', md: 'none' }} alignItems='center' justifyContent='flex-start' gridColumn='1' height='100%'>
-                    <IconButton
-                        size='md'
-                        icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
-                        aria-label='Toggle Navigation'
-                        onClick={onToggle}
-                        color='secondary.white'
-                        background='none'
-                        _hover={{ background: 'none' }}
-                        _active={{ background: 'none' }}
-                    />
-                </Box>
-
-                <Box className='logoGrande' display={{ base: 'none', md: 'flex' }} gridColumn='1' alignItems='center' justifyContent='start' height='100%' onClick={onToggle}>
-                    {logoGrande}
-                </Box>
-
-                <Center gridColumn='2' display={{ base: 'flex', md: 'none' }} justifyContent='center' alignItems='center' height='100%'>
-                    <Link to='/'>{logo}</Link>
-                </Center>
-
-                <Center gridColumn='2' display={{ base: 'none', md: 'flex' }} justifyContent='center' alignItems='center' height='100%'>
-                    {user?.rol === 'admin' && (
-                        <Box className='iconsAdmin' justifyContent='center'>
-                            <HStack spacing={8}>
-                                <Link to='/adminscheduleview'>
-                                    <Box display='flex' flexDirection='column' alignItems='center' justifyContent='center'>
-                                        {agenda}
-                                    </Box>
-                                </Link>
-                                <Link to='/paneladmin'>
-                                    <Box display='flex' flexDirection='column' alignItems='center'>
-                                        {panel}
-                                    </Box>
-                                </Link>
-                            </HStack>
-                        </Box>
-                    )}
-                </Center>
-                
-                <Box className='userInfo' display={{base:'none', md:'flex'}} justifyContent='flex-end' alignItems='center' gridColumn='3'>
-                    <Box>{profile}</Box>
-                </Box>
-            </Box>
-
-            {isOpen && (
-                <Box className='menulist' position='fixed' top='0' left='0' width={{ base: '70%', md: '25%' }} height='100vh' bg='#191919' zIndex='overlay' pb={4}>
-
-                    <Flex justifyContent='flex-end' p={4}>
-                        <IconButton
-                            icon={<CloseIcon />}
-                            aria-label='Close Menu'
-                            onClick={onClose}
-                            color='secondary.white'
-                            background='none'
-                            _hover={{ background: 'none' }}
-                            _active={{ background: 'none' }}
-                        />
-                    </Flex>
-				
-                    <VStack as='nav' spacing={'4'} mt={'4'}>
+	const Header = () => {
+		const { isOpen, onToggle, onClose } = useDisclosure();
+		const user = useSelector((state) => state.auth.user);
+		const dispatch = useDispatch();
+	
+		return (
+			<Box position='fixed' top='0' width='100%' bg='primary.50' px={4} height='72px' backgroundColor='#191919' zIndex='1000'>
+				<Box display='grid' gridTemplateColumns='1fr 1fr 1fr' alignItems='center' height='100%'>
+					<Box className='burgerIcon' display={{ base: 'flex', md: 'none' }} alignItems='center' justifyContent='flex-start' gridColumn='1' height='100%'>
+						<IconButton
+							size='md'
+							icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
+							aria-label='Toggle Navigation'
+							onClick={onToggle}
+							color='secondary.white'
+							background='none'
+							_hover={{ background: 'none' }}
+							_active={{ background: 'none' }}
+						/>
+					</Box>
+	
+					<Box className='logoGrande' display={{ base: 'none', md: 'flex' }} gridColumn='1' alignItems='center' justifyContent='start' height='100%' onClick={onToggle}>
+						{logoGrande}
+					</Box>
+	
+					<Center gridColumn='2' display={{ base: 'flex', md: 'none' }} justifyContent='center' alignItems='center' height='100%'>
+						<Link to='/'>{logo}</Link>
+					</Center>
+	
+					<Center gridColumn='2' display={{ base: 'none', md: 'flex' }} justifyContent='center' alignItems='center' height='100%'>
+						{user?.rol === 'admin' && (
+							<Box className='iconsAdmin' justifyContent='center'>
+								<HStack spacing={8}>
+									<Link to='/adminscheduleview'>
+										<Box display='flex' flexDirection='column' alignItems='center' justifyContent='center'>
+											{agenda}
+										</Box>
+									</Link>
+									<Link to='/paneladmin'>
+										<Box display='flex' flexDirection='column' alignItems='center'>
+											{panel}
+										</Box>
+									</Link>
+								</HStack>
+							</Box>
+						)}
+					</Center>
 					
-					<Button variant="unstyled" width="90%" fontSize="16px" borderRadius="10px" color="white" _hover={{ color: '#0F8BA0', border: '1px solid white', borderRadius: '10px' }}>
-                            INICIO
-                        </Button>
-						<Link to='/schedule' style={{ width: '90%' }}>
-							<Button 
-								variant="unstyled" 
-								width="100%" 
-								fontSize="16px" 
-								borderRadius="10px" 
-								color="white" 
-								_hover={{ color: '#0F8BA0', border: '1px solid white', borderRadius: '10px' }}
-							>
-								PROGRAMACION
+					<Box className='userInfo' display={{base:'none', md:'flex'}} justifyContent='flex-end' alignItems='center' gridColumn='3'>
+						<Box>{profile}</Box>
+					</Box>
+				</Box>
+	
+				{isOpen && (
+					<Box className='menulist' position='fixed' top='0' left='0' width={{ base: '70%', md: '25%' }} height='100vh' bg='#191919' zIndex='overlay' pb={4}>
+						<Flex justifyContent='flex-end' p={4}>
+							<IconButton
+								icon={<CloseIcon />}
+								aria-label='Close Menu'
+								onClick={onClose}
+								color='secondary.white'
+								background='none'
+								_hover={{ background: 'none' }}
+								_active={{ background: 'none' }}
+							/>
+						</Flex>
+						<VStack as='nav' spacing={'4'} mt={'4'}>
+							<Button variant="unstyled" width="90%" fontSize="16px" borderRadius="10px" color="white" _hover={{ color: '#0F8BA0', border: '1px solid white', borderRadius: '10px' }}>
+								INICIO
 							</Button>
-						</Link>
-
-                        <Link  to='/users'style={{ width: '90%' }} ><Button variant="unstyled" width="100%" fontSize="16px" borderRadius="10px" color="white" _hover={{ color: '#0F8BA0', border: '1px solid white', borderRadius: '10px' }}>
-                            PONENTES
-                        </Button></Link>
-						<Link to='/'style={{ width: '90%' }} > 
-                        <Button variant="unstyled" width="100%" fontSize="16px" borderRadius="10px" color="white" _hover={{ color: '#0F8BA0', border: '1px solid white', borderRadius: '10px' }}>
-                            PREMIOS DIGIT
-                        </Button>
-						</Link>
-						<Link to='/'style={{ width: '90%' }} >
-                        <Button variant="unstyled" width="100%" fontSize="16px" borderRadius="10px" color="white" _hover={{ color: '#0F8BA0', border: '1px solid white', borderRadius: '10px' }}>
-                            ALOJAMIENTO
-                        </Button>
-						</Link>
-						<Link to='/'style={{ width: '90%' }} >
-                        <Button variant="unstyled" width="100%" fontSize="16px" borderRadius="10px" color="white" _hover={{ color: '#0F8BA0', border: '1px solid white', borderRadius: '10px' }}>
-                            OTRAS EDICIONES
-                        </Button>
-						</Link>
-						<Link to='/'style={{ width: '90%' }} >
-                        <Button variant="unstyled" width="100%" fontSize="16px" borderRadius="10px" color="white" _hover={{ color: '#0F8BA0', border: '1px solid white', borderRadius: '10px' }}>
-                            CONTACTO
-                        </Button>
-						</Link>
-						<Link to='/login'style={{ width: '90%' }} >
-						<Button variant="unstyled" width="100%" fontSize="16px" position='relative'bottom='0' borderRadius="80px" bg='#0F8BA0' color="white" marginTop='150px'>
-                            Iniciar sesion
-                        </Button>
-						</Link>
-
-
-			
-
-                        {!user && (
-                            <>
-                                <Link to='/login' style={{ color: 'white' }}>
-                                    Login
-                                </Link>
-                                <Link to='/register' style={{ color: 'white' }}>
-                                    Register
-                                </Link>
-                            </>
-                        )}
-                        {/* <Link to='/checkout' style={{ color: 'white' }}>
-                            Checkout
-                        </Link> */}
-                    </VStack>
-                </Box>
-            )}
-        </Box>
-    );
-};
-
-export default Header;
+							<Link to='/schedule' style={{ width: '90%' }}>
+								<Button
+									variant="unstyled"
+									width="100%"
+									fontSize="16px"
+									borderRadius="10px"
+									color="white"
+									_hover={{ color: '#0F8BA0', border: '1px solid white', borderRadius: '10px' }}
+								>
+									PROGRAMACION
+								</Button>
+							</Link>
+							<Link to='/users' style={{ width: '90%' }}>
+								<Button variant="unstyled" width="100%" fontSize="16px" borderRadius="10px" color="white" _hover={{ color: '#0F8BA0', border: '1px solid white', borderRadius: '10px' }}>
+									PONENTES
+								</Button>
+							</Link>
+							<Link to='/' style={{ width: '90%' }}>
+								<Button variant="unstyled" width="100%" fontSize="16px" borderRadius="10px" color="white" _hover={{ color: '#0F8BA0', border: '1px solid white', borderRadius: '10px' }}>
+									PREMIOS DIGIT
+								</Button>
+							</Link>
+							<Link to='/' style={{ width: '90%' }}>
+								<Button variant="unstyled" width="100%" fontSize="16px" borderRadius="10px" color="white" _hover={{ color: '#0F8BA0', border: '1px solid white', borderRadius: '10px' }}>
+									ALOJAMIENTO
+								</Button>
+							</Link>
+							<Link to='/' style={{ width: '90%' }}>
+								<Button variant="unstyled" width="100%" fontSize="16px" borderRadius="10px" color="white" _hover={{ color: '#0F8BA0', border: '1px solid white', borderRadius: '10px' }}>
+									OTRAS EDICIONES
+								</Button>
+							</Link>
+							<Link to='/' style={{ width: '90%' }}>
+								<Button variant="unstyled" width="100%" fontSize="16px" borderRadius="10px" color="white" _hover={{ color: '#0F8BA0', border: '1px solid white', borderRadius: '10px' }}>
+									CONTACTO
+								</Button>
+							</Link>
+							<Link to='/login' style={{ width: '90%' }}>
+								<Button variant="unstyled" width="100%" fontSize="16px" position='relative'bottom='0' borderRadius="80px" bg='#0F8BA0' color="white" marginTop='150px'>
+									Iniciar sesion
+								</Button>
+							</Link>
+							{!user && (
+								<>
+									<Link to='/login' style={{ color: 'white' }}>
+										Login
+									</Link>
+									<Link to='/register' style={{ color: 'white' }}>
+										Register
+									</Link>
+								</>
+							)}
+						</VStack>
+					</Box>
+				)}
+			</Box>
+		);
+	};
+	
+	export default Header;
+	
