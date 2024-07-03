@@ -277,8 +277,8 @@ const profile = (
 									CONTACTO
 								</Button>
 							</Link>
-							<Link to='/login' style={{ width: '90%' }}>
-								<Button variant="unstyled" width="100%" fontSize="16px" position='relative'bottom='0' borderRadius="80px" bg='#0F8BA0' color="white" marginTop='150px'>
+							<Link to='/register' style={{ width: '90%' }}>
+								<Button variant="unstyled" width="100%" fontSize="16px" position='relative'bottom='0' borderRadius="80px" bg='#0F8BA0' color="white" marginTop='100px'>
 									Iniciar sesion
 								</Button>
 							</Link>

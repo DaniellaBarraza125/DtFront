@@ -72,7 +72,7 @@ const Users = ({ propUsers, hideButtons, hideFooter, height }) => {
     ];
 
     return (
-        <Box height={height ? height : '100vh'} display='flex' flexDirection='column'  width='100%' onClick={onOpen}>
+        <Box marginTop='10vh' height={height ? height : '100vh'} display='flex' flexDirection='column'  width='100%' onClick={onOpen}>
             <Container flex='1' display='flex' flexDirection='column' overflow='hidden'>
                 <Box></Box>
 

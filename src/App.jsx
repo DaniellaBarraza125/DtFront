@@ -36,7 +36,7 @@ function Layout({ children }) {
   return (
     <>
     {location.pathname !== '/register' && <Header />}
-    <Box mt='72px'>
+    <Box mt='70px'>
       {children}
     </Box>
   </>
