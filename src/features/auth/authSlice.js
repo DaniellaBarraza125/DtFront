@@ -76,7 +76,6 @@ export const getUsersByid = createAsyncThunk(
     "auth/getUsersById",
     async (id) => {
         try {
-            console.log('slice', id);
             return await authService.getUsersByid(id);
         } catch (error) {
             console.error(error);

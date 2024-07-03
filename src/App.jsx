@@ -4,7 +4,7 @@ import Login from "./components/Login/Login";
 import Header from "./components/Header/Header";
 import Home from "./components/Home/Home";
 import Profile from "./components/Profile/Profile";
-import { ChakraProvider } from "@chakra-ui/react";
+import { Box, ChakraProvider } from "@chakra-ui/react";
 import Schedule from "./components/Schedule/Schedule";
 import EventDetail from "./components/EventDetail/EventDetail";
 import Stepper from "./components/Stepper/Stepper";
@@ -30,16 +30,17 @@ import UserDetail from "./components/UserDetail/UserDetail";
 import Feedback from "./components/Feedback/Feedback";
 import SpeakerSchedule from "./components/SpeakerSchedule/SpeakerSchedule";
 
-// Carga tu clave pública de Stripe
 const stripePromise = loadStripe('pk_test_51PU6292MuIxm52bYvsBX37uZbLNzlaon35wbfpENgxW1ybFytd7Vdz7Pqp2bCvSfPYlcCBNZMBZxvQqtla0GLGV5006fBkWG84');
 
 function Layout({ children }) {
   const location = useLocation();
   return (
     <>
-      {location.pathname !== '/register' && <Header />}
+    {location.pathname !== '/register' && <Header />}
+    <Box mt='72px'>
       {children}
-    </>
+    </Box>
+  </>
   );
 }
 
@@ -50,6 +51,7 @@ function App() {
       <ChakraProvider theme={theme}>
         <BrowserRouter>
           <Layout />
+          <Header />
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
@@ -67,7 +69,6 @@ function App() {
               <Route path="/partners" element={<PrivateZone><Partners /></PrivateZone>} />
               <Route path="/userdetail/:id" element={<UserDetail />} />
               <Route path="/products" element={<Products />} />
-              <Route path="/speakerschedule" element={<SpeakerSchedule />} />
               <Route path="/checkoutForm" element={
                 <Elements stripe={stripePromise}>
                   <CheckoutForm />

@@ -151,7 +151,6 @@ const Stepper = () => {
 		}
 
 		setIsSubmitting(true);
-		console.log('Data to be submitted:', formValues);
 
 		dispatch(register(formValues));
 
@@ -201,7 +200,6 @@ const Stepper = () => {
 
 	const handleNext = () => {
 		let isValid = true;
-        console.log('step',activeStep);
 		switch (activeStep) {
 			case 0:
 				isValid = formValues.email !== '' && formValues.password !== '';
