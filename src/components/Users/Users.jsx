@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { UserCard } from '../UserCard/UserCard';
-import { Box, Container, Button, Text, useDisclosure } from '@chakra-ui/react';
+import { Box, Container, Button, Text, useDisclosure, Center } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUsers } from '../../features/auth/authSlice';
 import { getMeetingByUser } from '../../features/meetings/meetingSlice';
@@ -11,16 +11,16 @@ const Users = ({ propUsers, hideButtons, hideFooter, height, deleteButton, editB
     const dispatch = useDispatch();
     const { users: stateUsers, isLoading, user } = useSelector((state) => state.auth);
     const { meetings } = useSelector((state) => state.meeting);
-	const { isOpen, onOpen, onClose } = useDisclosure();
+
+    const { isOpen, onOpen, onClose } = useDisclosure();
     const [filteredUsers, setFilteredUsers] = useState([]);
     const [noMeetings, setNoMeetings] = useState(false);
     const [selectedTag, setSelectedTag] = useState('all');
-
     const options = [
         { value: 'user', label: 'Asistentes' },
         { value: 'speaker', label: 'Partners' },
     ];
-
+ 
     useEffect(() => {
         if (!propUsers) {
             dispatch(getUsers());
@@ -44,10 +44,12 @@ const Users = ({ propUsers, hideButtons, hideFooter, height, deleteButton, editB
         if (tagValue === 'all') {
             setFilteredUsers(users);
         } else if (tagValue === 'oneToOne') {
-            // No filtrar, solo mostrar el número de reuniones
             if (meetings.length === 0) {
                 setNoMeetings(true);
                 setFilteredUsers([]);
+            } else {
+                const oneToOneUsers = meetings.map(meeting => meeting.Partner?.User).filter(user => user); 
+                setFilteredUsers(oneToOneUsers);
             }
         } else if (tagValue === 'matches') {
             const filtered = users.filter((u) => u.tag === tagValue);
@@ -59,7 +61,10 @@ const Users = ({ propUsers, hideButtons, hideFooter, height, deleteButton, editB
         const match = stateUser.cluster == parseInt(user.cluster);
         return match;
     });
-console.log(meetings);
+
+    const oneToOneUsers = meetings.map(meeting => meeting.Partner?.User).filter(user => user);  
+    console.log(oneToOneUsers);
+
     const tags = [
         { label: 'Todas', value: 'all', count: users.length },
         { label: 'One to One', value: 'oneToOne', count: meetings.length },
@@ -109,7 +114,45 @@ console.log(meetings);
                             ) : (
                                 <>
                                     {selectedTag === 'oneToOne' ? (
-                                        <p>Tienes {meetings.length} reuniones One to One</p>
+                                        <>
+                                            {meetings.map((meeting, i) => meeting.Partner?.User && (
+                                                <Box display={'flex'} flexDirection={'column'} justifyContent={'center'} key={i}>
+                                                    <UserCard user={meeting.Partner.User} />
+                                                    <Box mt={1} ml='40px' pb='15px'>
+                                                        <Text fontSize='sm' fontWeight='bold' color='gray.700'>
+                                                            Fecha:
+                                                            <Text as='span' fontWeight='normal' color='gray.600' ml={1}>
+                                                                {new Date(meeting.fecha).toLocaleDateString('es-ES', { day: '2-digit', month: 'long' })}
+                                                            </Text>
+                                                        </Text>
+                                                        <Box display='flex' alignItems='center' mt={2}>
+                                                            <Text fontSize='sm' fontWeight='bold' color='gray.700' mr={4}>
+                                                                Hora de Inicio:
+                                                                <Text as='span' fontWeight='normal' color='gray.600' ml={1}>
+                                                                    {meeting.hora_inicio.slice(0, 5)}
+                                                                </Text>
+                                                            </Text>
+                                                            <Text fontSize='sm' fontWeight='bold' color='gray.700'>
+                                                                Duración:
+                                                                <Text as='span' fontWeight='normal' color='gray.600' ml={1}>
+                                                                    {(() => {
+                                                                        const start = new Date(`1970-01-01T${meeting.hora_inicio}Z`);
+                                                                        const end = new Date(`1970-01-01T${meeting.hora_fin}Z`);
+                                                                        const diffMs = end - start;
+                                                                        const diffMins = Math.floor(diffMs / 60000);
+                                                                        const hours = Math.floor(diffMins / 60);
+                                                                        const minutes = diffMins % 60;
+                                                                        return ` ${minutes}m`;
+                                                                    })()}
+                                                                </Text>
+                                                            </Text>
+                                                        </Box>
+                                                    </Box>
+
+
+                                                </Box>
+                                            ))}
+                                        </>
                                     ) : (
                                         <>
                                             {filteredUsers.map((user, i) => (
@@ -132,3 +175,4 @@ console.log(meetings);
 };
 
 export default Users;
+
