@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { logout } from '../../features/auth/authSlice';
 import { Box, Flex, IconButton, useDisclosure, VStack, Text, HStack, Grid, GridItem, Center } from '@chakra-ui/react';
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
+import { useEffect } from 'react';
+import { getAll, getByDate } from '../../features/events/eventSlice';
 
 const logoGrande = (
 	<svg width='150' height='50' viewBox='0 0 505 175' fill='white' xmlns='http://www.w3.org/2000/svg'>
@@ -167,6 +169,10 @@ const Header = () => {
 	const dispatch = useDispatch();
 	const { isOpen, onToggle } = useDisclosure();
 
+	// useEffect(() => {
+	// 	console.log('entro al useEffect');
+	// 	dispatch(getByDate('2024-04-20'));
+	// },[])
 	return (
 		<Box bg='primary.50' px={4} height='72px' backgroundColor='#191919'>
 			<Box display='grid' gridTemplateColumns='1fr 1fr 1fr' alignItems='center' h={16}>

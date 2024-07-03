@@ -24,6 +24,7 @@ import { sendSummary } from '../../features/emails/emailSlice';
 
 const PanelAdmin = ({ hideFooter }) => {
 	const { users } = useSelector((state) => state.auth);
+	const { partners } = useSelector((state) => state.partner);
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const [componentToRender, setComponentToRender] = useState(null);
 	const dispatch = useDispatch();
@@ -39,7 +40,6 @@ const PanelAdmin = ({ hideFooter }) => {
 
 	const asistentes = users.filter((user) => user.rol === 'user');
 	const ponentes = users.filter((user) => user.rol === 'speaker');
-	const partners = users.filter((user) => user.rol === 'partner');
 	console.log(ponentes);
 
 	const renderComponent = () => {
@@ -87,30 +87,22 @@ const PanelAdmin = ({ hideFooter }) => {
 							</Box>
 						</Box>
 						<Box display='flex' flexDirection='column' alignItems='end'>
-							{partners.length > 0 ? (
-								<>
-									<Partners hideButtons={true} hideFooter={true} height='60vh' />
-									<Button
-										width='216px'
-										height='10px'
-										padding='30px'
-										borderRadius='80'
-										backgroundColor='#0F8BA0'
-										color='white'
-										position='relative'
-										bottom='2.5rem'
-										right='0'
-										onClick={() => handleOpenModal('partner')}
-										_hover={{ bg: '#0F8BA0' }}
-									>
-										Añadir
-									</Button>
-								</>
-							) : (
-								<Box textAlign='center' width='100%'>
-									No hay partners disponibles.
-								</Box>
-							)}
+							<Partners hideButtons={true} hideFooter={true} height='60vh' />
+							<Button
+								width='216px'
+								height='10px'
+								padding='30px'
+								borderRadius='80'
+								backgroundColor='#0F8BA0'
+								color='white'
+								position='relative'
+								bottom='2.5rem'
+								right='0'
+								onClick={() => handleOpenModal('partner')}
+								_hover={{ bg: '#0F8BA0' }}
+							>
+								Añadir
+							</Button>
 						</Box>
 					</Flex>
 				</Box>
@@ -164,7 +156,7 @@ const PanelAdmin = ({ hideFooter }) => {
 						</Box>
 						<Box height='30%'>
 							{ponentes.length > 0 ? (
-								<Users hideButtons={true} propUsers={ponentes} hideFooter={true} height='60vh' deleteButton={true} editButton={true}/>
+								<Users hideButtons={true} propUsers={ponentes} hideFooter={true} height='60vh' deleteButton={true} editButton={true} />
 							) : (
 								<Box textAlign='center' width='100%'>
 									No hay ponentes disponibles.

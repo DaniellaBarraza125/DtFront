@@ -5,11 +5,13 @@ import {
   Box,
   Button,
   FormControl,
+  FormErrorMessage,
   FormLabel,
   Input,
   VStack,
 } from '@chakra-ui/react';
 import "./Login.scss";
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -18,6 +20,7 @@ const Login = () => {
   });
   const { email, password } = formData;
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
 
   console.log(formData)
@@ -31,10 +34,9 @@ const Login = () => {
   };
 
   const onSubmit = (e) => {
-    
     e.preventDefault();
     dispatch(login(formData));
-  
+    navigate('/schedule');
   };
 
   const validateEmail = (email) => {
@@ -69,7 +71,7 @@ const Login = () => {
               <FormErrorMessage>Debe ingresar un correo electrónico válido.</FormErrorMessage>
             )}
           </FormControl>
-          <Button className="btn_login" type="submit" colorScheme="teal" mt={4} borderRadius="80px">
+          <Button className="btn_login" type="submit" colorScheme="teal" mt={4} borderRadius="80px" >
             Login
           </Button>
         </VStack>
