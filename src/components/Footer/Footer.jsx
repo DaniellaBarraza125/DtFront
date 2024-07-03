@@ -45,7 +45,7 @@ const Footer = ({hideFooter}) => {
 	</svg>
 	return (
 		<>
-		 {!hideFooter && ( 	<Box width='100%' position='fixed' bottom='0' bg='white' p={2}  boxShadow="0 -4px 6px rgba(0, 0, 0, 0.1)">
+			<Box width='100%' position='fixed' bottom='0' bg='white' p={2}  boxShadow="0 -4px 6px rgba(0, 0, 0, 0.1)" display={hideFooter && 'none'}>
 			<Flex justify='space-around' align='center'>
 				<Button mx={2} color='191919' display={'flex'} flexDirection={'column'} bg={'transparent'} onClick={()=>redirect('/schedule')} >
 						{schedule}
@@ -56,7 +56,7 @@ const Footer = ({hideFooter}) => {
                 <Text fontSize='15px'>Asistentes</Text>
 				</Button>
 			</Flex>
-		</Box>)}
+		</Box>
 		</>
 		
 	

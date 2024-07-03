@@ -28,6 +28,7 @@ import Event from "./components/Event/Event";
 import Products from "./components/Products/Products";
 import UserDetail from "./components/UserDetail/UserDetail";
 import Feedback from "./components/Feedback/Feedback";
+import SpeakerSchedule from "./components/SpeakerSchedule/SpeakerSchedule";
 
 // Carga tu clave pública de Stripe
 const stripePromise = loadStripe('pk_test_51PU6292MuIxm52bYvsBX37uZbLNzlaon35wbfpENgxW1ybFytd7Vdz7Pqp2bCvSfPYlcCBNZMBZxvQqtla0GLGV5006fBkWG84');
@@ -48,7 +49,7 @@ function App() {
     <>
       <ChakraProvider theme={theme}>
         <BrowserRouter>
-          <Layout>
+          <Layout />
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
@@ -66,6 +67,7 @@ function App() {
               <Route path="/partners" element={<PrivateZone><Partners /></PrivateZone>} />
               <Route path="/userdetail/:id" element={<UserDetail />} />
               <Route path="/products" element={<Products />} />
+              <Route path="/speakerschedule" element={<SpeakerSchedule />} />
               <Route path="/checkoutForm" element={
                 <Elements stripe={stripePromise}>
                   <CheckoutForm />
@@ -75,7 +77,6 @@ function App() {
               <Route path='/adminscheduleview' element={<AdminZone><AdminScheduleView /></AdminZone>} />
               {/* <Route path="/footer" element={<Footer />} /> */}
             </Routes>
-          </Layout>
         </BrowserRouter>
       </ChakraProvider>
     </>

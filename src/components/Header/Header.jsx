@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { logout } from '../../features/auth/authSlice';
-import { Box, Flex, IconButton, useDisclosure, VStack, Text, HStack, Grid, GridItem, Center } from '@chakra-ui/react';
+import { Box, Flex, IconButton, useDisclosure, VStack, Text, HStack, Grid, GridItem, Center, Button } from '@chakra-ui/react';
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 
 const logoGrande = (
@@ -162,96 +162,124 @@ const logo = (
 		/>
 	</svg>
 );
+
 const Header = () => {
-	const { user } = useSelector((state) => state.auth);
-	const dispatch = useDispatch();
-	const { isOpen, onToggle } = useDisclosure();
+    const { isOpen, onToggle, onClose } = useDisclosure();
+    const user = useSelector((state) => state.auth.user);
+    const dispatch = useDispatch();
 
-	return (
-		<Box bg='primary.50' px={4} height='72px' backgroundColor='#191919'>
-			<Box display='grid' gridTemplateColumns='1fr 1fr 1fr' alignItems='center' h={16}>
-				<Box className='logoGrande' display={{ base: 'none', md: 'block' }} gridColumn='1'>
-					<Link to='/'>{logoGrande}</Link>
-				</Box>
+    return (
+        <Box bg='primary.50' px={4} height='72px' backgroundColor='#191919' position='relative'>
+            <Box display='grid' gridTemplateColumns='1fr 1fr 1fr' alignItems='center' height='100%' position='relative'>
+                <Box className='burgerIcon' display={{ base: 'flex', md: 'none' }} alignItems='center' justifyContent='flex-start' gridColumn='1' height='100%'>
+                    <IconButton
+                        size='md'
+                        icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
+                        aria-label='Toggle Navigation'
+                        onClick={onToggle}
+                        color='secondary.white'
+                        background='none'
+                        _hover={{ background: 'none' }}
+                        _active={{ background: 'none' }}
+                    />
+                </Box>
 
-				<Center>
-					{user?.role === 'admin' && (
-						<Box className='iconsAdmin' gridColumn='2' justifyContent='center'>
-							<HStack display={{ base: 'none', md: 'flex' }} spacing={8}>
-								<Link to='/adminscheduleview'>
-									<Box display='flex' flexDirection='column' alignItems='center' justifyContent='center'>
-										{agenda}
-									</Box>
-								</Link>
-								<Link to='/paneladmin'>
-									<Box display='flex' flexDirection='column' alignItems='center'>
-										{panel}
-									</Box>
-								</Link>
-							</HStack>
-						</Box>
-					)}
-				</Center>
+                <Box className='logoGrande' display={{ base: 'none', md: 'flex' }} gridColumn='1' alignItems='center' justifyContent='start' height='100%' onClick={onToggle}>
+                    {logoGrande}
+                </Box>
 
-				<Box className='logo' display={{ base: 'flex', md: 'none' }} gridColumn='2' justifyContent='center'>
-					<Link to='/'>{logo}</Link>
-				</Box>
+                <Center gridColumn='2' display={{ base: 'flex', md: 'none' }} justifyContent='center' alignItems='center' height='100%'>
+                    <Link to='/'>{logo}</Link>
+                </Center>
 
-				<Box
-					className='burgerIcon'
-					display='flex'
-					alignItems='center'
-					justifyContent={{ base: 'flex-end', md: 'flex-end' }}
-					gridColumn={{ base: '3', md: '3' }}
-					alignSelf='center'
-				>
-					<IconButton
-						size='md'
-						icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
-						aria-label='Toggle Navigation'
-						onClick={onToggle}
-						color='secondary.white'
-						background='none'
-						_hover={{ background: 'none' }}
-						_active={{ background: 'none' }}
-					/>
-				</Box>
-			</Box>
+                <Center gridColumn='2' display={{ base: 'none', md: 'flex' }} justifyContent='center' alignItems='center' height='100%'>
+                    {user?.rol === 'admin' && (
+                        <Box className='iconsAdmin' justifyContent='center'>
+                            <HStack spacing={8}>
+                                <Link to='/adminscheduleview'>
+                                    <Box display='flex' flexDirection='column' alignItems='center' justifyContent='center'>
+                                        {agenda}
+                                    </Box>
+                                </Link>
+                                <Link to='/paneladmin'>
+                                    <Box display='flex' flexDirection='column' alignItems='center'>
+                                        {panel}
+                                    </Box>
+                                </Link>
+                            </HStack>
+                        </Box>
+                    )}
+                </Center>
+                
+                <Box className='userInfo' display={{base:'none', md:'flex'}} justifyContent='flex-end' alignItems='center' gridColumn='3'>
+                    <Text color='white'>hola</Text>
+                </Box>
+            </Box>
 
-			{isOpen && (
-				<Box className='menulist' position='absolute' top='72px' left='0' width='100%' bg='black' zIndex='overlay' pb={4}>
-					<VStack as='nav' spacing={'4'} mt={'4'}>
-						<Link to='/schedule' style={{ color: 'white' }}>
-							Schedule
-						</Link>
-						{user && (
-							<>
-								<Link to='/profile' style={{ color: 'white' }}>
-									{user.name}
-								</Link>
-								<Text cursor='pointer' onClick={() => dispatch(logout())} style={{ color: 'white' }}>
-									Logout
-								</Text>
-							</>
-						)}
-						{!user && (
-							<>
-								<Link to='/login' style={{ color: 'white' }}>
-									Login
-								</Link>
-								<Link to='/register' style={{ color: 'white' }}>
-									Register
-								</Link>
-							</>
-						)}
-						<Link to='/checkout' style={{ color: 'white' }}>
-							Checkout
-						</Link>
-					</VStack>
-				</Box>
-			)}
-		</Box>
-	);
+            {isOpen && (
+                <Box className='menulist' position='fixed' top='0' left='0' width={{ base: '70%', md: '25%' }} height='100vh' bg='#191919' zIndex='overlay' pb={4}>
+
+                    <Flex justifyContent='flex-end' p={4}>
+                        <IconButton
+                            icon={<CloseIcon />}
+                            aria-label='Close Menu'
+                            onClick={onClose}
+                            color='secondary.white'
+                            background='none'
+                            _hover={{ background: 'none' }}
+                            _active={{ background: 'none' }}
+                        />
+                    </Flex>
+				
+                    <VStack as='nav' spacing={'4'} mt={'4'}>
+					<Button variant="unstyled" width="90%" fontSize="16px" borderRadius="10px" color="white" _hover={{ color: '#0F8BA0', border: '1px solid white', borderRadius: '10px' }}>
+                            INICIO
+                        </Button>
+                        <Link to='/schedule'>
+                            <Button variant="unstyled" width="90%" fontSize="16px" borderRadius="10px" color="white" _hover={{ color: '#0F8BA0', border: '1px solid white', borderRadius: '10px' }}>
+                                PROGRAMACION
+                            </Button>
+                        </Link>
+                        <Link to='/users'><Button variant="unstyled" width="90%" fontSize="16px" borderRadius="10px" color="white" _hover={{ color: '#0F8BA0', border: '1px solid white', borderRadius: '10px' }}>
+                            PONENTES
+                        </Button></Link>
+                        <Button variant="unstyled" width="90%" fontSize="16px" borderRadius="10px" color="white" _hover={{ color: '#0F8BA0', border: '1px solid white', borderRadius: '10px' }}>
+                            PREMIOS DIGIT
+                        </Button>
+                        <Button variant="unstyled" width="90%" fontSize="16px" borderRadius="10px" color="white" _hover={{ color: '#0F8BA0', border: '1px solid white', borderRadius: '10px' }}>
+                            ALOJAMIENTO
+                        </Button>
+                        <Button variant="unstyled" width="90%" fontSize="16px" borderRadius="10px" color="white" _hover={{ color: '#0F8BA0', border: '1px solid white', borderRadius: '10px' }}>
+                            OTRAS EDICIONES
+                        </Button>
+                        <Button variant="unstyled" width="90%" fontSize="16px" borderRadius="10px" color="white" _hover={{ color: '#0F8BA0', border: '1px solid white', borderRadius: '10px' }}>
+                            CONTACTO
+                        </Button>
+						<Button variant="unstyled" width="90%" fontSize="16px" position='relative'bottom='0' borderRadius="80px" bg='#0F8BA0' color="white" >
+                            Iniciar sesion
+                        </Button>
+
+
+			
+
+                        {!user && (
+                            <>
+                                <Link to='/login' style={{ color: 'white' }}>
+                                    Login
+                                </Link>
+                                <Link to='/register' style={{ color: 'white' }}>
+                                    Register
+                                </Link>
+                            </>
+                        )}
+                        <Link to='/checkout' style={{ color: 'white' }}>
+                            Checkout
+                        </Link>
+                    </VStack>
+                </Box>
+            )}
+        </Box>
+    );
 };
 
 export default Header;

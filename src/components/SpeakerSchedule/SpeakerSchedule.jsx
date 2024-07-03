@@ -1,31 +1,22 @@
-import {
-    Box,
-    Grid,
-    GridItem,
-    Heading,
-    Flex,
-    Divider,
-    Center,
-    Modal,
-    ModalOverlay,
-    ModalContent,
-    ModalBody,
-    useDisclosure,
-    Text,
-    Button
-} from '@chakra-ui/react';
+import { Box, Grid, GridItem, Heading, Flex, Divider, Center, IconButton, Modal, ModalOverlay, ModalContent, ModalBody, useDisclosure, Text, Button } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getByDate } from '../../features/events/eventSlice';
 import Event from '../Event/Event';
 import Buttons from '../Buttons/Buttons';
+import { AddIcon } from '@chakra-ui/icons';
 import AddEvent from '../AddEvent/AddEvent';
+import Tags from '../Tags/Tags';
 
-const AdminScheduleView = () => {
+const SpeakerSchedule = () => {
     const { eventIsLoading, events } = useSelector((state) => state.event);
+    const { user   } = useSelector((state) => state.auth);
+
     const dispatch = useDispatch();
     const { isOpen, onOpen, onClose } = useDisclosure();
 
+
+    const speakerEvents = events.filter(event => event.userId == user.id)
     const options = [
         { value: '2024-04-20', label: '23 de Mayo' },
         { value: '2024-05-15', label: '24 de Mayo' }
@@ -45,13 +36,40 @@ const AdminScheduleView = () => {
     if (eventIsLoading) {
         return <h1>Cargando eventos...</h1>;
     }
+    const handleTagClick = (value) => {
+        switch (value) {
+            case 'Todas':
+          console.log('Todas');
+                break;
+            case 'One to One':
+               console.log('One to One');
+                break;
+            case 'Matches':
+              console.log('Matches');
+                break;
+            default:
+                break;
+        }
+    };
+    console.log();
+    const eventosSalaPrincipal = speakerEvents.filter(event => event.sala === 'Sala A');
+    const eventosSalaWorkshop = speakerEvents.filter(event => event.sala === 'Sala B');
+    const matches = events.filter(event => event.interes === user.interes);
+    const matchesSalaPrincipal = matches.filter(event => event.sala === 'Sala A');
+    const marthesSalaWorkshop = matches.filter(event => event.sala === 'Sala B');
 
-    const eventosSalaPrincipal = events.filter(event => event.sala === 'Sala A');
-    const eventosSalaWorkshop = events.filter(event => event.sala === 'Sala B');
+    
+    console.log(marthesSalaWorkshop);
+    const tags = [
+        { label: 'Todas', value: 'Todas'},
+        { label: 'One to One',value: 'One to One'  },
+        { label: 'Matches', value: 'Matches'},
+    ]; 
 
     return (
         <Flex justifyContent="center">
-            <Box borderRadius="1em" width="69vw" overflow="hidden">
+            {!user ?  <h1>Cargando...</h1> : (<Box borderRadius="1em" width="69vw" overflow="hidden">
+                
                 <Grid templateRows="auto 1fr" >
                     <Box>
                         <Box className='buttonsZone' position="relative" zIndex="2">
@@ -75,27 +93,31 @@ const AdminScheduleView = () => {
                                             border="1px solid #0F8BA0"
                                             borderRadius="55px"
                                             height='3vh'
-                                            onClick={onOpen} // Asegúrate de que onOpen se llama aquí
                                         >
                                             Añadir Ponencia
                                         </Button>
                                     </Box>
                                 </GridItem>
                                 <GridItem colSpan={3}>
-                                    <Box className='fondo' bg='#ededed' width='100%' height='2vh'></Box>
+                                    <Box className='fondo' bg='#ededed' width='100%' height='3vh' marginTop='-0.6vh'></Box>
+                                    <Box className='fondo' bg='#ededed' height='3vh' marginTop='-0.6vh' w='100%' marginBottom='5px'>
+                                        <Box width='300px' marginLeft='15px'>
+                                            <Tags tags={tags} tagHoverColor="#0F8BA0" onClick={handleTagClick} /> <Text></Text>
+                                        </Box>
+                                    </Box>
                                 </GridItem>
                             </Grid>
                         </Box>
-                        <Box height='655px' className='salas' marginTop={0}>
+                        <Box height='615px' className='salas' marginTop={6}>
                             <GridItem bg='#ededed' flex="1" display="flex" flexDirection="row" overflow="hidden" width="100%" justifyContent='space-around' paddingBottom='15px'>
-                                <Box bg='white' width='31vw' height='67vh' borderRadius='15px' margin='15px 1px' display="flex" flexDirection="column" alignItems="center" paddingX="1.5vw" paddingBottom='3vh' paddingTop='3vh'>
+                                <Box bg='white' width='31vw' height='70vh' borderRadius='15px' margin='15px 1px' display="flex" flexDirection="column" alignItems="center" paddingX="1.5vw" paddingBottom='3vh' paddingTop='3vh'>
                                     <Box position="sticky" top="0" zIndex="1" width="100%">
                                         <Box display="flex" flexDirection="column" alignItems="center" borderBottom='1px black' width="100%" paddingTop="1.25em">
                                             <Center>
                                                 <Heading size="md" paddingBottom="0.5em">Sala Principal - La font blanca</Heading>
                                             </Center>
                                             <Divider mb="1em" width="85%" />
-                                        </Box>
+                                            </Box>
                                     </Box>
                                     <Box flex="1" overflowY="scroll" paddingX='1em' width="100%" css={{
                                         '&::-webkit-scrollbar': {
@@ -121,13 +143,13 @@ const AdminScheduleView = () => {
                                     </Box>
                                 </Box>
                                 {eventosSalaWorkshop.length > 0 ? (
-                                    <Box bg='white' width='31vw' height='67vh' borderRadius='15px' margin='15px 1px' display="flex" flexDirection="column" alignItems="center" paddingX="1.5vw" paddingBottom='3vh' paddingTop='3vh'>
+                                    <Box bg='white' width='31vw' height='70vh' borderRadius='15px' margin='15px 1px' display="flex" flexDirection="column" alignItems="center" paddingX="1.5vw" paddingBottom='3vh' paddingTop='3vh'>
                                         <Box position="sticky" top="0" zIndex="1" width="100%">
                                             <Box display="flex" flexDirection="column" borderBottom='1px black' alignItems="center" width="100%" paddingTop="10px">
                                                 <Center>
                                                     <Heading size="md" paddingBottom="0.5em">Sala Workshop - La Alcazaba</Heading>
                                                 </Center>
-                                                <Divider mb="1em" width="85%" />
+                                                <Divider mb="1em" width="85%"  />
                                             </Box>
                                         </Box>
                                         <Box flex="1" overflowY="scroll" paddingX='1em' width="100%" css={{
@@ -153,18 +175,25 @@ const AdminScheduleView = () => {
                                             ))}
                                         </Box>
                                     </Box>
-                                ) : (
-                                    <Box bg='white' width='31vw' height='70vh' borderRadius='15px' margin='15px 1px' display="flex" flexDirection="column" alignItems="center" paddingX="1.5vw" paddingBottom='3vh' paddingTop='3vh'>
-                                        <Center>
-                                            <Text>No hay eventos en esta sala</Text>
-                                        </Center>
-                                    </Box>
-                                )}
+                                ):(   <Box bg='white' width='31vw' height='70vh' borderRadius='15px' margin='15px 1px' display="flex" flexDirection="column" alignItems="center" paddingX="1.5vw" paddingBottom='3vh' paddingTop='3vh'>
+                                     <Box position="sticky" top="0" zIndex="1" width="100%">
+                                            <Box display="flex" flexDirection="column" borderBottom='1px black' alignItems="center" width="100%" paddingTop="10px">
+                                                <Center>
+                                                    <Heading size="md" paddingBottom="0.5em">Sala Workshop - La Alcazaba</Heading>
+                                                </Center>
+                                                <Divider mb="1em" width="85%"  />
+                                            </Box>
+                                        </Box>
+                                    <Center>
+                                        <Text>No hay eventos en esta sala</Text>
+                                    </Center>
+                                </Box>)}
                             </GridItem>
                         </Box>
                     </Box>
                 </Grid>
-            </Box>
+            </Box>)}
+            
 
             <Modal isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay />
@@ -178,4 +207,4 @@ const AdminScheduleView = () => {
     );
 };
 
-export default AdminScheduleView;
+export default SpeakerSchedule;

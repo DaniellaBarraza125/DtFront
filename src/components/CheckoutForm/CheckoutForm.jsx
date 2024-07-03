@@ -4,6 +4,8 @@ import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { Box, Button, FormControl, FormLabel, Input, Text } from '@chakra-ui/react'; // Asegúrate de importar Input para el campo "Nombre completo"
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux';
+import { updateUser } from '../../features/auth/authSlice';
 
 const CheckoutForm = () => {
   const location = useLocation();
@@ -15,6 +17,8 @@ const CheckoutForm = () => {
   const [success, setSuccess] = useState(false);
   const [fullName, setFullName] = useState(''); // Estado para almacenar el nombre completo
   const [cardElement, setCardElement] = useState(''); // Estado para almacenar los datos de la tarjeta
+  const dispatch = useDispatch();
+
 
   const imageUrl = "https://img.freepik.com/fotos-premium/mano-portatil-persona-escribiendo-correo-electronico-o-mensaje-negocios-marketing-redes-sociales-o-redes_590464-269480.jpg?w=900";
 
@@ -59,10 +63,13 @@ const handleSubmit = async (event) => {
             setError('Payment failed');
             setProcessing(false);
         }
+    
     } catch (error) {
-        setError('Payment failed');
-        setProcessing(false);
+      setError('Payment failed');
+      setProcessing(false);
     }
+    const user = JSON.parse(localStorage.getItem('user'));
+      dispatch(updateUser({id:user.id, pagado: 1}))
 };
 
 
