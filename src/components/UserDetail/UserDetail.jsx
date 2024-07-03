@@ -70,11 +70,6 @@ const UserDetail = ({editButton}) => {
 		}
 	}, [id]);
 
-<<<<<<< HEAD
-	if (!userDetail) {
-		return null;
-	}
-=======
     if (!userDetail) {
         return null;
     }
