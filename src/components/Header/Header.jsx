@@ -1,10 +1,11 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { logout } from '../../features/auth/authSlice';
-import { Box, Flex, IconButton, useDisclosure, VStack, Text, HStack, Grid, GridItem, Center, Button } from '@chakra-ui/react';
+import { Box, Flex, IconButton, useDisclosure, VStack, HStack, Center, Button } from '@chakra-ui/react';
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 import { useEffect } from 'react';
-import { getAll, getByDate } from '../../features/events/eventSlice';
+import { getByDate } from '../../features/events/eventSlice';
+import { Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react';
 
 const logoGrande = (
 	<svg width='150' height='50' viewBox='0 0 505 175' fill='white' xmlns='http://www.w3.org/2000/svg'>
@@ -164,23 +165,35 @@ const logo = (
 		/>
 	</svg>
 );
+
 const profile = (
-<svg width="38" height="24" viewBox="0 0 38 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+	<svg width="38" height="24" viewBox="0 0 38 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 	<path d="M16.5 9C16.5 10.1935 16.0259 11.3381 15.182 12.182C14.3381 13.0259 13.1935 13.5 12 13.5C10.8065 13.5 9.66193 13.0259 8.81802 12.182C7.97411 11.3381 7.5 10.1935 7.5 9C7.5 7.80653 7.97411 6.66193 8.81802 5.81802C9.66193 4.97411 10.8065 4.5 12 4.5C13.1935 4.5 14.3381 4.97411 15.182 5.81802C16.0259 6.66193 16.5 7.80653 16.5 9Z" fill="#FBFBFB"/>
 	<path fill-rule="evenodd" clip-rule="evenodd" d="M0 12C0 8.8174 1.26428 5.76516 3.51472 3.51472C5.76516 1.26428 8.8174 0 12 0C15.1826 0 18.2348 1.26428 20.4853 3.51472C22.7357 5.76516 24 8.8174 24 12C24 15.1826 22.7357 18.2348 20.4853 20.4853C18.2348 22.7357 15.1826 24 12 24C8.8174 24 5.76516 22.7357 3.51472 20.4853C1.26428 18.2348 0 15.1826 0 12ZM12 1.5C10.0227 1.50011 8.08555 2.05854 6.4116 3.11104C4.73766 4.16354 3.39492 5.66732 2.53795 7.44929C1.68097 9.23127 1.34458 11.219 1.5675 13.1837C1.79042 15.1485 2.56358 17.0103 3.798 18.555C4.863 16.839 7.2075 15 12 15C16.7925 15 19.1355 16.8375 20.202 18.555C21.4364 17.0103 22.2096 15.1485 22.4325 13.1837C22.6554 11.219 22.319 9.23127 21.4621 7.44929C20.6051 5.66732 19.2623 4.16354 17.5884 3.11104C15.9145 2.05854 13.9773 1.50011 12 1.5Z" fill="#FBFBFB"/>
 	<path d="M33.6775 5.01074L31 7.68241L28.3225 5.01074L27.5 5.83324L31 9.33324L34.5 5.83324L33.6775 5.01074Z" fill="#FBFBFB"/>
 	</svg>
 	)
 
+
 	const Header = () => {
 		const { isOpen, onToggle, onClose } = useDisclosure();
 		const user = useSelector((state) => state.auth.user);
 		const dispatch = useDispatch();
+		const navigate = useNavigate()
 
 		useEffect(() => {
 			dispatch(getByDate('2025-06-25'));
 		},[])
 	
+		const handleLogout = () => {
+			console.log('Logging out handle')
+			dispatch(logout())
+			navigate('/login')
+
+		}
+
+	
+		
 		return (
 			<Box position='fixed' top='0' width='100%' bg='primary.50' px={4} height='72px' backgroundColor='#191919' zIndex='1000'>
 				<Box display='grid' gridTemplateColumns='1fr 1fr 1fr' alignItems='center' height='100%'>
@@ -225,7 +238,21 @@ const profile = (
 					</Center>
 					
 					<Box className='userInfo' display={{base:'none', md:'flex'}} justifyContent='flex-end' alignItems='center' gridColumn='3'>
-						<Box>{profile}</Box>
+						<Box>
+						<Menu>
+          <MenuButton
+            as={Button}
+            bg="transparent"
+            _hover={{ bg: 'transparent' }}
+            _focus={{ boxShadow: 'none' }}
+          >
+            {profile}
+          </MenuButton>
+          <MenuList>
+            <MenuItem onClick={handleLogout}>Logout</MenuItem>
+          </MenuList>
+        </Menu>
+						</Box>
 					</Box>
 				</Box>
 	
@@ -263,12 +290,12 @@ const profile = (
 									PONENTES
 								</Button>
 							</Link>
-							<Link to='/' style={{ width: '90%' }}>
+							<Link to='https://www.elearningexperience.es/premio-digit-e-learning/' target='blank' style={{ width: '90%' }}>
 								<Button variant="unstyled" width="100%" fontSize="16px" borderRadius="10px" color="white" _hover={{ color: '#0F8BA0', border: '1px solid white', borderRadius: '10px' }}>
 									PREMIOS DIGIT
 								</Button>
 							</Link>
-							<Link to='/' style={{ width: '90%' }}>
+							<Link to='https://www.elearningexperience.es/alojamiento/' target='blank' style={{ width: '90%' }}>
 								<Button variant="unstyled" width="100%" fontSize="16px" borderRadius="10px" color="white" _hover={{ color: '#0F8BA0', border: '1px solid white', borderRadius: '10px' }}>
 									ALOJAMIENTO
 								</Button>
