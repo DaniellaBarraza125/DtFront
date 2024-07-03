@@ -53,7 +53,7 @@ const handleSubmit = async (event) => {
 
             // Redirigir después de 2 segundos
             setTimeout(() => {
-                navigate('/schedule');
+                navigate('/login');
             }, 2000);
         } else {
             setError('Payment failed');
@@ -66,7 +66,6 @@ const handleSubmit = async (event) => {
 };
 
 
-  const formCompleted = fullName !== "" && cardElement !== "";
 
   const formCompleted = fullName !== "" && cardElement !== "";
 

@@ -27,6 +27,7 @@ import PanelInfo from "./components/PanelInfo/PanelInfo";
 import Event from "./components/Event/Event";
 import Products from "./components/Products/Products";
 import UserDetail from "./components/UserDetail/UserDetail";
+import Feedback from "./components/Feedback/Feedback";
 
 // Carga tu clave pública de Stripe
 const stripePromise = loadStripe('pk_test_51PU6292MuIxm52bYvsBX37uZbLNzlaon35wbfpENgxW1ybFytd7Vdz7Pqp2bCvSfPYlcCBNZMBZxvQqtla0GLGV5006fBkWG84');
@@ -53,6 +54,7 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/profile" element={<PrivateZone><Profile /></PrivateZone>} />
               <Route path='/register' element={<Stepper />} />
+              <Route path='/feedback' element={<Feedback />} />
               <Route path="/schedule" element={<PrivateZone><Schedule /></PrivateZone>} />
               <Route path="/eventDetail/:id" element={<PrivateZone><EventDetail /></PrivateZone>} />
               <Route path="/personalInfo" element={<PrivateZone><PersonalInfo /></PrivateZone>} />
