@@ -46,10 +46,12 @@ const UserDetail = () => {
         const horaFin = `${String(endHour).padStart(2, '0')}:${String(endMinute).padStart(2, '0')}`;
 
         const formData = {
-            time: selectedDay + ' ' + selectedTime,
+            time_inicio: selectedDay + ' ' + selectedTime,
             partner_id: userDetail.id,
             hora_fin: selectedDay + ' ' + horaFin,
-            userId: userId
+            fecha: selectedDay,
+
+         
         };
         console.log(formData);
         onClose();
