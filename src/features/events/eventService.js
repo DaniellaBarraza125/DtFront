@@ -1,5 +1,5 @@
 import axios from "axios";
-const API_URL = "http://localhost:3000/events";
+const API_URL = "https://e-learning-experience.onrender.com/events";
 
 const createEvent = async (event) => {
     const token = localStorage.getItem("token");

@@ -20,13 +20,13 @@ const Buttons = ({ options }) => {
             case value == 'speaker':
                 dispatch(getUsersByRole('speaker'));
                 break;
-            case value == '2024-04-20':
+            case value == '2025-06-25':
                 console.log('2024-04-20 switch');
-                dispatch(getByDate('2024-04-20'));
+                dispatch(getByDate('2025-06-25'));
                 break;
-            case value == '2024-05-15':
+            case value == '2025-06-26':
                 console.log('2024-05-15 switch');
-                dispatch(getByDate('2024-05-15'));
+                dispatch(getByDate('2025-06-26'));
                 break;
         
             default:

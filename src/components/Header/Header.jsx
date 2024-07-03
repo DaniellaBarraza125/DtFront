@@ -169,10 +169,10 @@ const Header = () => {
 	const dispatch = useDispatch();
 	const { isOpen, onToggle } = useDisclosure();
 
-	// useEffect(() => {
-	// 	console.log('entro al useEffect');
-	// 	dispatch(getByDate('2024-04-20'));
-	// },[])
+	useEffect(() => {
+		console.log('entro al useEffect');
+		dispatch(getByDate('2025-06-25'));
+	},[])
 	return (
 		<Box bg='primary.50' px={4} height='72px' backgroundColor='#191919'>
 			<Box display='grid' gridTemplateColumns='1fr 1fr 1fr' alignItems='center' h={16}>

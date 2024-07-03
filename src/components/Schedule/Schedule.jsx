@@ -34,7 +34,7 @@ const Schedule = ({ hideFooter, propEvents }) => {
 
 	const handleSalaChange = (e) => {
 		if (e.target.value == 'todas') {
-			dispatch(getByDate('2024-05-15'));
+			dispatch(getByDate('2025-06-25'));
 		} else {
 			const sala = e.target.value;
 			dispatch(getBySala(sala));
@@ -42,13 +42,13 @@ const Schedule = ({ hideFooter, propEvents }) => {
 	};
 
 	const options = [
-		{ value: '2024-05-15', label: '25 de Junio' },
-		{ value: '2024-04-20', label: '26 de Junio' },
+		{ value: '2025-06-25', label: '25 de Junio' },
+		{ value: '2025-06-26', label: '26 de Junio' },
 	];
 
 	const tags = [
 		{ label: 'Todas', value: 'todas', count: events.length },
-		{ label: 'One to One', value: 'oneToOne', count: meetings.length },
+		{ label: 'One to One', value: 'oneToOne', count: meetings == undefined ? 0 : meetings.length },
 		{ label: 'Matches', value: 'matches', count: 0 },
 	];
 
