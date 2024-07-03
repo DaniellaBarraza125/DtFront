@@ -29,10 +29,12 @@ Este proyecto es una aplicación web desarrollada para gestionar eventos y reuni
     -   Chakra UI
     -   React Router
     -   Figma
+    -   Vercel
 -   **Backend:**
     -   Node.js
     -   Express
     -   Sequelize (ORM)
+    -   Render
 -   **Base de Datos:**
     -   MySQL
 -   **Autenticación:**
@@ -56,16 +58,21 @@ Este proyecto es una aplicación web desarrollada para gestionar eventos y reuni
 ```bash
 git clone https://github.com/DaniellaBarraza125/DtFront.git
 cd DtFront
+npm install
+npm run dev
 ```
 
 ### Despliegue
 
 Hemos desplegado el frontend en Vercel y el backend en Render. Por lo cual, puedes acceder a toda la funcionalidad sin necesidad de clonar el repositorio desde el siguiente link: https://elearningexperience.vercel.app/
 
+El despliegue de aplicaciones en plataformas como Vercel y Render es crucial por varias razones. En primer lugar, facilita el acceso inmediato a la aplicación para los usuarios finales sin necesidad de instalaciones complicadas. Además, garantiza que el frontend y el backend estén alojados en entornos optimizados para su rendimiento, escalabilidad y seguridad. Utilizando Vercel para el frontend, podemos aprovechar su infraestructura global para una entrega rápida de contenido, mientras que Render proporciona un entorno robusto para la ejecución del backend, permitiendo una gestión eficiente de bases de datos, autenticación y otras operaciones del servidor.
+
 ## Repositorio del Backend
 
-El backend de este proyecto ha sido desarrollado con Node.js y Sequelize. Puedes encontrar el código fuente del backend en el siguiente enlace:
+El backend de este proyecto ha sido desarrollado con Node.js y Sequelize. Hemos desplegado el backend en Render, lo cual es importante ya que Render ofrece un entorno de ejecución confiable y escalable para nuestras aplicaciones, asegurando un rendimiento óptimo y alta disponibilidad. Además, puedes probar el backend directamente utilizando herramientas como Postman, sin necesidad de clonar el repositorio.
 
+Puedes encontrar el código fuente del backend en el siguiente enlace:
 https://github.com/JuanjoSalas/DT-Back
 
 link con la documentacion:
