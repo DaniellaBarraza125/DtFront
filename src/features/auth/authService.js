@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API_URL = "https://e-learning-experience.onrender.com/users";
-
+console.log(API_URL);
 const login = async (user) => {
     const res = await axios.post(API_URL + "/login", user);
     if (res.data) {
