@@ -12,7 +12,7 @@ import {
   Center,
 } from '@chakra-ui/react';
 import { createFeedback } from '../../features/feedback/feedbackSlice';
-import { getAll } from '../../features/events/eventSlice';
+import { getAll, getAllByUserId } from '../../features/events/eventSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 const Feedback = () => {
@@ -24,11 +24,13 @@ const Feedback = () => {
   
   const { id } = JSON.parse(localStorage.getItem("user"));
   
-  useEffect((id) => {
-    dispatch(getAll(id));
-  }, [dispatch, user, token]);
+  useEffect(() => {
+    if (id) {
+      dispatch(getAllByUserId(id));
+    }
+  }, [dispatch, id]);
 
-  const userEvents = events.filter(event => event.userId === id);
+  // const userEvents = events.filter(event => event.userId === id)
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -121,13 +123,15 @@ const Feedback = () => {
         </Text>
       </Box>
 
-      {userEvents.map((event) => (
+      ;
+
+      {events.filter(event => event.asistentes.includes(id)).map((event) => (
         <Box key={event.id} mb={6} textAlign="center">
           <Heading as="h3" size="md" mb={2}>
             {event.titulo}
           </Heading>
           <Text mb={4}>
-            {event.userId}
+            {event.descripcion}
           </Text>
           {renderRadioButtons(event.id)}
         </Box>

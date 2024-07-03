@@ -1,5 +1,5 @@
 import axios from "axios";
-const API_URL = "https://e-learning-expeirence.onrender.com/events";
+const API_URL = "http://localhost:3000/events";
 
 const createEvent = async (event) => {
     const token = localStorage.getItem("token");
@@ -19,6 +19,17 @@ const getAll = async () => {
         },
     });
     return res.data;
+};
+const getAllByUserId = async (userId) => {
+    const token = localStorage.getItem("token");
+    const res = await axios.get(API_URL + "/", {
+        headers: {
+            Authorization: token,
+        },
+    });
+    const userEvents = res.data.filter(event => event.asistentes.includes(userId))
+    console.log(getAllByUserId(userId))
+    return userEvents;
 };
 const getById = async (id) => {
     const token = localStorage.getItem("token");
@@ -77,6 +88,7 @@ const eventService = {
     subscribeEvent,
     unsubscribeEvent,
     getBySala,
+    getAllByUserId
 };
 
 export default eventService;
