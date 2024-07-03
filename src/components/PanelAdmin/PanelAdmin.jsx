@@ -47,20 +47,24 @@ const PanelAdmin = ({ hideFooter }) => {
 			case 'enviar':
 				return (
 					<>
-						<Text>¿Quieres enviar todos los resumenes de las ponencias a los usuarios que se inscribieron en ellas?</Text>
-						<Button
-							width='216px'
-							height='10px'
-							padding='30px'
-							borderRadius='80'
-							backgroundColor='#0F8BA0'
-							color='white'
-							bottom='2.5rem'
-							_hover={{ bg: '#0F8BA0' }}
-							onClick={sendEmails}
-						>
-							Enviar correos
-						</Button>
+						<Box>
+							<Text>¿Quieres enviar todos los resúmenes de las ponencias a los usuarios que se inscribieron en ellas?</Text>
+						</Box>
+						<Box mt='1rem'>
+							<Button
+								width='216px'
+								height='40px'
+								padding='10px'
+								borderRadius='80'
+								backgroundColor='#0F8BA0'
+								color='white'
+								bottom='2.5rem'
+								_hover={{ bg: '#0F8BA0' }}
+								onClick={sendEmails}
+							>
+								Enviar correos
+							</Button>
+						</Box>
 					</>
 				);
 			default:
@@ -117,8 +121,8 @@ const PanelAdmin = ({ hideFooter }) => {
 						<Box display='flex' flexDirection='column' alignItems='end'>
 							{asistentes.length > 0 ? (
 								<>
-								<Users hideButtons={true} propUsers={asistentes} hideFooter={true} height='60vh'/>
-								<Button
+									<Users hideButtons={true} propUsers={asistentes} hideFooter={true} height='60vh' />
+									<Button
 										width='216px'
 										height='10px'
 										padding='30px'
