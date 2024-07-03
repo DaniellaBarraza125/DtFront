@@ -24,11 +24,9 @@ import NotFound from "./components/NotFound/NotFound";
 import AdminScheduleView from "./components/AdminScheduleView/AdminScheduleView";
 import Partners from "./components/Partners/Partners";
 import PanelInfo from "./components/PanelInfo/PanelInfo";
-import Event from "./components/Event/Event";
 import Products from "./components/Products/Products";
 import UserDetail from "./components/UserDetail/UserDetail";
 import Feedback from "./components/Feedback/Feedback";
-import SpeakerSchedule from "./components/SpeakerSchedule/SpeakerSchedule";
 
 const stripePromise = loadStripe('pk_test_51PU6292MuIxm52bYvsBX37uZbLNzlaon35wbfpENgxW1ybFytd7Vdz7Pqp2bCvSfPYlcCBNZMBZxvQqtla0GLGV5006fBkWG84');
 
