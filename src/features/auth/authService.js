@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "https://e-learning-expeirence.onrender.com/users";
+const API_URL = "http://localhost:3000/users";
 
 const login = async (user) => {
     console.log("service", user);

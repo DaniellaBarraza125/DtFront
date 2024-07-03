@@ -1,5 +1,5 @@
 import axios from "axios";
-const API_URL = "https://e-learning-expeirence.onrender.com/emails";
+const API_URL = "http://localhost:3000/emails";
 
 const sendSummary = async () => {
     const res = await axios.get(API_URL + "/summary");
@@ -7,7 +7,7 @@ const sendSummary = async () => {
 };
 
 const emailService = {
-    sendSummary
+    sendSummary,
 };
 
 export default emailService;

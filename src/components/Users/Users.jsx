@@ -44,11 +44,11 @@ const Users = ({ propUsers, hideButtons, hideFooter, height, deleteButton, editB
         if (tagValue === 'all') {
             setFilteredUsers(users);
         } else if (tagValue === 'oneToOne') {
-            if (meetings.length === 0) {
+            if (meetings?.length === 0) {
                 setNoMeetings(true);
                 setFilteredUsers([]);
             } else {
-                const oneToOneUsers = meetings.map(meeting => meeting.Partner?.User).filter(user => user); 
+                const oneToOneUsers = meetings?.map(meeting => meeting.Partner?.User).filter(user => user); 
                 setFilteredUsers(oneToOneUsers);
             }
         } else if (tagValue === 'matches') {
@@ -62,13 +62,13 @@ const Users = ({ propUsers, hideButtons, hideFooter, height, deleteButton, editB
         return match;
     });
 
-    const oneToOneUsers = meetings.map(meeting => meeting.Partner?.User).filter(user => user);  
+    const oneToOneUsers = meetings?.map(meeting => meeting.Partner?.User).filter(user => user);  
     console.log(oneToOneUsers);
 
     const tags = [
-        { label: 'Todas', value: 'all', count: users.length },
-        { label: 'One to One', value: 'oneToOne', count: meetings.length },
-        { label: 'Matches', value: 'matches', count: matches.length },
+        { label: 'Todas', value: 'all', count: users?.length },
+        { label: 'One to One', value: 'oneToOne', count: meetings?.length },
+        { label: 'Matches', value: 'matches', count: matches?.length },
     ];
 
     return (
@@ -115,7 +115,7 @@ const Users = ({ propUsers, hideButtons, hideFooter, height, deleteButton, editB
                                 <>
                                     {selectedTag === 'oneToOne' ? (
                                         <>
-                                            {meetings.map((meeting, i) => meeting.Partner?.User && (
+                                            {meetings?.map((meeting, i) => meeting.Partner?.User && (
                                                 <Box display={'flex'} flexDirection={'column'} justifyContent={'center'} key={i}>
                                                     <UserCard user={meeting.Partner.User} />
                                                     <Box mt={1} ml='40px' pb='15px'>
@@ -155,10 +155,10 @@ const Users = ({ propUsers, hideButtons, hideFooter, height, deleteButton, editB
                                         </>
                                     ) : (
                                         <>
-                                            {filteredUsers.map((user, i) => (
+                                            {filteredUsers?.map((user, i) => (
                                                 <UserCard key={i} user={user} editButton={editButton ? true: false}/>
                                             ))}
-                                            {matches.map((match, i) => (
+                                            {matches?.map((match, i) => (
                                                 <UserCard key={i} user={match} />
                                             ))}
                                         </>
