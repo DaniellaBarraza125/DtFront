@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:3000/users";
+const API_URL = "https://e-learning-expeirence.onrender.com/users";
 
 const login = async (user) => {
     console.log("service", user);
@@ -33,7 +33,6 @@ const logout = async () => {
 };
 const getUsers = async () => {
     const token = localStorage.getItem("token");
-
     const res = await axios.get(API_URL + "/", {
         headers: {
             Authorization: token,

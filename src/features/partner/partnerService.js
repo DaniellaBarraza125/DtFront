@@ -1,5 +1,5 @@
 import axios from "axios";
-const API_URL = "http://localhost:3000/partners";
+const API_URL = "https://e-learning-expeirence.onrender.com/partners";
 
 const getAllPartners = async () => {
     const token = localStorage.getItem("token");
