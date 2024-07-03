@@ -10,9 +10,9 @@ const getMeetingByUser = async () => {
     });
     return res.data;
 };
-const createMeeting = async () => {
+const createMeeting = async (formData) => {
     const token = localStorage.getItem("token");
-    const res = await axios.post(API_URL + "/", {
+    const res = await axios.post(API_URL + "/", formData, {
         headers: {
             Authorization: token,
         },

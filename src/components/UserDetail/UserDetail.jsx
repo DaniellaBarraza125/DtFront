@@ -55,6 +55,7 @@ const UserDetail = () => {
          
         };
         dispatch(createMeeting(formData));
+        console.log(formData);
         onClose();
     };
 
