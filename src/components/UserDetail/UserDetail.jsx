@@ -79,7 +79,6 @@ const UserDetail = ({editButton}) => {
         return null;
     }
     const intereses = JSON.parse(userDetail.interes);
->>>>>>> superdani
 
     const events = userDetail?.Events?.filter(event => event.tipo_evento === 'Conference');
     const speaker = userDetail?.rol === 'speaker';
