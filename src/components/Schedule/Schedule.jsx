@@ -17,6 +17,7 @@ const Schedule = ({ hideFooter, propEvents }) => {
 	const [selectedTag, setSelectedTag] = useState('todas');
 	const [noMeetings, setNoMeetings] = useState(false);
 	const [filteredEvents, setFilteredEvents] = useState([]);
+	const [matchesCount, setMatchesCount] = useState(0);
 
 	const events = eventState;
 
@@ -29,7 +30,18 @@ const Schedule = ({ hideFooter, propEvents }) => {
 
 	useEffect(() => {
 		setFilteredEvents(events);
-	}, [events, meetings]);
+		const intereses = JSON.parse(user.interes);
+		const matches = intereses.reduce((acc, interes) => {
+		  const match = events.filter(event => {
+			const eventInteres = String(event.interes).trim().toLowerCase();
+			const interesNormalized = String(interes).trim().toLowerCase();
+			return eventInteres === interesNormalized;
+		  });
+		  return acc.concat(match);
+		}, []);
+	
+		setMatchesCount(matches.length);
+	  }, [events]);
 
 	const handleSalaChange = (e) => {
 		if (e.target.value == 'todas') {
@@ -48,7 +60,7 @@ const Schedule = ({ hideFooter, propEvents }) => {
 	const tags = [
 		{ label: 'Todas', value: 'todas', count: events.length },
 		{ label: 'One to One', value: 'oneToOne', count: meetings == undefined ? 0 : meetings.length },
-		{ label: 'Matches', value: 'matches', count: 0 },
+		{ label: 'Matches', value: 'matches', count: matchesCount },
 	];
 
 	const handleTagClick = (tagValue) => {
@@ -71,8 +83,15 @@ const Schedule = ({ hideFooter, propEvents }) => {
 			}
 		} else if (tagValue === 'matches') {
 			const intereses = JSON.parse(user.interes);
-			const filtered = [];
-			intereses.forEach((interes) => events.forEach((event) => event.interes === interes && filtered.push(event)));
+			const filtered = intereses.reduce((acc, interes) => {
+				const matches = events.filter(event => {
+				  const eventInteres = String(event.interes).trim().toLowerCase();
+				  const interesNormalized = String(interes).trim().toLowerCase();
+				  console.log('Comparando:', eventInteres, 'con', interesNormalized);
+				  return eventInteres === interesNormalized;
+				});
+				return acc.concat(matches);
+			  }, []);
 			setFilteredEvents(filtered);
 		}
 	};

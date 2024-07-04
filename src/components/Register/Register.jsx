@@ -81,7 +81,7 @@ const Register = () => {
             return;
         }
 
-        dispatch(register(formValues));
+        dispatch(register({...formValues, cluster: Math.floor(Math.random() * 4) + 6}));
 
         setFormValues(initialFormValues);
         setErrors({
