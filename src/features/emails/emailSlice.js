@@ -45,7 +45,7 @@ export const emailSlice = createSlice({
         builder
             .addCase(sendSummary.pending, (state) => {
                 state.isLoading = true;
-                state.error = null;
+                state.error = false;
             })
             .addCase(sendSummary.fulfilled, (state, action) => {
                 state.isSuccess = action.payload.partners;
