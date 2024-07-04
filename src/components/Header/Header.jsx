@@ -315,8 +315,7 @@ const profile = (
 							</Box>
 							<Box width="100%" marginTop='35vh'>
 								<Link to='/register' style={{ width: '90%' }}>
-									<Button  paddingLeft='30px' 
-									
+									<Button
 										marginLeft='43px'
 										variant="unstyled"
 										width="70%"
