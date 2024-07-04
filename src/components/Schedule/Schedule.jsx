@@ -87,7 +87,6 @@ const Schedule = ({ hideFooter, propEvents }) => {
 				const matches = events.filter(event => {
 				  const eventInteres = String(event.interes).trim().toLowerCase();
 				  const interesNormalized = String(interes).trim().toLowerCase();
-				  console.log('Comparando:', eventInteres, 'con', interesNormalized);
 				  return eventInteres === interesNormalized;
 				});
 				return acc.concat(matches);

@@ -87,7 +87,6 @@ const Stepper = () => {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		console.log('hola');
 		dispatch(getAllProducts())
 	}, []);
 

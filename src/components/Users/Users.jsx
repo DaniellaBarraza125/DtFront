@@ -48,7 +48,6 @@ const Users = ({ propUsers, hideButtons, hideFooter, height, deleteButton, editB
                 setNoMeetings(true);
                 setFilteredUsers([]);
             } else {
-                console.log(meetings)
                 const oneToOneUsers = meetings?.map(meeting => meeting.Partner?.User).filter(user => user); 
                 setFilteredUsers(oneToOneUsers);
             }
