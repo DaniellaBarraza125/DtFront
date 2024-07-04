@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Flex, Text, Heading, Divider, Tag, Container } from '@chakra-ui/react';
 
-const Partner = ({ partner }) => {
+const Partner = ({ partner, hiddeButton }) => {
   return (
     <Container marginTop={5}>
     <Box borderWidth="1px" borderRadius="lg" overflow="hidden" p={4} mb={4} borderColor='grey'>

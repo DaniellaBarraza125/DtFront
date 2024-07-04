@@ -65,10 +65,10 @@ const EventDetail = () => {
 					</Box>
 					<Box paddingTop='1' paddingBottom='4' textAlign='justify'>
 						<Text as='b'>
-							{event.User?.nombre} {event.User?.apellido}
+							{event.User.nombre} {event.User.apellido}
 						</Text>
 						<Text as='b'>
-							{event.User?.puesto_trabajo}, {event.User?.nombre_empresa}
+							{event.User.puesto_trabajo}, {event.User.nombre_empresa}
 						</Text>
 					</Box>
 					<Box paddingTop='4' paddingBottom='4' textAlign='justify'>

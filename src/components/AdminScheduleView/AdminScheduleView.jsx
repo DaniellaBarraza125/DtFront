@@ -1,18 +1,19 @@
 import {
-    Box,
-    Grid,
-    GridItem,
-    Heading,
-    Flex,
-    Divider,
-    Center,
-    Modal,
-    ModalOverlay,
-    ModalContent,
-    ModalBody,
-    useDisclosure,
-    Text,
-    Button
+	Box,
+	Grid,
+	GridItem,
+	Heading,
+	Flex,
+	Divider,
+	Center,
+	Modal,
+	ModalOverlay,
+	ModalContent,
+	ModalBody,
+	useDisclosure,
+	Text,
+	Button,
+	ModalCloseButton,
 } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -22,32 +23,32 @@ import Buttons from '../Buttons/Buttons';
 import AddEvent from '../AddEvent/AddEvent';
 
 const AdminScheduleView = () => {
-    const { eventIsLoading, events } = useSelector((state) => state.event);
-    const dispatch = useDispatch();
-    const { isOpen, onOpen, onClose } = useDisclosure();
+	const { eventIsLoading, events } = useSelector((state) => state.event);
+	const dispatch = useDispatch();
+	const { isOpen, onOpen, onClose } = useDisclosure();
 
-    const options = [
-        { value: '2024-04-20', label: '23 de Mayo' },
-        { value: '2024-05-15', label: '24 de Mayo' }
-    ];
+	const options = [
+		{ value: '2025-06-25', label: '25 de Junio' },
+		{ value: '2025-06-26', label: '26 de Junio' },
+	];
 
-    const [activeDate, setActiveDate] = useState(options[0].value);
+	const [activeDate, setActiveDate] = useState(options[0].value);
 
-    useEffect(() => {
-        dispatch(getByDate(activeDate));
-    }, [dispatch, activeDate]);
+	useEffect(() => {
+		dispatch(getByDate(activeDate));
+	}, [dispatch, activeDate]);
 
-    const handleButtonClick = (value) => {
-        setActiveDate(value);
-        dispatch(getByDate(value));
-    };
+	const handleButtonClick = (value) => {
+		setActiveDate(value);
+		dispatch(getByDate(value));
+	};
 
-    if (eventIsLoading) {
-        return <h1>Cargando eventos...</h1>;
-    }
+	if (eventIsLoading) {
+		return <h1>Cargando eventos...</h1>;
+	}
 
-    const eventosSalaPrincipal = events.filter(event => event.sala === 'Sala A');
-    const eventosSalaWorkshop = events.filter(event => event.sala === 'Sala B');
+	const eventosSalaPrincipal = events.filter((event) => event.sala == '1');
+	const eventosSalaWorkshop = events.filter((event) => event.sala == '2');
 
     return (
         <Flex justifyContent="center">
@@ -154,7 +155,7 @@ const AdminScheduleView = () => {
                                         </Box>
                                     </Box>
                                 ) : (
-                                    <Box bg='white' width='31vw' height='70vh' borderRadius='15px' margin='15px 1px' display="flex" flexDirection="column" alignItems="center" paddingX="1.5vw" paddingBottom='3vh' paddingTop='3vh'>
+                                    <Box bg='white' width='31vw' height='67vh' borderRadius='15px' margin='15px 1px' display="flex" flexDirection="column" alignItems="center" paddingX="1.5vw" paddingBottom='3vh' paddingTop='3vh'>
                                         <Center>
                                             <Text>No hay eventos en esta sala</Text>
                                         </Center>
@@ -166,16 +167,17 @@ const AdminScheduleView = () => {
                 </Grid>
             </Box>
 
-            <Modal isOpen={isOpen} onClose={onClose}>
-                <ModalOverlay />
-                <ModalContent>
-                    <ModalBody>
-                        <AddEvent />
-                    </ModalBody>
-                </ModalContent>
-            </Modal>
-        </Flex>
-    );
+			<Modal isOpen={isOpen} onClose={onClose}>
+				<ModalOverlay />
+				<ModalContent>
+					<ModalBody padding='2rem'>
+						<ModalCloseButton />
+						<AddEvent />
+					</ModalBody>
+				</ModalContent>
+			</Modal>
+		</Flex>
+	);
 };
 
 export default AdminScheduleView;

@@ -17,7 +17,6 @@ export const createEvent = createAsyncThunk(
 export const getAll = createAsyncThunk(
     "event/getAll",
     async (_, { rejectWithValue }) => {
-        console.log("getAll");
         try {
             const response = await eventService.getAll();
             return response;
@@ -27,6 +26,19 @@ export const getAll = createAsyncThunk(
         }
     },
 );
+export const getAllByUserId = createAsyncThunk(
+    "event/getAllByUserId",
+    async (id, { rejectWithValue }) => {
+        try {
+            const response = await eventService.getAll(id);
+            return response;
+        } catch (error) {
+            console.error(error);
+            return rejectWithValue(error.response.data);
+        }
+    },
+);
+
 
 export const getById = createAsyncThunk(
     "event/getById",
@@ -89,12 +101,6 @@ export const getBySala = createAsyncThunk(
     },
 );
 
-const initialState = {
-    events: [],
-    isLoading: true,
-    event: null,
-    error: null,
-};
 
 export const eventSlice = createSlice({
     name: "event",
@@ -196,6 +202,10 @@ export const eventSlice = createSlice({
             })
             .addCase(getBySala.rejected, (state, action) => {
                 state.error = action.payload || action.error.message;
+            })
+            .addCase(getAllByUserId.fulfilled, (state,action) => {
+                state.events = action.payload.events;
+                state.isLoading = false;
             })
     },
 });

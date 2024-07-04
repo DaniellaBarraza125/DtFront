@@ -3,6 +3,9 @@ import { useState } from 'react';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { Box, Button, FormControl, FormLabel, Input, Text } from '@chakra-ui/react'; // Asegúrate de importar Input para el campo "Nombre completo"
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux';
+import { updateUser } from '../../features/auth/authSlice';
 
 const CheckoutForm = () => {
   const location = useLocation();
@@ -14,10 +17,16 @@ const CheckoutForm = () => {
   const [success, setSuccess] = useState(false);
   const [fullName, setFullName] = useState(''); // Estado para almacenar el nombre completo
   const [cardElement, setCardElement] = useState(''); // Estado para almacenar los datos de la tarjeta
+  const dispatch = useDispatch();
+
 
   const imageUrl = "https://img.freepik.com/fotos-premium/mano-portatil-persona-escribiendo-correo-electronico-o-mensaje-negocios-marketing-redes-sociales-o-redes_590464-269480.jpg?w=900";
 
-  const handleSubmit = async (event) => {
+  const navigate = useNavigate()
+
+
+// Dentro de tu componente
+const handleSubmit = async (event) => {
     event.preventDefault();
     setProcessing(true);
 
@@ -30,30 +39,40 @@ const CheckoutForm = () => {
     });
 
     if (error) {
-      setError(error.message);
-      setProcessing(false);
-      return;
+        setError(error.message);
+        setProcessing(false);
+        return;
     }
 
     try {
-      const { id } = paymentMethod;
-      const response = await axios.post('http://localhost:3000/checkout', {
-        id,
-        amount: product.prices[0].unit_amount,
-      });
+        const { id } = paymentMethod;
+        const response = await axios.post('http://localhost:3000/checkout', {
+            id,
+            amount: product.prices[0].unit_amount,
+        });
 
-      if (response.data.msg === 'Successful payment') {
-        setSuccess(true);
-        setProcessing(false);
-      } else {
-        setError('Payment failed');
-        setProcessing(false);
-      }
+        if (response.data.msg === 'Successful payment') {
+            setSuccess(true);
+            setProcessing(false);
+
+            // Redirigir después de 2 segundos
+            setTimeout(() => {
+                navigate('/login');
+            }, 2000);
+        } else {
+            setError('Payment failed');
+            setProcessing(false);
+        }
+    
     } catch (error) {
       setError('Payment failed');
       setProcessing(false);
     }
-  };
+    const user = JSON.parse(localStorage.getItem('user'));
+      dispatch(updateUser({id:user.id, pagado: 1}))
+};
+
+
 
   const formCompleted = fullName !== "" && cardElement !== "";
 

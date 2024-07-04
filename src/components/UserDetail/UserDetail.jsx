@@ -18,7 +18,7 @@ const mail = (
     </svg>
 );
 
-const UserDetail = () => {
+const UserDetail = ({editButton}) => {
     const dispatch = useDispatch();
     const { id } = useParams();
     const { userDetail, isLoading, user } = useSelector((state) => state.auth);
@@ -59,11 +59,11 @@ const UserDetail = () => {
         onClose();
     };
 
-    useEffect(() => {
-        if (id) {
-            dispatch(getUsersByid(id));
-        }
-    }, [id, dispatch]);
+	useEffect(() => {
+		if (id) {
+			dispatch(getUsersByid(id));
+		}
+	}, [id]);
 
     useEffect(() => {
         if (msg) {
