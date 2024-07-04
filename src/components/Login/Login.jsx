@@ -14,6 +14,7 @@ import {
 import Logotipo from "../../assets/Images/Logotipo.png"
 import "./Login.scss";
 import { useNavigate } from 'react-router-dom';
+import { getByDate } from '../../features/events/eventSlice';
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -51,6 +52,7 @@ const Login = () => {
         position: "top-left"
       });
       dispatch(reset());
+      dispatch(getByDate('2025-06-25'));
     }
   }, [isSuccess, isError, msg, toast, navigate, dispatch]);
 
