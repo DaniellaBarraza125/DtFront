@@ -47,7 +47,6 @@ export const login = createAsyncThunk("auth/login", async (user, thunkAPI) => {
 
 export const logout = createAsyncThunk("auth/logout", async () => {
     try {
-        console.log('Loggin out slice')
         await authService.logout();
         localStorage.removeItem("token");
         localStorage.removeItem("user");

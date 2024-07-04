@@ -55,7 +55,6 @@ const UserDetail = () => {
             fecha: selectedDay,
         };
         dispatch(createMeeting(formData));
-        console.log(formData);
         onClose();
     };
 

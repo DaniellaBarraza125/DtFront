@@ -19,7 +19,6 @@ const getById = async (id) => {
             Authorization: token,
         },
     });
-    console.log("res", res.data);
     return res.data;
 };
 

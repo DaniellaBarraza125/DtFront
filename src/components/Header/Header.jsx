@@ -186,10 +186,10 @@ const profile = (
 		},[])
 	
 		const handleLogout = () => {
-			console.log('Logging out handle')
 			dispatch(logout())
 			navigate('/login')
-
+			localStorage.removeItem('user')
+			localStorage.removeItem('token')
 		}
 
 	
