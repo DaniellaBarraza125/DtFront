@@ -30,8 +30,6 @@ const Feedback = () => {
     }
   }, [dispatch, id]);
 
-  // const userEvents = events.filter(event => event.userId === id)
-
   const handleSubmit = (e) => {
     e.preventDefault();
 

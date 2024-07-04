@@ -108,9 +108,9 @@ export const eventSlice = createSlice({
         events: [],
         status: null,
         error: null,
-        eventsIsLoading: false, //---------------
+        eventsIsLoading: false, 
         event: null,
-        eventIsLoading: false, //---------------
+        eventIsLoading: false,
     },
     reducers: {
         reset: (state) => {
@@ -145,7 +145,7 @@ export const eventSlice = createSlice({
             })
             .addCase(getById.rejected, (state, action) => {
                 state.isLoading = false;
-                state.error = action.payload || action.error.message;//----------------
+                state.error = action.payload || action.error.message;
             })
             .addCase(getByDate.fulfilled, (state, action) => {
                 state.isLoading = false;
