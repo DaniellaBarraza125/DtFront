@@ -65,7 +65,7 @@ function App() {
               <Route path="*" element={<NotFound />} />
               <Route path="/panelInfo" element={<PanelInfo />} />
               <Route path="/partners" element={<PrivateZone><Partners /></PrivateZone>} />
-              <Route path="//:id" element={<UserDetail />} />
+              <Route path="userdetail/:id" element={<UserDetail />} />
               <Route path="/products" element={<Products />} />
               <Route path="/checkoutForm" element={
                 <Elements stripe={stripePromise}>
