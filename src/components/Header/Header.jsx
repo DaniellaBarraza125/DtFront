@@ -249,7 +249,7 @@ const profile = (
             {profile}
           </MenuButton>
           <MenuList>
-            <MenuItem onClick={handleLogout}>Logout</MenuItem>
+            <MenuItem fontFamily="Montserrat" onClick={handleLogout}>Logout</MenuItem>
           </MenuList>
         </Menu>
 						</Box>
