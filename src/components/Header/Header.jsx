@@ -271,9 +271,11 @@ const profile = (
 						</Flex>
 						<VStack as='nav' spacing={'4'} mt={'4'} flex="1" justifyContent="right">
 							<Box>
+							<Link to='/' style={{ width: '90%' }}>
 								<Button variant="unstyled" width="90%" fontSize="16px" borderRadius="10px" color="white" _hover={{ color: '#0F8BA0', border: '1px solid white', borderRadius: '10px' }}>
 									INICIO
 								</Button>
+								</Link>
 								<Link to='/schedule' style={{ width: '90%' }}>
 									<Button
 										variant="unstyled"
