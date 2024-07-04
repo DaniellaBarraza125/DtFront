@@ -18,15 +18,11 @@ export const UserCard = ({ user, editButton }) => {
 
   const handleClik = (id) => {
     editButton ? handleOpenModal(user.id) : navigate('/userdetail/' + id)
-    console.log('hola',editButton);
-    console.log(id);
-    console.log(user);
-    dispatch(getUsersByid(id))
   }
   return (
     <>
       <Container maxW="md" spacing={4}>
-        <Link onClick={()=>handleClik(user.id)}>
+        <Box onClick={()=>handleClik(user.id)}>
           <Container paddingX='0' paddingY='16px' display='flex' justifyContent='space-between' alignContent='center' borderTop='#718096 1px solid'>
             <Box display="flex" direction="row" w='343px' key={user.id} height='108px'>
               <Box mr={4}>
@@ -50,7 +46,7 @@ export const UserCard = ({ user, editButton }) => {
             </Box>
         
           </Container>
-        </Link>
+        </Box>
         <Modal isOpen={isOpen} onClose={onClose}>
 				<ModalContent maxW='md' mx='auto' mt='10' p='6' borderWidth='1px' borderRadius='lg' boxShadow='lg'>
 					<ModalBody display={'flex'} flexDirection={'column'}>
