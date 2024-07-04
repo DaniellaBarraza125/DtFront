@@ -41,6 +41,7 @@ import { FiEye, FiEyeOff } from 'react-icons/fi';
 import Logotipo from '../../assets/Images/Logotipo.png';
 import Products from '../Products/Products';
 import './Stepper.scss';
+import { getAllProducts } from '../../features/products/productSlice';
 
 const steps = [
 	{ title: 'Cuenta' },
@@ -84,6 +85,11 @@ const Stepper = () => {
 	const activeStepText = steps[activeStep].title;
 	const toast = useToast();
 	const dispatch = useDispatch();
+
+	useEffect(() => {
+		console.log('hola');
+		dispatch(getAllProducts())
+	}, []);
 
 	const handleChange = (e) => {
 		const { name, value } = e.target;

@@ -13,43 +13,18 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import "./Products.scss";
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllProducts } from '../../features/products/productSlice';
 
 const Products = () => {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const {products, isLoading} = useSelector((state) => state.product);
   const [category, setCategory] = useState('');
+  const [filteredProducts, setFilteredProducts] = useState([]);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const imageUrl = "https://img.freepik.com/fotos-premium/mano-portatil-persona-escribiendo-correo-electronico-o-mensaje-negocios-marketing-redes-sociales-o-redes_590464-269480.jpg?w=900";
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const token = localStorage.getItem('token');
-        const response = await axios.get('https://e-learning-experience.onrender.com/products', {
-          headers: {
-            Authorization: token,
-          },
-        });
-        setProducts(response.data);
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching products:', error);
-        setLoading(false);
-      }
-    };
-
-    fetchProducts();
-  }, []);
-
-  const handleBuyClick = (product) => {
-    navigate('/checkoutForm', { state: { product } });
-  };
-
-  const handleCategoryChange = (event) => {
-    setCategory(event.target.value);
-  };
-
+  
   const filterProducts = () => {
     if (category === 'empresas privadas') {
       return products.filter(product => product.name.toLowerCase().includes('privadas'));
@@ -60,11 +35,22 @@ const Products = () => {
     }
   };
 
-  if (loading) {
-    return <Text>Loading...</Text>;
-  }
+  useEffect(() => {
+     dispatch(getAllProducts());
+  }, []);
 
-  const filteredProducts = filterProducts();
+  const handleBuyClick = (product) => {
+    navigate('/checkoutForm', { state: { product } });
+  };
+
+  const handleCategoryChange = (event) => {
+    setCategory(event.target.value);
+  };
+  useEffect(() => {
+    setFilteredProducts(filterProducts());
+  }, [products]);
+  
+
 
   return (
     <Container maxW="container.md" centerContent mt={8} mb={8}>
@@ -106,11 +92,16 @@ const Products = () => {
                 <Text fontFamily="Montserrat" fontSize="16px" fontWeight="400" lineHeight="19.5px">
                   {product.description}
                 </Text>
-                {product.prices.map(price => (
-                  <Text key={price.id} fontFamily="Montserrat" fontSize="16px" fontWeight="400" lineHeight="19.5px">
-                    Precio: {(price.unit_amount / 100).toFixed(2)} {price.currency.toUpperCase()}
-                  </Text>
-                ))}
+                {isLoading ? (<Text>Cargando productos...</Text>) : (
+                  <>
+                  {product.prices.map(price => (
+                    <Text key={price.id} fontFamily="Montserrat" fontSize="16px" fontWeight="400" lineHeight="19.5px">
+                      Precio: {(price.unit_amount / 100).toFixed(2)} {price.currency.toUpperCase()}
+                    </Text>
+                  ))}
+                  </>
+                )}
+                
                 <Button fontFamily="Montserrat" fontSize="16px" fontWeight="400" lineHeight="19.5px" colorScheme="blue" onClick={() => handleBuyClick(product)}>
                   Comprar
                 </Button>
