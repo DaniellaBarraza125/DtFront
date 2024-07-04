@@ -53,7 +53,9 @@ const UserDetail = () => {
             partner_id: userDetail.id,
             hora_fin: `${selectedDay} ${horaFin}`,
             fecha: selectedDay,
+            user_id: user.id,
         };
+        console.log(formData);
         dispatch(createMeeting(formData));
         onClose();
     };

@@ -94,7 +94,8 @@ const Schedule = ({ hideFooter, propEvents }) => {
 							</Select>
 						</FormControl>
 					</Box>
-					{tags.map((tag, index) => (
+					<Box display='flex' justifyContent='space-between' marginX='20px'>					
+						{tags.map((tag, index) => (
 						<Button
 							key={index}
 							fontSize='10px'
@@ -117,6 +118,8 @@ const Schedule = ({ hideFooter, propEvents }) => {
 							{tag.count && <Text ml='5px'>{tag.count}</Text>}
 						</Button>
 					))}
+					</Box>
+
 				</Box>
 				<Box flex='1' overflowY='auto' width='100%'>
 					{isLoading ? (
