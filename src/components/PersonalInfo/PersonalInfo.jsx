@@ -29,7 +29,6 @@ const PersonalInfo = () => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        // console.log(`Name: ${name}, Value: ${value}`);
         setFormValues({
             ...formValues,
             [name]: value
@@ -54,7 +53,6 @@ const PersonalInfo = () => {
             return;
         }
 
-        console.log("Data submitted:", formValues);
         dispatch(register(formValues));
 
         setFormValues(initialFormValues);

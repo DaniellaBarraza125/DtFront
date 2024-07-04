@@ -10,7 +10,6 @@ const Buttons = ({ options }) => {
     const dispatch = useDispatch();
 
     const handleClick = (value) => {
-        console.log('value', value);
         setSelectedOption(value);
         setActiveButton(value)
         switch (true) {
@@ -20,13 +19,11 @@ const Buttons = ({ options }) => {
             case value == 'speaker':
                 dispatch(getUsersByRole('speaker'));
                 break;
-            case value == '2024-04-20':
-                console.log('2024-04-20 switch');
-                dispatch(getByDate('2024-04-20'));
+            case value == '2025-06-25':
+                dispatch(getByDate('2025-06-25'));
                 break;
-            case value == '2024-05-15':
-                console.log('2024-05-15 switch');
-                dispatch(getByDate('2024-05-15'));
+            case value == '2025-06-26':
+                dispatch(getByDate('2025-06-26'));
                 break;
         
             default:

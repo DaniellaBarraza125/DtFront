@@ -45,7 +45,6 @@ const Register = () => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        console.log(`Name: ${name}, Value: ${value}`);
         setFormValues({
             ...formValues,
             [name]: value
@@ -57,7 +56,6 @@ const Register = () => {
             const newValues = prevValues[group].includes(value)
                 ? prevValues[group].filter(i => i !== value)
                 : [...prevValues[group], value];
-            console.log(`${group}: ${newValues}`);
             return {
                 ...prevValues,
                 [group]: newValues,
@@ -83,7 +81,6 @@ const Register = () => {
             return;
         }
 
-        console.log("Data submitted:", formValues);
         dispatch(register(formValues));
 
         setFormValues(initialFormValues);

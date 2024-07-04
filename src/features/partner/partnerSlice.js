@@ -14,11 +14,11 @@ export const getAllPartners = createAsyncThunk(
     },
 );
 
-export const getPartnerById = createAsyncThunk(
-    "partner/getPartnerById",
+export const getPartnerByIdUser = createAsyncThunk(
+    "partner/getPartnerByIdUser",
     async (id, { rejectWithValue }) => {
         try {
-            const response = await partnerService.getPartnerById(id);
+            const response = await partnerService.getPartnerByIdUser(id);
             return response;
         } catch (error) {
             console.error(error);
@@ -31,6 +31,18 @@ export const addPartner = createAsyncThunk(
     async (partner, { rejectWithValue }) => {
         try {
             const response = await partnerService.addPartner(partner);
+            return response;
+        } catch (error) {
+            console.error(error);
+            return rejectWithValue(error.response.data);
+        }
+    },
+);
+export const updatePartner = createAsyncThunk(
+    "partner/updatePartner",
+    async (partner, { rejectWithValue }) => {
+        try {
+            const response = await partnerService.updatePartner(partner);
             return response;
         } catch (error) {
             console.error(error);
@@ -73,15 +85,15 @@ export const partnerSlice = createSlice({
                 state.eventsIsLoading = false;
                 state.error = action.payload || action.error.message;
             })
-            .addCase(getPartnerById.pending, (state) => {
+            .addCase(getPartnerByIdUser.pending, (state) => {
                 state.eventIsLoading = true;
                 state.error = null;
             })
-            .addCase(getPartnerById.fulfilled, (state, action) => {
+            .addCase(getPartnerByIdUser.fulfilled, (state, action) => {
                 state.partner = action.payload.partner;
                 state.eventIsLoading = false;
             })
-            .addCase(getPartnerById.rejected, (state, action) => {
+            .addCase(getPartnerByIdUser.rejected, (state, action) => {
                 state.eventIsLoading = false;
                 state.error = action.payload || action.error.message;
             })
@@ -96,7 +108,19 @@ export const partnerSlice = createSlice({
             .addCase(addPartner.rejected, (state, action) => {
                 state.eventIsLoading = false;
                 state.error = action.payload || action.error.message;
-            });
+            })
+            .addCase(updatePartner.pending, (state) => {
+                state.eventIsLoading = true;
+                state.error = null;
+            })
+            .addCase(updatePartner.fulfilled, (state, action) => {
+                state.partner = action.payload.partner;
+                state.eventIsLoading = false;
+            })
+            .addCase(updatePartner.rejected, (state, action) => {
+                state.eventIsLoading = false;
+                state.error = action.payload || action.error.message;
+            })
     },
 });
 

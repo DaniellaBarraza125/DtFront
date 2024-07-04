@@ -7,7 +7,7 @@ import { getMeetingByUser } from '../../features/meetings/meetingSlice';
 import Buttons from '../Buttons/Buttons';
 import Footer from '../Footer/Footer';
 
-const Users = ({ propUsers, hideButtons, hideFooter, height }) => {
+const Users = ({ propUsers, hideButtons, hideFooter, height, deleteButton, editButton }) => {
     const dispatch = useDispatch();
     const { users: stateUsers, isLoading, user } = useSelector((state) => state.auth);
     const { meetings } = useSelector((state) => state.meeting);
@@ -48,7 +48,7 @@ const Users = ({ propUsers, hideButtons, hideFooter, height }) => {
                 setNoMeetings(true);
                 setFilteredUsers([]);
             } else {
-                const oneToOneUsers = meetings?.map(meeting => meeting.Partner?.User).filter(user => user); // Filter out undefined users
+                const oneToOneUsers = meetings?.map(meeting => meeting.Partner?.User).filter(user => user); 
                 setFilteredUsers(oneToOneUsers);
             }
         } else if (tagValue === 'matches') {
@@ -62,8 +62,7 @@ const Users = ({ propUsers, hideButtons, hideFooter, height }) => {
         return match;
     });
 
-    const oneToOneUsers = meetings?.map(meeting => meeting.Partner?.User).filter(user => user);  // Filter out undefined users
-    console.log(oneToOneUsers);
+    const oneToOneUsers = meetings?.map(meeting => meeting.Partner?.User).filter(user => user);  
 
     const tags = [
         { label: 'Todas', value: 'all', count: users?.length },
@@ -72,7 +71,7 @@ const Users = ({ propUsers, hideButtons, hideFooter, height }) => {
     ];
 
     return (
-        <Box height={height ? height : '100vh'} display='flex' flexDirection='column'  width='100%' onClick={onOpen}>
+        <Box marginTop='10vh' height={height ? height : '100vh'} display='flex' flexDirection='column'  width='100%' onClick={onOpen}>
             <Container flex='1' display='flex' flexDirection='column' overflow='hidden'>
                 <Box></Box>
 
@@ -156,6 +155,9 @@ const Users = ({ propUsers, hideButtons, hideFooter, height }) => {
                                     ) : (
                                         <>
                                             {filteredUsers?.map((user, i) => (
+                                                <UserCard key={i} user={user} editButton={editButton ? true: false}/>
+                                            ))}
+                                            {matches?.map((match, i) => (
                                                 <UserCard key={i} user={user} />
                                             ))}
                                             {selectedTag === 'matches' && matches?.map((match, i) => (
@@ -175,3 +177,4 @@ const Users = ({ propUsers, hideButtons, hideFooter, height }) => {
 };
 
 export default Users;
+

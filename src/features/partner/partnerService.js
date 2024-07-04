@@ -1,5 +1,5 @@
 import axios from "axios";
-const API_URL = "http://localhost:3000/partners";
+const API_URL = "https://e-learning-experience.onrender.com/partners";
 
 const getAllPartners = async () => {
     const token = localStorage.getItem("token");
@@ -10,13 +10,27 @@ const getAllPartners = async () => {
     });
     return res.data;
 };
-const getPartnerById = async (id) => {
-    const res = await axios.get(API_URL + "/id/" + id);
+const getPartnerByIdUser = async (id) => {
+    const token = localStorage.getItem("token");
+    const res = await axios.get(API_URL + "/id/" + id, {
+        headers: {
+            Authorization: token,
+        },
+    });
     return res.data;
 };
 const addPartner = async (partner) => {
     const token = localStorage.getItem("token");
-    const res = await axios.post(API_URL, partner,{
+    const res = await axios.post(API_URL, partner, {
+        headers: {
+            Authorization: token,
+        },
+    });
+    return res.data;
+};
+const updatePartner = async (partner) => {
+    const token = localStorage.getItem("token");
+    const res = await axios.put(API_URL + "/id/" + partner.id, partner, {
         headers: {
             Authorization: token,
         },
@@ -26,8 +40,9 @@ const addPartner = async (partner) => {
 
 const partnerService = {
     getAllPartners,
-    getPartnerById,
+    getPartnerByIdUser,
     addPartner,
+    updatePartner,
 };
 
 export default partnerService;

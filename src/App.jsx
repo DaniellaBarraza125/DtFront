@@ -24,10 +24,9 @@ import NotFound from "./components/NotFound/NotFound";
 import AdminScheduleView from "./components/AdminScheduleView/AdminScheduleView";
 import Partners from "./components/Partners/Partners";
 import PanelInfo from "./components/PanelInfo/PanelInfo";
-import Event from "./components/Event/Event";
 import Products from "./components/Products/Products";
 import UserDetail from "./components/UserDetail/UserDetail";
-import SpeakerSchedule from "./components/SpeakerSchedule/SpeakerSchedule";
+import Feedback from "./components/Feedback/Feedback";
 
 const stripePromise = loadStripe('pk_test_51PU6292MuIxm52bYvsBX37uZbLNzlaon35wbfpENgxW1ybFytd7Vdz7Pqp2bCvSfPYlcCBNZMBZxvQqtla0GLGV5006fBkWG84');
 
@@ -36,7 +35,7 @@ function Layout({ children }) {
   return (
     <>
     {location.pathname !== '/register' && <Header />}
-    <Box mt='72px'>
+    <Box mt='70px'>
       {children}
     </Box>
   </>
@@ -56,6 +55,7 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/profile" element={<PrivateZone><Profile /></PrivateZone>} />
               <Route path='/register' element={<Stepper />} />
+              <Route path='/feedback' element={<Feedback />} />
               <Route path="/schedule" element={<PrivateZone><Schedule /></PrivateZone>} />
               <Route path="/eventDetail/:id" element={<PrivateZone><EventDetail /></PrivateZone>} />
               <Route path="/personalInfo" element={<PrivateZone><PersonalInfo /></PrivateZone>} />
@@ -67,7 +67,6 @@ function App() {
               <Route path="/partners" element={<PrivateZone><Partners /></PrivateZone>} />
               <Route path="/userdetail/:id" element={<UserDetail />} />
               <Route path="/products" element={<Products />} />
-              <Route path="/speakerschedule" element={<SpeakerSchedule />} />
               <Route path="/checkoutForm" element={
                 <Elements stripe={stripePromise}>
                   <CheckoutForm />

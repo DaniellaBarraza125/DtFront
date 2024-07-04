@@ -32,7 +32,7 @@ export const createMeeting = createAsyncThunk(
             if (!token) {
                 throw new Error("Token not found in localStorage");
             }
-            return await meetingService.getMeetingByUser(token);
+            return await meetingService.createMeeting(token);
         } catch (error) {
             console.error(error);
             throw error;

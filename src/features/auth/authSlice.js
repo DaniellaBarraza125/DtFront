@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import authService from "./authService";
 
+
 const token = localStorage.getItem("token") || "";
 const user = JSON.parse(localStorage.getItem("user")) || null;
 
@@ -19,7 +20,10 @@ export const register = createAsyncThunk(
     "auth/register",
     async (user, thunkAPI) => {
         try {
-            return await authService.register(user);
+            const response = await authService.register(user);
+            localStorage.setItem("token", response.token);
+            localStorage.setItem("user", JSON.stringify(response.user));    
+            return response;
         } catch (error) {
             console.error(error);
             const msgError = error.response.data.msg;
@@ -43,10 +47,11 @@ export const login = createAsyncThunk("auth/login", async (user, thunkAPI) => {
 
 export const logout = createAsyncThunk("auth/logout", async () => {
     try {
+        console.log('Loggin out slice')
         await authService.logout();
-
         localStorage.removeItem("token");
         localStorage.removeItem("user");
+        
     } catch (error) {
         console.error(error);
     }
@@ -79,6 +84,16 @@ export const getUsersByid = createAsyncThunk(
             console.error(error);
         }
     },
+);
+export const updateUser = createAsyncThunk(
+    "auth/updateUser",
+    async (user) => {
+        try {
+            return await authService.updateUser(user);
+        } catch (error) {
+            console.error(error);
+        }
+    }, 
 );
 
 

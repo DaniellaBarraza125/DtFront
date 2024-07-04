@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
 	Box,
 	Button,
@@ -20,38 +20,57 @@ import PanelInfo from '../PanelInfo/PanelInfo';
 import Users from '../Users/Users';
 import Partners from '../Partners/Partners';
 import AddPartner from '../AddPartner/AddPartner';
+import { sendSummary } from '../../features/emails/emailSlice';
 
 const PanelAdmin = ({ hideFooter }) => {
 	const { users } = useSelector((state) => state.auth);
-	const {partners} = useSelector((state) => state.partner);
+	const { partners } = useSelector((state) => state.partner);
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const [componentToRender, setComponentToRender] = useState(null);
+	const dispatch = useDispatch();
 
 	const handleOpenModal = (component) => {
 		setComponentToRender(component);
 		onOpen();
-	  };
+	};
+	const sendEmails = () => {
+		dispatch(sendSummary());
+	};
 
-	// console.log(users);
 	const asistentes = users.filter((user) => user.rol === 'user');
 	const ponentes = users.filter((user) => user.rol === 'speaker');
-	// const partners = users.filter((user) => user.rol === 'partner');
-    console.log( "ponentes",ponentes);
 
 	const renderComponent = () => {
-    switch (componentToRender) {
-      case 'partner':
-        return <AddPartner />;
-      case 'enviar':
-        return (
-          <Box>
-            <Text>Enviar contenido</Text>
-          </Box>
-        );
-      default:
-        return null;
-    }
-  };
+		switch (componentToRender) {
+			case 'partner':
+				return <AddPartner />;
+			case 'enviar':
+				return (
+					<>
+						<Box>
+							<Text>¿Quieres enviar todos los resúmenes de las ponencias a los usuarios que se inscribieron en ellas?</Text>
+						</Box>
+						<Box mt='1rem'>
+							<Button
+								width='216px'
+								height='40px'
+								padding='10px'
+								borderRadius='80'
+								backgroundColor='#0F8BA0'
+								color='white'
+								bottom='2.5rem'
+								_hover={{ bg: '#0F8BA0' }}
+								onClick={sendEmails}
+							>
+								Enviar correos
+							</Button>
+						</Box>
+					</>
+				);
+			default:
+				return null;
+		}
+	};
 
 	return (
 		<Box className='panelAdmin' height='90vh' display='flex' flexDirection='column' alignItems='center' paddingX='3rem'>
@@ -70,26 +89,22 @@ const PanelAdmin = ({ hideFooter }) => {
 							</Box>
 						</Box>
 						<Box display='flex' flexDirection='column' alignItems='end'>
-						
-								<>
-									<Partners hideFooter={true} height='60vh' />
-									<Button
-										width='216px'
-										height='10px'
-										padding='30px'
-										borderRadius='80'
-										backgroundColor='#0F8BA0'
-										color='white'
-										position='relative'
-										bottom='2.5rem'
-										right='0'
-										onClick={() => handleOpenModal('partner')}
-										_hover={{ bg: '#0F8BA0'}}
-									>
-										Añadir
-									</Button>
-								</>
-						
+							<Partners hideButtons={true} hideFooter={true} height='60vh' />
+							<Button
+								width='216px'
+								height='10px'
+								padding='30px'
+								borderRadius='80'
+								backgroundColor='#0F8BA0'
+								color='white'
+								position='relative'
+								bottom='2.5rem'
+								right='0'
+								onClick={() => handleOpenModal('partner')}
+								_hover={{ bg: '#0F8BA0' }}
+							>
+								Añadir
+							</Button>
 						</Box>
 					</Flex>
 				</Box>
@@ -106,14 +121,14 @@ const PanelAdmin = ({ hideFooter }) => {
 						<Box display='flex' flexDirection='column' alignItems='end'>
 							{asistentes.length > 0 ? (
 								<>
-								<Users hideButtons={true} propUsers={asistentes} hideFooter={true} height='60vh'/>
-								<Button
+									<Users hideButtons={true} propUsers={asistentes} hideFooter={true} height='60vh' />
+									<Button
 										width='216px'
 										height='10px'
 										padding='30px'
 										borderRadius='80'
 										backgroundColor='#0F8BA0'
-										_hover={{ bg: '#0F8BA0'}}
+										_hover={{ bg: '#0F8BA0' }}
 										color='white'
 										position='relative'
 										bottom='2.5rem'
@@ -143,7 +158,7 @@ const PanelAdmin = ({ hideFooter }) => {
 						</Box>
 						<Box height='30%'>
 							{ponentes.length > 0 ? (
-								<Users hideButtons={true} propUsers={ponentes} hideFooter={true} height='60vh' deleteButton={true}/>
+								<Users hideButtons={true} propUsers={ponentes} hideFooter={true} height='60vh' deleteButton={true} editButton={true} />
 							) : (
 								<Box textAlign='center' width='100%'>
 									No hay ponentes disponibles.
@@ -155,7 +170,7 @@ const PanelAdmin = ({ hideFooter }) => {
 			</Box>
 			<Modal isOpen={isOpen} onClose={onClose}>
 				<ModalContent maxW='md' mx='auto' mt='10' p='6' borderWidth='1px' borderRadius='lg' boxShadow='lg'>
-					<ModalBody>
+					<ModalBody display={'flex'} flexDirection={'column'}>
 						<ModalCloseButton />
 						{renderComponent()}
 					</ModalBody>
