@@ -26,7 +26,7 @@ const logout = async () => {
     if (res.data) {
         localStorage.clear();
     }
-    console.log('Logging out')
+    console.log("Logging out");
     return res.data;
 };
 const getUsers = async () => {
