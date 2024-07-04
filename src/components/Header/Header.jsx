@@ -179,11 +179,11 @@ const profile = (
 		const { isOpen, onToggle, onClose } = useDisclosure();
 		const user = useSelector((state) => state.auth.user);
 		const dispatch = useDispatch();
-		const navigate = useNavigate()
-
+		const navigate = useNavigate();
+	
 		useEffect(() => {
 			dispatch(getByDate('2025-06-25'));
-		},[])
+		}, [dispatch]);
 	
 		const handleLogout = () => {
 			dispatch(logout())
@@ -193,9 +193,8 @@ const profile = (
 		}
 
 	
-		
 		return (
-			<Box position='fixed' top='0' width='100%' bg='primary.50' px={4} height={{base:'50px', md:'72px'}} backgroundColor='#191919' zIndex='1000'>
+			<Box position='fixed' top='0' width='100%' bg='primary.50' px={4} height={{ base: '50px', md: '55px' }} backgroundColor='#191919' zIndex='1000'>
 				<Box display='grid' gridTemplateColumns='1fr 1fr 1fr' alignItems='center' height='100%'>
 					<Box className='burgerIcon' display={{ base: 'flex', md: 'none' }} alignItems='center' justifyContent='flex-start' gridColumn='1' height='100%'>
 						<IconButton
@@ -236,22 +235,22 @@ const profile = (
 							</Box>
 						)}
 					</Center>
-					
-					<Box className='userInfo' display={{base:'none', md:'flex'}} justifyContent='flex-end' alignItems='center' gridColumn='3'>
+	
+					<Box className='userInfo' display={{ base: 'none', md: 'flex' }} justifyContent='flex-end' alignItems='center' gridColumn='3'>
 						<Box>
-						<Menu>
-          <MenuButton
-            as={Button}
-            bg="transparent"
-            _hover={{ bg: 'transparent' }}
-            _focus={{ boxShadow: 'none' }}
-          >
-            {profile}
-          </MenuButton>
-          <MenuList>
-            <MenuItem fontFamily="Montserrat" onClick={handleLogout}>Logout</MenuItem>
-          </MenuList>
-        </Menu>
+							<Menu>
+								<MenuButton
+									as={Button}
+									bg="transparent"
+									_hover={{ bg: 'transparent' }}
+									_focus={{ boxShadow: 'none' }}
+								>
+									{profile}
+								</MenuButton>
+								<MenuList>
+									<MenuItem fontFamily="Montserrat" onClick={handleLogout}>Logout</MenuItem>
+								</MenuList>
+							</Menu>
 						</Box>
 					</Box>
 				</Box>
@@ -271,10 +270,10 @@ const profile = (
 						</Flex>
 						<VStack as='nav' spacing={'4'} mt={'4'} flex="1" justifyContent="right">
 							<Box>
-							<Link to='/' style={{ width: '90%' }}>
-								<Button variant="unstyled" width="90%" fontSize="16px" borderRadius="10px" color="white" _hover={{ color: '#0F8BA0', border: '1px solid white', borderRadius: '10px' }}>
-									INICIO
-								</Button>
+								<Link to='/' style={{ width: '90%' }}>
+									<Button variant="unstyled" width="90%" fontSize="16px" borderRadius="10px" color="white" _hover={{ color: '#0F8BA0', border: '1px solid white', borderRadius: '10px' }} onClick={onClose}>
+										INICIO
+									</Button>
 								</Link>
 								<Link to='/schedule' style={{ width: '90%' }}>
 									<Button
@@ -284,32 +283,33 @@ const profile = (
 										borderRadius="10px"
 										color="white"
 										_hover={{ color: '#0F8BA0', border: '1px solid white', borderRadius: '10px' }}
+										onClick={onClose}
 									>
 										PROGRAMACION
 									</Button>
 								</Link>
 								<Link to='/users' style={{ width: '90%' }}>
-									<Button variant="unstyled" width="100%" fontSize="16px" borderRadius="10px" color="white" _hover={{ color: '#0F8BA0', border: '1px solid white', borderRadius: '10px' }}>
+									<Button variant="unstyled" width="100%" fontSize="16px" borderRadius="10px" color="white" _hover={{ color: '#0F8BA0', border: '1px solid white', borderRadius: '10px' }} onClick={onClose}>
 										PONENTES
 									</Button>
 								</Link>
 								<Link to='https://www.elearningexperience.es/premio-digit-e-learning/' target='blank' style={{ width: '90%' }}>
-								<Button variant="unstyled" width="100%" fontSize="16px" borderRadius="10px" color="white" _hover={{ color: '#0F8BA0', border: '1px solid white', borderRadius: '10px' }}>
-									PREMIOS DIGIT
-								</Button>
-							</Link>
-							<Link to='https://www.elearningexperience.es/alojamiento/' target='blank' style={{ width: '90%' }}>
-								<Button variant="unstyled" width="100%" fontSize="16px" borderRadius="10px" color="white" _hover={{ color: '#0F8BA0', border: '1px solid white', borderRadius: '10px' }}>
-									ALOJAMIENTO
-								</Button>
-							</Link>
+									<Button variant="unstyled" width="100%" fontSize="16px" borderRadius="10px" color="white" _hover={{ color: '#0F8BA0', border: '1px solid white', borderRadius: '10px' }} onClick={onClose}>
+										PREMIOS DIGIT
+									</Button>
+								</Link>
+								<Link to='https://www.elearningexperience.es/alojamiento/' target='blank' style={{ width: '90%' }}>
+									<Button variant="unstyled" width="100%" fontSize="16px" borderRadius="10px" color="white" _hover={{ color: '#0F8BA0', border: '1px solid white', borderRadius: '10px' }} onClick={onClose}>
+										ALOJAMIENTO
+									</Button>
+								</Link>
 								<Link to='/' style={{ width: '90%' }}>
-									<Button variant="unstyled" width="100%" fontSize="16px" borderRadius="10px" color="white" _hover={{ color: '#0F8BA0', border: '1px solid white', borderRadius: '10px' }}>
+									<Button variant="unstyled" width="100%" fontSize="16px" borderRadius="10px" color="white" _hover={{ color: '#0F8BA0', border: '1px solid white', borderRadius: '10px' }} onClick={onClose}>
 										OTRAS EDICIONES
 									</Button>
 								</Link>
 								<Link to='/' style={{ width: '90%' }}>
-									<Button variant="unstyled" width="100%" fontSize="16px" borderRadius="10px" color="white" _hover={{ color: '#0F8BA0', border: '1px solid white', borderRadius: '10px' }}>
+									<Button variant="unstyled" width="100%" fontSize="16px" borderRadius="10px" color="white" _hover={{ color: '#0F8BA0', border: '1px solid white', borderRadius: '10px' }} onClick={onClose}>
 										CONTACTO
 									</Button>
 								</Link>
@@ -325,6 +325,7 @@ const profile = (
 										color="white"
 										mt="auto"
 										hover={{ color: '#0F8BA0', border: '1px solid white', borderRadius: '5px' }}
+										onClick={onClose}
 									>
 										Iniciar sesión
 									</Button>
