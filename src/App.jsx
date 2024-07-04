@@ -56,7 +56,7 @@ function App() {
               <Route path="/profile" element={<PrivateZone><Profile /></PrivateZone>} />
               <Route path='/register' element={<Stepper />} />
               <Route path="/schedule" element={<PrivateZone><Schedule /></PrivateZone>} />
-              <Route path="/eventDetail/:id" element={<PrivateZone><EventDetail /></PrivateZone>} />
+              userdetail<Route path="/eventDetail/:id" element={<PrivateZone><EventDetail /></PrivateZone>} />
               <Route path="/personalInfo" element={<PrivateZone><PersonalInfo /></PrivateZone>} />
               <Route path="/users" element={<PrivateZone><Users /></PrivateZone>} />
               <Route path="/addPartner" element={<PrivateZone><AddPartner /></PrivateZone>} />
@@ -64,7 +64,7 @@ function App() {
               <Route path="*" element={<NotFound />} />
               <Route path="/panelInfo" element={<PanelInfo />} />
               <Route path="/partners" element={<PrivateZone><Partners /></PrivateZone>} />
-              <Route path="/userdetail/:id" element={<UserDetail />} />
+              <Route path="//:id" element={<UserDetail />} />
               <Route path="/products" element={<Products />} />
               <Route path="/checkoutForm" element={
                 <Elements stripe={stripePromise}>
