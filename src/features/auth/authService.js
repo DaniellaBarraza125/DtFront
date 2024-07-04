@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "https://e-learning-experience.onrender.com/users";
+const API_URL = "http://localhost:3000/users";
 
 const login = async (user) => {
     const res = await axios.post(API_URL + "/login", user);

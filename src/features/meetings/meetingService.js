@@ -1,5 +1,5 @@
 import axios from "axios";
-const API_URL = "https://e-learning-experience.onrender.com/meetings";
+const API_URL = "http://localhost:3000/meetings";
 
 const getMeetingByUser = async () => {
     const token = localStorage.getItem("token");
@@ -10,9 +10,9 @@ const getMeetingByUser = async () => {
     });
     return res.data;
 };
-const createMeeting = async () => {
+const createMeeting = async (formData) => {
     const token = localStorage.getItem("token");
-    const res = await axios.post(API_URL + "/", {
+    const res = await axios.post(API_URL + "/", formData, {
         headers: {
             Authorization: token,
         },
