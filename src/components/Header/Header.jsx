@@ -186,12 +186,11 @@ const profile = (
 		}, [dispatch]);
 	
 		const handleLogout = () => {
-			dispatch(logout())
-			navigate('/login')
-			localStorage.removeItem('user')
-			localStorage.removeItem('token')
-		}
-
+			dispatch(logout());
+			navigate('/login');
+			localStorage.removeItem('user');
+			localStorage.removeItem('token');
+		};
 	
 		return (
 			<Box position='fixed' top='0' width='100%' bg='primary.50' px={4} height={{ base: '50px', md: '55px' }} backgroundColor='#191919' zIndex='1000'>
@@ -209,8 +208,8 @@ const profile = (
 						/>
 					</Box>
 	
-					<Box className='logoGrande' display={{ base: 'none', md: 'flex' }} gridColumn='1' alignItems='center' justifyContent='start' height='100%' onClick={onToggle}>
-						{logoGrande}
+					<Box className='logoGrande' display={{ base: 'none', md: 'flex' }} gridColumn='1' alignItems='center' justifyContent='start' height='100%'>
+						<Link to='/'>{logoGrande}</Link>
 					</Box>
 	
 					<Center gridColumn='2' display={{ base: 'flex', md: 'none' }} justifyContent='center' alignItems='center' height='100%'>
@@ -236,7 +235,7 @@ const profile = (
 						)}
 					</Center>
 	
-					<Box className='userInfo' display={{ base: 'none', md: 'flex' }} justifyContent='flex-end' alignItems='center' gridColumn='3'>
+					<Box className='userInfo' display='flex' justifyContent='flex-end' alignItems='center' gridColumn='3'>
 						<Box>
 							<Menu>
 								<MenuButton
@@ -268,15 +267,15 @@ const profile = (
 								_active={{ background: 'none' }}
 							/>
 						</Flex>
-						<VStack as='nav' spacing={'4'} mt={'4'} flex="1" justifyContent="right">
+						<VStack as='nav' spacing={'4'} mt={'4'} flex="1" justifyContent="rigth">
 							<Box>
 								<Link to='/' style={{ width: '90%' }}>
-									<Button variant="unstyled" width="90%" fontSize="16px" borderRadius="10px" color="white" _hover={{ color: '#0F8BA0', border: '1px solid white', borderRadius: '10px' }} onClick={onClose}>
+									<Button textAlign='left'  paddingLeft='30px' variant="unstyled" width="100%" fontSize="16px" borderRadius="10px" color="white" _hover={{ color: '#0F8BA0', border: '1px solid white', borderRadius: '10px' }} onClick={onClose}>
 										INICIO
 									</Button>
 								</Link>
 								<Link to='/schedule' style={{ width: '90%' }}>
-									<Button
+									<Button textAlign='left'  paddingLeft='30px' 
 										variant="unstyled"
 										width="100%"
 										fontSize="16px"
@@ -289,42 +288,44 @@ const profile = (
 									</Button>
 								</Link>
 								<Link to='/users' style={{ width: '90%' }}>
-									<Button variant="unstyled" width="100%" fontSize="16px" borderRadius="10px" color="white" _hover={{ color: '#0F8BA0', border: '1px solid white', borderRadius: '10px' }} onClick={onClose}>
+									<Button textAlign='left'  paddingLeft='30px'  variant="unstyled" width="100%" fontSize="16px" borderRadius="10px" color="white" _hover={{ color: '#0F8BA0', border: '1px solid white', borderRadius: '10px' }} onClick={onClose}>
 										PONENTES
 									</Button>
 								</Link>
 								<Link to='https://www.elearningexperience.es/premio-digit-e-learning/' target='blank' style={{ width: '90%' }}>
-									<Button variant="unstyled" width="100%" fontSize="16px" borderRadius="10px" color="white" _hover={{ color: '#0F8BA0', border: '1px solid white', borderRadius: '10px' }} onClick={onClose}>
+									<Button textAlign='left'  paddingLeft='30px'  variant="unstyled" width="100%" fontSize="16px" borderRadius="10px" color="white" _hover={{ color: '#0F8BA0', border: '1px solid white', borderRadius: '10px' }} onClick={onClose}>
 										PREMIOS DIGIT
 									</Button>
 								</Link>
 								<Link to='https://www.elearningexperience.es/alojamiento/' target='blank' style={{ width: '90%' }}>
-									<Button variant="unstyled" width="100%" fontSize="16px" borderRadius="10px" color="white" _hover={{ color: '#0F8BA0', border: '1px solid white', borderRadius: '10px' }} onClick={onClose}>
+									<Button textAlign='left'  paddingLeft='30px'  variant="unstyled" width="100%" fontSize="16px" borderRadius="10px" color="white" _hover={{ color: '#0F8BA0', border: '1px solid white', borderRadius: '10px' }} onClick={onClose}>
 										ALOJAMIENTO
 									</Button>
 								</Link>
 								<Link to='/' style={{ width: '90%' }}>
-									<Button variant="unstyled" width="100%" fontSize="16px" borderRadius="10px" color="white" _hover={{ color: '#0F8BA0', border: '1px solid white', borderRadius: '10px' }} onClick={onClose}>
+									<Button textAlign='left'  paddingLeft='30px'  variant="unstyled" width="100%" fontSize="16px" borderRadius="10px" color="white" _hover={{ color: '#0F8BA0', border: '1px solid white', borderRadius: '10px' }} onClick={onClose}>
 										OTRAS EDICIONES
 									</Button>
 								</Link>
 								<Link to='/' style={{ width: '90%' }}>
-									<Button variant="unstyled" width="100%" fontSize="16px" borderRadius="10px" color="white" _hover={{ color: '#0F8BA0', border: '1px solid white', borderRadius: '10px' }} onClick={onClose}>
+									<Button textAlign='left'  paddingLeft='30px'  variant="unstyled" width="100%" fontSize="16px" borderRadius="10px" color="white" _hover={{ color: '#0F8BA0', border: '1px solid white', borderRadius: '10px' }} onClick={onClose}>
 										CONTACTO
 									</Button>
 								</Link>
 							</Box>
-							<Box width="100%">
+							<Box width="100%" marginTop='35vh'>
 								<Link to='/register' style={{ width: '90%' }}>
-									<Button
+									<Button  paddingLeft='30px' 
+									
+										marginLeft='43px'
 										variant="unstyled"
-										width="100%"
+										width="70%"
 										fontSize="16px"
-										borderRadius="10px"
+										borderRadius="80px"
 										bg='#0F8BA0'
 										color="white"
 										mt="auto"
-										hover={{ color: '#0F8BA0', border: '1px solid white', borderRadius: '5px' }}
+										_hover={{ color: '#0F8BA0', border: '1px solid white', borderRadius: '5px' }}
 										onClick={onClose}
 									>
 										Iniciar sesión
@@ -339,5 +340,6 @@ const profile = (
 	};
 	
 	export default Header;
+	
 	
 	

@@ -48,6 +48,7 @@ const Users = ({ propUsers, hideButtons, hideFooter, height, deleteButton, editB
                 setNoMeetings(true);
                 setFilteredUsers([]);
             } else {
+                console.log(meetings)
                 const oneToOneUsers = meetings?.map(meeting => meeting.Partner?.User).filter(user => user); 
                 setFilteredUsers(oneToOneUsers);
             }
@@ -69,7 +70,6 @@ const Users = ({ propUsers, hideButtons, hideFooter, height, deleteButton, editB
         { label: 'One to One', value: 'oneToOne', count: meetings?.length },
         { label: 'Matches', value: 'matches', count: matches?.length },
     ];
-
     return (
         <Box marginTop='2px' height={height ? height : '100vh'} display='flex' flexDirection='column'  width='100%' onClick={onOpen}>
             <Container flex='1' display='flex' flexDirection='column' overflow='hidden'>
