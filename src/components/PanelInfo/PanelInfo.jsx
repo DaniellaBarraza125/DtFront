@@ -7,7 +7,7 @@ import { getAllPartners } from '../../features/partner/partnerSlice';
 const PanelInfo = () => {
 	const dispatch = useDispatch();
 	const { users, isLoading, error } = useSelector((state) => state.auth);
-  
+	const { partners } = useSelector((state) => state.partner);
 
 	useEffect(() => {
 		dispatch(getUsers());

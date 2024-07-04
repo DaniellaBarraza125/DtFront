@@ -11,14 +11,15 @@ const AddPartner = ({ admin, id: idUser }) => {
 	const [searchTerm, setSearchTerm] = useState('');
 	const [filteredOptions, setFilteredOptions] = useState(users);
 	const [id, setId] = useState(idUser);
+	const [editUser, setEditUser] = useState({});
+	const [partnerToEdit, setPartnerToEdit] = useState({});
 	const dispatch = useDispatch();
-	let editUser = {};
-	let partnerToEdit = {};
+
 	useEffect(() => {
 		setId(idUser);
 		if (admin) {
-			editUser = users.find((user) => user.id === id);
-			partnerToEdit = partners.find((partner) => partner.user_id === id);
+			setEditUser(users.find((user) => user.id === id));
+			setPartnerToEdit(partners.find((partner) => partner.user_id === id));
 		}
 	}, [dispatch]);
 	const initialValues = {
@@ -35,7 +36,7 @@ const AddPartner = ({ admin, id: idUser }) => {
 
 	useEffect(() => {
 		setFormData(partnerToEdit);
-	}, [useState]);
+	}, [setPartnerToEdit,setEditUser]);
 
 	const handleChange = (e) => {
 		const { id, value } = e.target;

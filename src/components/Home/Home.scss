@@ -1,0 +1,95 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+.home_container {
+    margin-top: 95px;
+    margin-left: 20px;
+    font-family: "Montserrat", sans-serif;
+}
+
+.sammoo {
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-bottom: 10px;
+}
+
+.title_home {
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    margin-bottom: 25px;
+}
+
+.info_home {
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 18px;
+    margin-bottom: 15px;
+}
+
+.date_home {
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    margin-bottom: 15px;
+}
+
+.place_home {
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 15px;
+}
+
+.adress_home {
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 15px;
+}
+
+.btn_container_home {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.btn_home {
+    width: 343px;
+    height: 48px;
+    padding: 0px 16px;
+    margin-bottom: 20px ;
+}
+
+.home-image {
+    width: 100%;
+}
+
+.footer_home {
+    background-color: #202028;
+    color: #FBFBFB;
+    display: flex;
+    flex-direction: row;
+    padding: 8px 24px;
+    justify-content: center;
+    align-items: center;
+    gap: 32px;
+}
+
+.card_home {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+.info_card_home {
+    margin-top: 10px;
+}

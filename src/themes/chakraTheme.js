@@ -24,6 +24,22 @@ const theme = extendTheme({
                 boxShadow: "sm",
             },
         },
+        Toast: {
+            variants: {
+                customSuccess: {
+                    container: {
+                        bg: "#FFFFFF",
+                        color: "black",
+                    },
+                },
+                customError: {
+                    container: {
+                        bg: "red.500",
+                        color: "white",
+                    },
+                },
+            },
+        },
     },
     styles: {
         global: {

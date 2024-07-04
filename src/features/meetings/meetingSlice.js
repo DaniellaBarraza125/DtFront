@@ -3,6 +3,7 @@ import meetingService from "./meetingService";
 
 const initialState = {
     meetings: [],
+    meeting: null,
     isError: false,
     isSuccess: false,
     isLoading: true,
@@ -26,13 +27,13 @@ export const getMeetingByUser = createAsyncThunk(
 );
 export const createMeeting = createAsyncThunk(
     "meeting/createMeeting",
-    async () => {
+    async (formData) => {
         try {
             const token = localStorage.getItem("token");
             if (!token) {
                 throw new Error("Token not found in localStorage");
             }
-            return await meetingService.createMeeting(token);
+            return await meetingService.createMeeting(formData);
         } catch (error) {
             console.error(error);
             throw error;
@@ -65,6 +66,20 @@ export const meetingSlice = createSlice({
                 state.isLoading = false;
             })
             .addCase(getMeetingByUser.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(createMeeting.fulfilled, (state, action) => {
+                state.meeting = action.payload.meeting;
+                state.msg = action.payload.msg;
+                state.isSuccess = true;
+                state.isLoading = false;
+            })
+            .addCase(createMeeting.rejected, (state, action) => {
+                state.msg = action.payload;
+                state.isError = true;
+                state.isLoading = false;
+            })
+            .addCase(createMeeting.pending, (state) => {
                 state.isLoading = true;
             });
     },
