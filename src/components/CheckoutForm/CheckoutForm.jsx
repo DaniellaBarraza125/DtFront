@@ -46,7 +46,7 @@ const handleSubmit = async (event) => {
 
     try {
         const { id } = paymentMethod;
-        const response = await axios.post('http://localhost:3000/checkout', {
+        const response = await axios.post('https://e-learning-experience.onrender.com/checkout', {
             id,
             amount: product.prices[0].unit_amount,
         });

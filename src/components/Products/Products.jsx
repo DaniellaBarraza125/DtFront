@@ -26,7 +26,7 @@ const Products = () => {
     const fetchProducts = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get('http://localhost:3000/products', {
+        const response = await axios.get('https://e-learning-experience.onrender.com/products', {
           headers: {
             Authorization: token,
           },
