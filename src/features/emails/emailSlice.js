@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import emailService from "./emailService";
 
 export const sendSummary = createAsyncThunk(
-    "partner/sendSummary",
+    "email/sendSummary",
     async (_, { rejectWithValue }) => {
         try {
             const response = await emailService.sendSummary();
@@ -13,11 +13,11 @@ export const sendSummary = createAsyncThunk(
         }
     },
 );
-export const sendto = createAsyncThunk(
-    "partner/sendto",
+export const sendTo = createAsyncThunk(
+    "email/sendto",
     async (_, { rejectWithValue }) => {
         try {
-            const response = await emailService.sendto();
+            const response = await emailService.sendTo();
             return response;
         } catch (error) {
             console.error(error);

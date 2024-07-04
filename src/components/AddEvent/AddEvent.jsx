@@ -19,6 +19,7 @@ import {
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createEvent, getByDate, getBySala } from "../../features/events/eventSlice";
+import { sendTo } from "../../features/emails/emailSlice";
 
 const generateTimeOptions = (events, room, fecha) => {
   const times = [];
@@ -163,7 +164,7 @@ const AddEvent = () => {
         fecha: "",
         numero_asistentes: 0
       });
-      
+      dispatch(sendTo())
     } catch (error) {
       console.error("Error al añadir evento", error);
     }

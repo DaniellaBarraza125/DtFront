@@ -12,6 +12,7 @@ const sendTo = async () => {
 
 const emailService = {
     sendSummary,
+    sendTo,
 };
 
 export default emailService;
