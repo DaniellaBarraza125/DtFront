@@ -75,7 +75,7 @@ const AdminScheduleView = () => {
                                             border="1px solid #0F8BA0"
                                             borderRadius="55px"
                                             height='3vh'
-                                            onClick={onOpen} // Asegúrate de que onOpen se llama aquí
+                                            onClick={onOpen} 
                                         >
                                             Añadir Ponencia
                                         </Button>
@@ -87,7 +87,7 @@ const AdminScheduleView = () => {
                             </Grid>
                         </Box>
                         <Box height='655px' className='salas' marginTop={0}>
-                            <GridItem bg='#ededed' flex="1" display="flex" flexDirection="row" overflow="hidden" width="100%" justifyContent='space-around' paddingBottom='15px'>
+                            <GridItem bg='#ededed' flex="1" display="flex" flexDirection="row" overflow="hidden" width="100%" justifyContent='space-around' paddingBottom='15px' borderBottomRadius='15px'>
                                 <Box bg='white' width='31vw' height='67vh' borderRadius='15px' margin='15px 1px' display="flex" flexDirection="column" alignItems="center" paddingX="1.5vw" paddingBottom='3vh' paddingTop='3vh'>
                                     <Box position="sticky" top="0" zIndex="1" width="100%">
                                         <Box display="flex" flexDirection="column" alignItems="center" borderBottom='1px black' width="100%" paddingTop="1.25em">

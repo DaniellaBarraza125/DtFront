@@ -7,7 +7,11 @@ import { getMeetingByUser } from '../../features/meetings/meetingSlice';
 import Buttons from '../Buttons/Buttons';
 import Footer from '../Footer/Footer';
 
+
+
+
 const Users = ({ propUsers, hideButtons, hideFooter, height }) => {
+
     const dispatch = useDispatch();
     const { users: stateUsers, isLoading, user } = useSelector((state) => state.auth);
     const { meetings } = useSelector((state) => state.meeting);
@@ -72,7 +76,7 @@ const Users = ({ propUsers, hideButtons, hideFooter, height }) => {
     ];
 
     return (
-        <Box marginTop='10vh' height={height ? height : '100vh'} display='flex' flexDirection='column'  width='100%' onClick={onOpen}>
+        <Box marginTop='2px' height={height ? height : '100vh'} display='flex' flexDirection='column'  width='100%' onClick={onOpen}>
             <Container flex='1' display='flex' flexDirection='column' overflow='hidden'>
                 <Box></Box>
 
