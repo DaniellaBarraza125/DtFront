@@ -26,29 +26,29 @@ const AdminScheduleView = () => {
 	const { eventIsLoading, events } = useSelector((state) => state.event);
 	const dispatch = useDispatch();
 	const { isOpen, onOpen, onClose } = useDisclosure();
-
+    const [eventosSalaPrincipal, setEventosSalaPrincipal] = useState([]);
+    const [eventosSalaWorkshop, setEventosSalaWorkshop] = useState([]);
+    
 	const options = [
-		{ value: '2025-06-25', label: '25 de Junio' },
+        { value: '2025-06-25', label: '25 de Junio' },
 		{ value: '2025-06-26', label: '26 de Junio' },
 	];
-
-	const [activeDate, setActiveDate] = useState(options[0].value);
+    const [activeDate, setActiveDate] = useState(options[0].value);
+    
 
 	useEffect(() => {
 		dispatch(getByDate(activeDate));
-	}, [dispatch, activeDate]);
+	}, [dispatch]);
 
 	const handleButtonClick = (value) => {
 		setActiveDate(value);
 		dispatch(getByDate(value));
 	};
 
-	if (eventIsLoading) {
-		return <h1>Cargando eventos...</h1>;
-	}
-
-	const eventosSalaPrincipal = events.filter((event) => event.sala == '1');
-	const eventosSalaWorkshop = events.filter((event) => event.sala == '2');
+useEffect(() => {
+        setEventosSalaPrincipal(events.filter((event) => event.sala == '1'));
+        setEventosSalaWorkshop(events.filter((event) => event.sala == '2'));
+}, [dispatch, events]);
 
     return (
         <Flex justifyContent="center">
@@ -149,9 +149,14 @@ const AdminScheduleView = () => {
                                                 display: 'none',
                                             },
                                         }}>
-                                            {eventosSalaWorkshop.map((event, i) => (
-                                                <Event key={i} event={event} />
-                                            ))}
+                                            {eventIsLoading ? (<h1>Cargando eventos...</h1> )
+                                            : (
+                                                <>
+                                                {eventosSalaWorkshop.map((event, i) => (
+                                                    <Event key={i} event={event} />
+                                                ))}
+                                                </>
+                                            )}
                                         </Box>
                                     </Box>
                                 ) : (

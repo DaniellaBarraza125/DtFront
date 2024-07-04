@@ -161,7 +161,7 @@ export const eventSlice = createSlice({
             })
             .addCase(createEvent.fulfilled, (state, action) => {
                 state.eventIsLoading = false
-                state.events = action.payload.event;
+                state.event = action.payload.event;
             })
             .addCase(createEvent.pending, (state) => {
                 state.status = "loading";
