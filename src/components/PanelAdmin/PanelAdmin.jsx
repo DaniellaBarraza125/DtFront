@@ -75,7 +75,7 @@ const PanelAdmin = ({ hideFooter }) => {
 			<Box className='infoPanel'>
 				<PanelInfo />
 			</Box>
-			<Box flex='1' display='flex' justifyContent='center' overflow='hidden' width='100%' height='100%'>
+			<Box marginTop='-6vh'flex='1' display='flex' justifyContent='center' overflow='hidden' width='100%' height='100%'>
 				<Box className='componentes' bg='#fbfbfb' borderRadius='20px' p={4} m={2} width='70%' boxShadow='0 4px 6px rgba(0, 0, 0, 0.1)' height='98%'>
 					<Flex direction='column'>
 						<Box padding='16px' display='flex' flexDirection='column' alignItems='left' mb={1}>
