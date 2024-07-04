@@ -182,7 +182,7 @@ const profile = (
 		},[])
 	
 		return (
-			<Box position='fixed' top='0' width='100%' bg='primary.50' px={4} height='72px' backgroundColor='#191919' zIndex='1000'>
+			<Box position='fixed' top='0' width='100%' bg='primary.50' px={4} height={{base:'50px', md:'72px'}} backgroundColor='#191919' zIndex='1000'>
 				<Box display='grid' gridTemplateColumns='1fr 1fr 1fr' alignItems='center' height='100%'>
 					<Box className='burgerIcon' display={{ base: 'flex', md: 'none' }} alignItems='center' justifyContent='flex-start' gridColumn='1' height='100%'>
 						<IconButton
@@ -242,7 +242,7 @@ const profile = (
 								_active={{ background: 'none' }}
 							/>
 						</Flex>
-						<VStack as='nav' spacing={'4'} mt={'4'} flex="1" justifyContent="space-between">
+						<VStack as='nav' spacing={'4'} mt={'4'} flex="1" justifyContent="right">
 							<Box>
 								<Button variant="unstyled" width="90%" fontSize="16px" borderRadius="10px" color="white" _hover={{ color: '#0F8BA0', border: '1px solid white', borderRadius: '10px' }}>
 									INICIO

@@ -1,5 +1,5 @@
 import axios from "axios";
-const API_URL = "http://localhost:3000meetings";
+const API_URL = "http://localhost:3000/meetings";
 
 const getMeetingByUser = async () => {
     const token = localStorage.getItem("token");
