@@ -29,6 +29,7 @@ const generateTimeOptions = (events, room, fecha) => {
     return hours * 60 + minutes;
   };
 
+ useEffect(() => {
   events.forEach(event => {
     const dateFromEvent = new Date(event.fecha)
     const dateFromForm = new Date(fecha)
@@ -40,6 +41,7 @@ const generateTimeOptions = (events, room, fecha) => {
       }
     } 
   });
+ }, [events]);
 
   for (let i = 9 * 60; i <= 24 * 60; i += 5) { 
     const hour = Math.floor(i / 60);
@@ -92,24 +94,15 @@ const AddEvent = () => {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		dispatch(getByDate('2024-08-06'));
+		dispatch(getByDate('2025-06-25'));
 	}, [dispatch]);
 
 
   const handleChange = (e) => {
-    getEventsWhenRoomChanges(e)
     const { id, value } = e.target;
     setFormData({ ...formData, [id]: value });
   };
 
-  const getEventsWhenRoomChanges = (e) => {
-    if (e.target.id === 'sala') {
-      if(e.target.value !== 0){
-        const sala = e.target.value;
-        dispatch(getBySala(sala));
-      }
-		}
-  }
 
   const handleInteresChange = (value) => {
     setFormData((prevState) => ({
@@ -170,6 +163,7 @@ const AddEvent = () => {
         fecha: "",
         numero_asistentes: 0
       });
+      
     } catch (error) {
       console.error("Error al añadir evento", error);
     }

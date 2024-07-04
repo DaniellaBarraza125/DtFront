@@ -22,7 +22,7 @@ const Schedule = ({ hideFooter, propEvents }) => {
 
 	const user = JSON.parse(localStorage.getItem('user'));
 	useEffect(() => {
-		dispatch(getByDate('2024-04-20'));
+		dispatch(getByDate('2025-06-25'));
 		dispatch(getMeetingByUser());
 		dispatch(getUsersByid(user.id));
 	}, [dispatch]);
