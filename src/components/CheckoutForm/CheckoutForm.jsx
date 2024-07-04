@@ -1,7 +1,7 @@
 import { useLocation } from 'react-router-dom';
 import { useState } from 'react';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
-import { Box, Button, FormControl, FormLabel, Input, Text } from '@chakra-ui/react'; // Asegúrate de importar Input para el campo "Nombre completo"
+import { Box, Button, FormControl, FormLabel, Input, Text } from '@chakra-ui/react'; 
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux';
@@ -15,8 +15,8 @@ const CheckoutForm = () => {
   const [error, setError] = useState(null);
   const [processing, setProcessing] = useState(false);
   const [success, setSuccess] = useState(false);
-  const [fullName, setFullName] = useState(''); // Estado para almacenar el nombre completo
-  const [cardElement, setCardElement] = useState(''); // Estado para almacenar los datos de la tarjeta
+  const [fullName, setFullName] = useState(''); 
+  const [cardElement, setCardElement] = useState(''); 
   const dispatch = useDispatch();
 
 
@@ -24,8 +24,6 @@ const CheckoutForm = () => {
 
   const navigate = useNavigate()
 
-
-// Dentro de tu componente
 const handleSubmit = async (event) => {
     event.preventDefault();
     setProcessing(true);
@@ -34,7 +32,7 @@ const handleSubmit = async (event) => {
       type: 'card',
       card: elements.getElement(CardElement),
       billing_details: {
-        name: fullName, // Incluir el nombre completo en los detalles de facturación
+        name: fullName,
       },
     });
 
@@ -55,7 +53,6 @@ const handleSubmit = async (event) => {
             setSuccess(true);
             setProcessing(false);
 
-            // Redirigir después de 2 segundos
             setTimeout(() => {
                 navigate('/login');
             }, 2000);

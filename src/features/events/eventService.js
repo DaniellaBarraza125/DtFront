@@ -31,7 +31,6 @@ const getAllByUserId = async (userId) => {
     const userEvents = res.data.filter((event) =>
         event.asistentes.includes(userId),
     );
-    console.log(getAllByUserId(userId));
     return userEvents;
 };
 const getById = async (id) => {

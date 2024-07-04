@@ -26,36 +26,36 @@ const AdminScheduleView = () => {
 	const { eventIsLoading, events } = useSelector((state) => state.event);
 	const dispatch = useDispatch();
 	const { isOpen, onOpen, onClose } = useDisclosure();
-
+    const [eventosSalaPrincipal, setEventosSalaPrincipal] = useState([]);
+    const [eventosSalaWorkshop, setEventosSalaWorkshop] = useState([]);
+    
 	const options = [
-		{ value: '2025-06-25', label: '25 de Junio' },
+        { value: '2025-06-25', label: '25 de Junio' },
 		{ value: '2025-06-26', label: '26 de Junio' },
 	];
-
-	const [activeDate, setActiveDate] = useState(options[0].value);
+    const [activeDate, setActiveDate] = useState(options[0].value);
+    
 
 	useEffect(() => {
 		dispatch(getByDate(activeDate));
-	}, [dispatch, activeDate]);
+	}, [dispatch]);
 
 	const handleButtonClick = (value) => {
 		setActiveDate(value);
 		dispatch(getByDate(value));
 	};
 
-	if (eventIsLoading) {
-		return <h1>Cargando eventos...</h1>;
-	}
-
-	const eventosSalaPrincipal = events.filter((event) => event.sala == '1');
-	const eventosSalaWorkshop = events.filter((event) => event.sala == '2');
+useEffect(() => {
+        setEventosSalaPrincipal(events.filter((event) => event.sala == '1'));
+        setEventosSalaWorkshop(events.filter((event) => event.sala == '2'));
+}, [dispatch, events]);
 
     return (
-        <Flex justifyContent="center">
-            <Box borderRadius="1em" width="69vw" overflow="hidden">
+     <Box  display='flex' justifyContent="center">
+            <Box borderRadius="1em" width="69vw" >
                 <Grid templateRows="auto 1fr" >
-                    <Box>
-                        <Box className='buttonsZone' position="relative" zIndex="2">
+                    <Box >
+                        <Box  className='buttonsZone' position="relative" zIndex="2">
                             <Grid templateColumns="1fr 4fr 1fr" borderRadius="1em" position="sticky" top="0" zIndex="1" alignItems="end" justifyContent="center" height="12vh">
                                 <GridItem display="flex" justifyContent="center" alignItems="center">
                                     <Box height='5vh' position='relative' zIndex={3} bg='#ededed' paddingTop="1em" paddingLeft="1em" paddingRight="1em" borderTopRadius='1.5em' width="100%">
@@ -87,7 +87,7 @@ const AdminScheduleView = () => {
                                 </GridItem>
                             </Grid>
                         </Box>
-                        <Box height='655px' className='salas' marginTop={0}>
+                        <Box   className='salas' marginTop={0}>
                             <GridItem bg='#ededed' flex="1" display="flex" flexDirection="row" overflow="hidden" width="100%" justifyContent='space-around' paddingBottom='15px' borderBottomRadius='15px'>
                                 <Box bg='white' width='31vw' height='67vh' borderRadius='15px' margin='15px 1px' display="flex" flexDirection="column" alignItems="center" paddingX="1.5vw" paddingBottom='3vh' paddingTop='3vh'>
                                     <Box position="sticky" top="0" zIndex="1" width="100%">
@@ -131,7 +131,7 @@ const AdminScheduleView = () => {
                                                 <Divider mb="1em" width="85%" />
                                             </Box>
                                         </Box>
-                                        <Box flex="1" overflowY="scroll" paddingX='1em' width="100%" css={{
+                                        <Box  flex="1" overflowY="scroll" paddingX='1em' width="100%" css={{
                                             '&::-webkit-scrollbar': {
                                                 width: '0.5em',
                                             },
@@ -149,9 +149,14 @@ const AdminScheduleView = () => {
                                                 display: 'none',
                                             },
                                         }}>
-                                            {eventosSalaWorkshop.map((event, i) => (
-                                                <Event key={i} event={event} />
-                                            ))}
+                                            {eventIsLoading ? (<h1>Cargando eventos...</h1> )
+                                            : (
+                                                <>
+                                                {eventosSalaWorkshop.map((event, i) => (
+                                                    <Event key={i} event={event} />
+                                                ))}
+                                                </>
+                                            )}
                                         </Box>
                                     </Box>
                                 ) : (
@@ -176,7 +181,7 @@ const AdminScheduleView = () => {
 					</ModalBody>
 				</ModalContent>
 			</Modal>
-		</Flex>
+            </Box>
 	);
 };
 

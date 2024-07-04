@@ -68,21 +68,8 @@ export const feedbackSlice = createSlice({
           })
           .addCase(getById.rejected, (state, action) => {
               state.isLoading = false;
-              state.error = action.payload || action.error.message;//----------------
-          })
-          // .addCase(getByDate.fulfilled, (state, action) => {
-          //     state.isLoading = false;
-          //     state.feedbacks = action.payload.feedbacks;
-          // })
-          // .addCase(getByDate.pending, (state) => {
-          //     state.feedbacksIsLoading = true;
-          //     state.error = null;
-          // })
-          // .addCase(getByDate.rejected, (state, action) => {
-          //     state.feedbacksIsLoading = false;
-          //     state.error = action.payload || action.error.message;
-          // })
-         
+              state.error = action.payload || action.error.message;
+          }) 
   },
 });
 

@@ -107,9 +107,9 @@ const Register = () => {
     ];
     
     return (
-        <Container maxW="container.md" p={4}>
-            <Stepper/>
-            <Box as='form' onSubmit={handleSubmit} borderWidth="1px" borderRadius="lg" p={4}>
+        <Container maxW="container.md"  marginTop='20px'p={4}>
+            <Stepper marginTop='20px'/>
+            <Box as='form'onSubmit={handleSubmit} borderWidth="1px" borderRadius="lg" p={4}>
                 <FormControl isRequired>
                     <FormLabel>Email</FormLabel>
                     <Input
